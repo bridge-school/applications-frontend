@@ -1,25 +1,37 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './normalize.css';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  body {
+   font-family: 'Open Sans,sans-serif';
+  }
+`;
+
+const bridgeTheme = {
+  padding: '.5rem',
+  indigo: '#000c9e',
+  blue: '#2fa1d4',
+  green: '#08c39d',
+  pink: '#eb2c97',
+};
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer">
-            Learn React
-          </a>
-        </header>
-      </div>
+      <ThemeProvider theme={bridgeTheme}>
+        <>
+          <GlobalStyle />
+          <div>Home page!</div>
+        </>
+      </ThemeProvider>
     );
   }
 }

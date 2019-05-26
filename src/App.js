@@ -20,7 +20,7 @@ const bridgeTheme = {
   indigo: '#000c9e',
   blue: '#2fa1d4',
   green: '#08c39d',
-  pink: '#eb2c97',
+  pink: '#eb2c97'
 };
 
 class App extends Component {

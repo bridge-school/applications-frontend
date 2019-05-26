@@ -10,7 +10,8 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: inherit;
   }
   body {
-   font-family: 'Open Sans,sans-serif';
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.15;
   }
 `;
 

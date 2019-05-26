@@ -29,7 +29,7 @@ const Title = styled.h1`
   margin: 0;
 `;
 
-const AdminLink = styled.p`
+const Admin = styled.p`
   margin-left: auto;
   font-size: 0.8rem;
 `;
@@ -40,7 +40,7 @@ export default function Header({ admin }) {
       <Wrapper>
         <Logo src={logo} alt="Bridge Logo" />
         <Title>Cohort Application</Title>
-        {admin && <AdminLink>Admin View</AdminLink>}
+        {admin && <Admin>Admin View</Admin>}
       </Wrapper>
     </TopBar>
   );

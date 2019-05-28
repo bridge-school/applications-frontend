@@ -1,5 +1,6 @@
 import React from 'react';
+import ApplicationListContainer from './ApplicationListContainer';
 
 export default function CurrentApplications() {
-  return <div>List of current apps...</div>;
+  return <ApplicationListContainer></ApplicationListContainer>
 }

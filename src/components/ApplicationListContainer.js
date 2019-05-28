@@ -5,13 +5,14 @@ import ListItem from './ApplicationListItem'
 
 const List = styled.ul`
     list-style: none;
-    padding; 0;
+    padding: 0;
 `
-
 export default function ApplicationListContainer({listItemArray}) {
     return <List>
-        <ListItem></ListItem>
-    </List>
+            {listItemArray.map( li => 
+                <ListItem key={li.cohort_id} name={li}></ListItem>
+            )}
+        </List>
 }
 
 ApplicationListContainer.propTypes = {

@@ -7,6 +7,7 @@ const List = styled.ul`
   list-style: none;
   padding: 0;
 `;
+
 export default function ApplicationListContainer({ listItemArray }) {
   return (
     <List>

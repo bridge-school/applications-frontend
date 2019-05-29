@@ -18,7 +18,9 @@ const Link = styled.a`
   } */}
 `;
 
-export default function ApplicationListItem({ data }) {
+const url = 'http://applications-backend.bridgeschoolapp.io/applications';
+
+export default function ApplicationListItem() {
   return (
     <ListItem>
       <Link href="#">

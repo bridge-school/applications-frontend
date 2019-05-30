@@ -17,7 +17,6 @@ const Link = styled.a`
   align-items: center;
   color: black;
   text-decoration: none;
-  } */}
 `;
 
 export default function ListItem({ name, type, url }) {

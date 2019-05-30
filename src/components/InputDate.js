@@ -15,16 +15,17 @@ const InputDateElement = styled.input`
   border-radius: ${props => props.theme.borderRadius};
 `;
 
-export default function InputDate({ label, name }) {
+export default function InputDate({ label, name, value }) {
   return (
     <div>
       <Label htmlFor={name}>{label}</Label>
-      <InputDateElement id={name} name={name} type="date" />
+      <InputDateElement id={name} name={name} value={value} type="date" />
     </div>
   );
 }
 
 InputDate.propTypes = {
   label: PropTypes.string,
-  name: PropTypes.string
+  name: PropTypes.string,
+  value: PropTypes.string
 };

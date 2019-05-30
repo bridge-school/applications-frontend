@@ -6,7 +6,7 @@ export default function StudentView() {
   return (
     <div>
       <PageTitle title="Cohort Application Forms" />
-      <InputDate type="text" name="test" value="" label="Text Input" />
+      <InputDate name="test" value="" label="Date Input" />
       <p>STUDENT VIEW...</p>
     </div>
   );

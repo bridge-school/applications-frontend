@@ -16,7 +16,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default function createReduxStore(mode = 'development') {
   // Development store
-  if(mode == 'development') {
+  if(mode === 'development') {
     return createStore(
       reducers,
       composeEnhancers(

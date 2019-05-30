@@ -12,18 +12,25 @@ const SelectBox = styled.select`
   background-position: right 0.4rem top 54%, 0 0;
   background-size: 1rem auto, 100%;
 `;
-const Option = styled.option``;
 
-export default function Dropdown() {
+export default function Dropdown({ data }) {
   return (
     <div>
-      <SelectBox>
-        <Option>tejhgigiggyligst</Option>
-        <Option>test1</Option>
-        <Option>test2</Option>
-      </SelectBox>
+      <label>
+        {data.description}
+        <SelectBox>
+          <option value="" />
+          {data.items.map(item => (
+            <option key={data.items.indexOf(item)} value={item.value}>
+              {item.option}
+            </option>
+          ))}
+        </SelectBox>
+      </label>
     </div>
   );
 }
 
-Dropdown.propTypes = {};
+Dropdown.propTypes = {
+  data: PropTypes.object.isRequired,
+};

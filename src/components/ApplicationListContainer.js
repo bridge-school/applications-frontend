@@ -8,10 +8,10 @@ const List = styled.ul`
   padding: 0;
 `;
 
-export default function ApplicationListContainer({ listItemArray }) {
+export default function ApplicationListContainer({ cohortData }) {
   return (
     <List>
-      {listItemArray.map(li => (
+      {cohortData.map(li => (
         <ListItem key={li.cohort_id} name={li.cohort_name} />
       ))}
     </List>
@@ -19,5 +19,5 @@ export default function ApplicationListContainer({ listItemArray }) {
 }
 
 ApplicationListContainer.propTypes = {
-  listItemArray: PropTypes.array.isRequired,
+  cohortData: PropTypes.array.isRequired,
 };

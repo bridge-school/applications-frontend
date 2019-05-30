@@ -18,18 +18,17 @@ const Link = styled.a`
   } */}
 `;
 
-const url = 'http://applications-backend.bridgeschoolapp.io/applications';
-
-export default function ApplicationListItem() {
+export default function ApplicationListItem({ name }) {
   return (
     <ListItem>
       <Link href="#">
-        [cohort_name]<div>[button component with cohort_type and color]</div>
+        {name}
+        <div>button component...</div>
       </Link>
     </ListItem>
   );
 }
 
 ApplicationListItem.propTypes = {
-  data: PropTypes.object,
+  name: PropTypes.string.isRequired,
 };

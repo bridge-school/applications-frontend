@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { handleError } from './store/actions';
 import './normalize.css';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import styled from 'styled-components';
@@ -49,4 +51,15 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  error: state.error
+});
+
+const mapDispatchToProps = {
+  handleError
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

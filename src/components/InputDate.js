@@ -26,5 +26,5 @@ export default function InputDate({ label, name }) {
 
 InputDate.propTypes = {
   label: PropTypes.string,
-  name: PropTypes.name
+  name: PropTypes.string
 };

@@ -34,6 +34,8 @@ const bridgeTheme = {
   blue: '#2fa1d4',
   green: '#08c39d',
   pink: '#eb2c97',
+  black: '#000000',
+  borderRadius: '3px',
 };
 
 class App extends Component {

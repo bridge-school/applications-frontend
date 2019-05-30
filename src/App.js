@@ -20,6 +20,10 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Open Sans', sans-serif;
     line-height: 1.15;
+  }
+  label {
+    font-size: 0.8em;
+    font-weight: bold;
   }  
 `;
 
@@ -30,12 +34,16 @@ const Wrapper = styled.div`
 
 const bridgeTheme = {
   padding: '.5rem',
+  margin: '.5rem',
   indigo: '#000c9e',
   blue: '#2fa1d4',
   green: '#08c39d',
   pink: '#eb2c97',
   black: '#000000',
   borderRadius: '3px',
+  borderColor: '#979797',
+  borderWidth: '2px',
+  inputBackground: '#f6f6f6',
 };
 
 class App extends Component {

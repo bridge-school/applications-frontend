@@ -1,25 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const Label = styled.label`
-
-`;
-
 const InputDateElement = styled.input`
   padding: ${props => props.theme.padding};
-  margin: 0.5em;
+  margin: ${props => props.theme.margin} 0;
   color: ${props => props.theme.black};
-  background: #f6f6f6;
-  border: 2px solid #979797;
+  background: ${props => props.theme.inputBackground};
+  border: ${props => props.theme.borderWidth} solid ${props => props.theme.borderColor};
   border-radius: ${props => props.theme.borderRadius};
+  display: block;
 `;
 
 export default function InputDate({ label, name, value }) {
+  const [date, setDate] = useState(value);
   return (
     <div>
-      <Label htmlFor={name}>{label}</Label>
-      <InputDateElement id={name} name={name} value={value} type="date" />
+      <label htmlFor={name}>
+        {label}
+        <InputDateElement 
+          id={name} 
+          name={name} 
+          value={date} 
+          type="date" 
+          onChange={e => setDate(e.target.value)}
+        />
+      </label>
     </div>
   );
 }

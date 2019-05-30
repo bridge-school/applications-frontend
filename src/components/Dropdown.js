@@ -13,38 +13,22 @@ const SelectBox = styled.select`
   background-size: 1rem auto, 100%;
 `;
 
-const data = {
-  description: 'Random Multiple choice question.',
-  type: 'checkbox',
-  items: [
-    {
-      label: 'Option a',
-      value: 'A',
-    },
-    {
-      label: 'Option b',
-      value: 'B',
-    },
-  ],
-};
+export default function Dropdown() {
+  const data = {
+    description: 'Random Multiple choice question.',
+    type: 'checkbox',
+    items: [
+      {
+        label: 'Option a',
+        value: 'A',
+      },
+      {
+        label: 'Option b',
+        value: 'B',
+      },
+    ],
+  };
 
-export default function Dropdown({}) {
-  {
-    const data = {
-      description: 'Random Multiple choice question.',
-      type: 'checkbox',
-      items: [
-        {
-          label: 'Option a',
-          value: 'A',
-        },
-        {
-          label: 'Option b',
-          value: 'B',
-        },
-      ],
-    };
-  }
   return (
     <div>
       <label>

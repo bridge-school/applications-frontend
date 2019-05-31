@@ -21,6 +21,10 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Open Sans', sans-serif;
     line-height: 1.15;
+  }
+  label {
+    font-size: 0.8em;
+    font-weight: bold;
   }  
   button {
     cursor: pointer

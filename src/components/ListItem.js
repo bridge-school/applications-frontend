@@ -24,7 +24,7 @@ export default function ListItem({ name, type, url }) {
     <LI>
       <Link href={'apply/' + url}>
         {name}
-        <Button text={type} />
+        <span>[...button]</span>
       </Link>
     </LI>
   );

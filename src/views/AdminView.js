@@ -3,6 +3,9 @@ import PageTitle from '../components/PageTitle';
 import Button from '../components/Button';
 import styled from 'styled-components';
 import bridgeTheme from '../styles/bridgeTheme';
+import { useFetch } from '../hooks';
+
+import ListContainer from '../components/ListContainer';
 
 const Header = styled.header`
   display: flex;
@@ -10,6 +13,8 @@ const Header = styled.header`
 `;
 
 export default function AdminView() {
+  const url = 'http://applications-backend.bridgeschoolapp.io/applications';
+  const [data, loading] = useFetch(url);
   return (
     <div>
       <Header>
@@ -20,6 +25,8 @@ export default function AdminView() {
           backgroundColor={bridgeTheme.green}
         />
       </Header>
+      {loading ? <div>loading</div> : <ListContainer cohortData={data} />}
+
       <p>List of ALL applications for Admin...</p>
     </div>
   );

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import './normalize.css';
+import './styles/normalize.css';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import styled from 'styled-components';
+import bridgeTheme from './styles/bridgeTheme';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import AdminView from './views/AdminView';
 import StudentView from './views/StudentView';
@@ -25,26 +26,15 @@ const GlobalStyle = createGlobalStyle`
     font-size: 0.8em;
     font-weight: bold;
   }  
+  button {
+    cursor: pointer
+  }
 `;
 
 const Wrapper = styled.div`
   max-width: 64rem;
   margin: 0 auto;
 `;
-
-const bridgeTheme = {
-  padding: '.5rem',
-  margin: '.5rem',
-  indigo: '#000c9e',
-  blue: '#2fa1d4',
-  green: '#08c39d',
-  pink: '#eb2c97',
-  black: '#000000',
-  borderRadius: '3px',
-  borderColor: '#979797',
-  borderWidth: '2px',
-  inputBackground: '#f6f6f6',
-};
 
 class App extends Component {
   render() {

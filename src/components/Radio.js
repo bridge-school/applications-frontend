@@ -54,12 +54,10 @@ export default function Radio({ description, name, items }) {
         <Legend> {description}</Legend>
         <Container>
           {items.map(item => (
-            <>
+            <React.Fragment key={item}>
               <RadioButton type="radio" id={item} name={name} value={item} />
-              <RadioLabel key={item} for={item}>
-                {item}
-              </RadioLabel>
-            </>
+              <RadioLabel htmlFor={item}>{item}</RadioLabel>
+            </React.Fragment>
           ))}
         </Container>
       </Fieldset>

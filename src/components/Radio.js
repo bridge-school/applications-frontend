@@ -10,10 +10,37 @@ const RadioLabel = styled.label`
   border: 2px solid ${props => props.theme.darkGrey};
   border-radius: 5px;
   padding: ${props => props.theme.padding};
+  text-align: center;
+  color: ${props => props.theme.darkGrey};
+  display: inline-block;
+  width: 100%;
+  cursor: pointer;
+  &:hover {
+    color: white;
+    background: ${props => props.theme.indigo};
+    border-color: ${props => props.theme.indigo};
+  }
 `;
 
-const RadioButton = styled.input.attrs({ type: 'radio' })`
-  ${'' /* todo: styling */}
+const RadioButton = styled.input`
+  /* for accessibility */
+  opacity: 0;
+  &:checked + label {
+    color: white;
+    background: ${props => props.theme.indigo};
+    border-color: ${props => props.theme.indigo};
+  }
+`;
+
+const Container = styled.div`
+  display: flex;
+  div {
+    flex: 1 1 0;
+    margin-right: 1rem;
+    &:last-of-type {
+      margin: 0;
+    }
+  }
 `;
 
 const Legend = styled.legend`
@@ -25,12 +52,16 @@ export default function Radio({ description, name, items }) {
     <div>
       <Fieldset>
         <Legend> {description}</Legend>
-        {items.map(item => (
-          <RadioLabel key={item}>
-            {item}
-            <RadioButton type="radio" id={item} name={name} value={item} />
-          </RadioLabel>
-        ))}
+        <Container>
+          {items.map(item => (
+            <>
+              <RadioButton type="radio" id={item} name={name} value={item} />
+              <RadioLabel key={item} for={item}>
+                {item}
+              </RadioLabel>
+            </>
+          ))}
+        </Container>
       </Fieldset>
     </div>
   );

@@ -20,8 +20,7 @@ const Legend = styled.legend`
   padding: ${props => props.theme.padding};
 `;
 
-export default function Radio({ description, name, items, value }) {
-  const [answer, setAnswer] = useState(value);
+export default function Radio({ description, name, items }) {
   return (
     <div>
       <Fieldset>
@@ -29,13 +28,7 @@ export default function Radio({ description, name, items, value }) {
         {items.map(item => (
           <RadioLabel key={item}>
             {item}
-            <RadioButton
-              type="radio"
-              id={item}
-              name={name}
-              onChange={e => setAnswer(e.target.value)}
-              value={answer}
-            />
+            <RadioButton type="radio" id={item} name={name} value={item} />
           </RadioLabel>
         ))}
       </Fieldset>
@@ -47,5 +40,4 @@ Radio.propTypes = {
   description: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired,
-  value: PropTypes.string.isRequired,
 };

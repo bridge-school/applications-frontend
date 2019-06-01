@@ -11,7 +11,6 @@ export default function StudentView() {
         name="pronouns"
         description="What pronouns should we use?"
         items={['He/Him', 'She/Her', 'They/Them']}
-        value=""
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -25,8 +25,7 @@ const TextareaElement = styled.textarea`
   width: 100%;
 `;
 
-export default function Input({ label, name, type, value }) {
-  const [input, setInput] = useState(value);
+export default function Input({ label, name, type, value, handleChange }) {
   return (
     <div>
       <label htmlFor={name}>
@@ -35,15 +34,15 @@ export default function Input({ label, name, type, value }) {
           ? <TextareaElement 
               id={name} 
               name={name}
-              value={input}
+              value={value}
               rows="3"
-              onChange={e => setInput(e.target.value)} />
+              onChange={e => handleChange(e)} />
           : <InputElement 
               id={name} 
               name={name} 
               type={type} 
-              value={input}
-              onChange={e => setInput(e.target.value)}
+              value={value}
+              onChange={e => handleChange(e)}
             />
         }
       </label>
@@ -55,5 +54,6 @@ Input.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string,
   type: PropTypes.string,
-  value: PropTypes.string
+  value: PropTypes.string,
+  handleChange: PropTypes.func
 };

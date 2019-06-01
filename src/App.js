@@ -42,7 +42,7 @@ const bridgeTheme = {
   grey: '#F0F0F0',
   black: '#000000',
   borderRadius: '3px',
-  borderColor: '#979797',
+  darkGrey: '#979797',
   borderWidth: '2px',
   inputBackground: '#f6f6f6',
 };

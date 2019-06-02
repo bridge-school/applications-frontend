@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import CohortLabel from './CohortLabel';
 
 const LI = styled.li`
   background-color: ${props => props.theme.grey};
@@ -23,7 +24,7 @@ export default function ListItem({ name, type, url }) {
     <LI>
       <Link href={'apply/' + url}>
         {name}
-        <span>[...button]</span>
+        <CohortLabel text={type} width="150px" uppercase />
       </Link>
     </LI>
   );

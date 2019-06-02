@@ -2,30 +2,42 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const ButtonElem = styled.button`
+const Label = styled.div`
   border-radius: ${p => p.theme.borderRadius};
   padding: 0.5em;
   color: white;
   text-align: center;
-  font-weight: bold;
   width: ${p => p.width || '24em'};
   font-size: ${p => (p.uppercase ? '1rem' : '.8rem')};
   background: ${p => p.backgroundColor};
   border: 3px solid ${p => p.backgroundColor};
   text-transform: ${p => (p.uppercase ? 'uppercase' : 'lowercase')};
-  &:hover {
-    color: ${p => p.backgroundColor};
-    background: white;
-  }
 `;
 
-export default function Button(props) {
-  return <ButtonElem {...props}>{props.text}</ButtonElem>;
+function getColor(type) {
+  let randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+  switch (type) {
+    case 'backend':
+      return '#00A1D7';
+    case 'frontend':
+      return '#FF0093';
+    case 'design':
+      return '#00CC9F';
+    default:
+      return randomColor;
+  }
 }
 
-Button.propTypes = {
+export default function CohortLabel(props) {
+  return (
+    <Label {...props} backgroundColor={getColor(props.text)}>
+      {props.text}
+    </Label>
+  );
+}
+
+CohortLabel.propTypes = {
   text: PropTypes.string.isRequired,
-  backgroundColor: PropTypes.string.isRequired,
   width: PropTypes.string,
   uppercase: PropTypes.bool,
 };

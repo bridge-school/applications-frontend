@@ -26,8 +26,6 @@ export default function AdminView() {
         />
       </Header>
       {loading ? <div>loading</div> : <ListContainer cohortData={data} />}
-
-      <p>List of ALL applications for Admin...</p>
     </div>
   );
 }

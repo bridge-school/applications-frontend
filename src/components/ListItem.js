@@ -26,6 +26,19 @@ const CohortLink = styled(Link)`
   color: black;
   text-decoration: none;
 `;
+function getColor(type) {
+  let randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+  switch (type) {
+    case 'backend':
+      return '#00A1D7';
+    case 'frontend':
+      return '#FF0093';
+    case 'design':
+      return '#00CC9F';
+    default:
+      return randomColor;
+  }
+}
 
 export default function ListItem({ name, type, url }) {
   return (

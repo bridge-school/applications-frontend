@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -12,8 +12,7 @@ const InputDateElement = styled.input`
   display: block;
 `;
 
-export default function InputDate({ label, name, value }) {
-  const [date, setDate] = useState(value);
+export default function InputDate({ label, name, value, handleChange }) {
   return (
     <div>
       <label htmlFor={name}>
@@ -21,9 +20,9 @@ export default function InputDate({ label, name, value }) {
         <InputDateElement 
           id={name} 
           name={name} 
-          value={date} 
+          value={value} 
           type="date" 
-          onChange={e => setDate(e.target.value)}
+          onChange={e => handleChange(e)}
         />
       </label>
     </div>
@@ -33,5 +32,6 @@ export default function InputDate({ label, name, value }) {
 InputDate.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string,
-  value: PropTypes.string
+  value: PropTypes.string,
+  handleChange: PropTypes.func
 };

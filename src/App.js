@@ -3,7 +3,7 @@ import './styles/normalize.css';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import styled from 'styled-components';
 import bridgeTheme from './styles/bridgeTheme';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AdminView from './views/AdminView';
 import StudentView from './views/StudentView';
 import CreateCohort from './views/CreateCohort';

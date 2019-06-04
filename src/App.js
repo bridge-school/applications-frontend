@@ -31,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.main`
   max-width: 64rem;
   margin: 0 auto;
 `;
@@ -45,24 +45,6 @@ class App extends Component {
           <div>
             <Header admin />
             <Wrapper>
-              {/* just a way to go to links for now */}
-              <nav>
-                <ul>
-                  <li>
-                    <Link to="/">Frontpage</Link>
-                  </li>
-                  <li>
-                    <Link to="/admin">Admin view</Link>
-                  </li>
-                  <li>
-                    <Link to="/admin/create">Create Cohort</Link>
-                  </li>
-                  <li>
-                    <Link to="/apply/:coID">Cohort Submission Form</Link>
-                  </li>
-                </ul>
-              </nav>
-
               <Switch>
                 <Route path="/" exact component={StudentView} />
                 <Route path="/admin" exact component={AdminView} />

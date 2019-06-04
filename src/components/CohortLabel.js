@@ -7,11 +7,11 @@ const Label = styled.div`
   padding: 0.5em;
   color: white;
   text-align: center;
-  width: ${p => p.width || '24em'};
-  font-size: ${p => (p.uppercase ? '1rem' : '.8rem')};
+  width: 16em;
+  font-size: 0.8rem;
   background: ${p => p.backgroundColor};
   border: 3px solid ${p => p.backgroundColor};
-  text-transform: ${p => (p.uppercase ? 'uppercase' : 'lowercase')};
+  text-transform: lowercase;
 `;
 
 function getColor(type) {

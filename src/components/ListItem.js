@@ -5,10 +5,17 @@ import CohortLabel from './CohortLabel';
 
 const LI = styled.li`
   background-color: ${props => props.theme.grey};
-  padding: ${props => props.theme.padding};
+  padding: 0.75em 1.5em;
   margin: 0.2rem 0;
   font-weight: bold;
   border-radius: 5px;
+  &:hover,
+  &:focus {
+    background-color: ${props => props.theme.indigo};
+    a {
+      color: white;
+    }
+  }
 `;
 
 const Link = styled.a`

@@ -10,7 +10,7 @@ const reducers = (state = initialState, action) => {
   switch (action.type) {
     case ERROR:
       return {
-        ...initialState,
+        ...state,
         error: action.payload
       }
     default:

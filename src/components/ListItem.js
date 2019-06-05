@@ -2,16 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import CohortLabel from './CohortLabel';
+import { Link } from 'react-router-dom';
 
 const LI = styled.li`
   background-color: ${props => props.theme.grey};
-  padding: ${props => props.theme.padding};
+  padding: 0.75em 1.5em;
   margin: 0.2rem 0;
   font-weight: bold;
   border-radius: 5px;
+  &:hover,
+  &:focus {
+    background-color: ${props => props.theme.indigo};
+    a {
+      color: white;
+    }
+  }
 `;
 
-const Link = styled.a`
+const CohortLink = styled(Link)`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,10 +30,10 @@ const Link = styled.a`
 export default function ListItem({ name, type, url }) {
   return (
     <LI>
-      <Link href={'apply/' + url}>
+      <CohortLink to={'apply/' + url}>
         {name}
         <CohortLabel text={type} width="150px" uppercase />
-      </Link>
+      </CohortLink>
     </LI>
   );
 }

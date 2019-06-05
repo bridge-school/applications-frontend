@@ -4,7 +4,7 @@ import Button from '../components/Button';
 import styled from 'styled-components';
 import bridgeTheme from '../styles/bridgeTheme';
 import { useFetch } from '../hooks/fetch';
-
+import { Link } from 'react-router-dom';
 import ListContainer from '../components/ListContainer';
 
 const Header = styled.header`
@@ -19,11 +19,13 @@ export default function AdminView() {
     <div>
       <Header>
         <PageTitle title="Cohort Application Forms" />
-        <Button
-          text="create application group"
-          uppercase
-          backgroundColor={bridgeTheme.green}
-        />
+        <Link to="/admin/create">
+          <Button
+            text="create application group"
+            uppercase
+            backgroundColor={bridgeTheme.green}
+          />
+        </Link>
       </Header>
       {loading ? <div>loading</div> : <ListContainer cohortData={data} />}
     </div>

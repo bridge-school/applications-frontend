@@ -34,6 +34,7 @@ const GlobalStyle = createGlobalStyle`
 const Wrapper = styled.main`
   max-width: 64rem;
   margin: 0 auto;
+  padding-top: 2rem;
 `;
 
 class App extends Component {

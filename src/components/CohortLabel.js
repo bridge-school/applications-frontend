@@ -17,9 +17,9 @@ const Label = styled.div`
 function getColor(type) {
   let randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
   switch (type) {
-    case 'backend':
+    case 'backend-development':
       return '#00A1D7';
-    case 'frontend':
+    case 'frontend-development':
       return '#FF0093';
     case 'design':
       return '#00CC9F';

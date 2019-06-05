@@ -14,9 +14,9 @@ export default function ListContainer({ cohortData }) {
       {cohortData.data.map(li => (
         <ListItem
           key={li.id}
-          name={li.cohort_name}
-          type={li.cohort_type}
-          url={li.cohort_slug}
+          name={li.cohortName}
+          type={li.cohortType}
+          url={li.cohortSlug}
         />
       ))}
     </List>

@@ -14,7 +14,7 @@ const logger = store => next => action => {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export default function createReduxStore(mode = 'development') {
+function createReduxStore(mode = 'development') {
   // Development store
   if(mode === 'development') {
     return createStore(
@@ -31,3 +31,6 @@ export default function createReduxStore(mode = 'development') {
     applyMiddleware(thunk)
   );
 }
+
+const store = createReduxStore();
+export default store;

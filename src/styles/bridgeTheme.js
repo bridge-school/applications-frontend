@@ -6,4 +6,7 @@ export default {
   pink: '#eb2c97',
   grey: '#F0F0F0',
   borderRadius: '5px',
+  backend: 'lightblue',
+  frontend: '',
+  design: '#08c39d',
 };

@@ -13,7 +13,7 @@ const QuestionContainer = styled.div`
   width: 100%;
 `;
 
-const QuestionWrap = styled.div`
+const QuestionOuterWrap = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -21,21 +21,21 @@ const QuestionWrap = styled.div`
   width: 100%;
 `;
 
-const QuestionDiv = styled.div`
+const QuestionWrap = styled.div`
   width: 70%;
   margin-right: 2rem;
 `;
 
-const DropdownDiv = styled.div`
+const DropdownWrap = styled.div`
   width: 19%;
   margin-right: 2rem;
 `;
 
-const CheckboxDiv = styled.div`
+const CheckboxWrap = styled.div`
   width: 8%;
 `;
 
-const ButtonDiv = styled.div`
+const ButtonWrap = styled.div`
   width: 3%;
 `;
 
@@ -51,14 +51,14 @@ const ButtonElem = styled.button`
 export default function AddQuestions({fields, handleChange, handleAddNewQuestion, handleRemoveQuestion}) {
   return (
     <div>
-      <PageTitle title="Create Cohort Application Form" />
+      <PageTitle title="Application Questions" />
       <QuestionContainer>
         {fields.map((field, index) => {
           const handleChangeAtIndex = handleChange(index);
 
           return(
-            <QuestionWrap key={`${field}-${index}`}>
-              <QuestionDiv>
+            <QuestionOuterWrap key={`${field}-${index}`}>
+              <QuestionWrap>
                 <Input
                   name={`description${index}`} 
                   type="text" 
@@ -66,16 +66,16 @@ export default function AddQuestions({fields, handleChange, handleAddNewQuestion
                   handleChange={handleChangeAtIndex('description')}
                   label="Question" 
                 />
-              </QuestionDiv>
-              <DropdownDiv>
+              </QuestionWrap>
+              <DropdownWrap>
                 <Dropdown 
                   name={`type${index}`}
                   value={field.type}
                   data={{description: 'test'}} 
                   handleChange={handleChangeAtIndex('type')}
                 />
-              </DropdownDiv>
-              <CheckboxDiv>
+              </DropdownWrap>
+              <CheckboxWrap>
                 <Checkbox
                   name={`ifRequired${index}`}
                   data={{
@@ -89,13 +89,13 @@ export default function AddQuestions({fields, handleChange, handleAddNewQuestion
                     }]
                   }}
                 />
-              </CheckboxDiv>
-              <ButtonDiv>
+              </CheckboxWrap>
+              <ButtonWrap>
                 <ButtonElem
                   onClick={handleRemoveQuestion(index)}
                 >-</ButtonElem>
-              </ButtonDiv>
-            </QuestionWrap>
+              </ButtonWrap>
+            </QuestionOuterWrap>
           );
         })}
       </QuestionContainer>

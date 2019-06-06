@@ -8,7 +8,7 @@ const Label = styled.div`
   color: white;
   text-align: center;
   width: 16em;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   background: ${p => p.backgroundColor};
   border: 3px solid ${p => p.backgroundColor};
   text-transform: lowercase;
@@ -37,6 +37,4 @@ export default function CohortLabel(props) {
 
 CohortLabel.propTypes = {
   text: PropTypes.string.isRequired,
-  width: PropTypes.string,
-  uppercase: PropTypes.bool,
 };

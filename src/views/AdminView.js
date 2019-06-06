@@ -2,47 +2,26 @@ import React from 'react';
 import PageTitle from '../components/PageTitle';
 import Button from '../components/Button';
 import styled from 'styled-components';
-import bridgeTheme from '../styles/bridgeTheme';
-import Checkbox from '../components/CheckBox';
+import { useFetch } from '../hooks/fetch';
+
+import ListContainer from '../components/ListContainer';
 
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
+  margin: 0 0 3rem 0;
 `;
 
 export default function AdminView() {
+  const url = 'http://applications-backend.bridgeschoolapp.io/applications';
+  const [data, loading] = useFetch(url);
   return (
     <div>
       <Header>
         <PageTitle title="Cohort Application Forms" />
-        <Button
-          text="create application group"
-          uppercase
-          backgroundColor={bridgeTheme.green}
-        />
+        <Button text="create application group" />
       </Header>
-      <p>List of ALL applications for Admin...</p>
-      <Checkbox
-        description="Answer this question."
-        items={[
-          {
-            label: 'Option a',
-            value: 'A',
-          },
-          {
-            label: 'Option b',
-            value: 'B',
-          },
-          {
-            label: 'Option c',
-            value: 'C',
-          },
-          {
-            label: 'Option d',
-            value: 'D',
-          },
-        ]}
-      />
+      {loading ? <div>loading</div> : <ListContainer cohortData={data} />}
     </div>
   );
 }

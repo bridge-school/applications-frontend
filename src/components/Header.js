@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import logo from '../images/bridge-logo.svg';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const TopBar = styled.header`
   background: ${props => props.theme.indigo};
@@ -16,6 +17,7 @@ const Wrapper = styled.div`
   padding: ${props => props.theme.padding};
   max-width: 64rem;
   margin: 0 auto;
+  padding: 0.5rem 1rem;
 `;
 
 const Logo = styled.img`
@@ -37,7 +39,9 @@ export default function Header({ admin }) {
   return (
     <TopBar>
       <Wrapper>
-        <Logo src={logo} alt="Bridge Logo" />
+        <Link to="/" title="Bridge home">
+          <Logo src={logo} alt="Bridge Logo" />
+        </Link>
         <Title>Cohort Application</Title>
         {admin && <Admin>Admin View</Admin>}
       </Wrapper>

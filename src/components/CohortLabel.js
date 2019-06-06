@@ -31,7 +31,7 @@ function getColor(type) {
 export default function CohortLabel(props) {
   return (
     <Label {...props} backgroundColor={getColor(props.text)}>
-      {props.text.replace(/-/g, ' ')}
+      {props.text.replace(/-/g, ' ').toLowerCase()}
     </Label>
   );
 }

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import PageTitle from '../components/PageTitle';
 import Input from '../components/Input';
 import Dropdown from '../components/Dropdown';
+import Checkbox from '../components/Fieldset';
 import Button from '../components/Button';
 import bridgeTheme from '../styles/bridgeTheme';
 
@@ -53,7 +54,8 @@ export default function AddQuestions({fields, handleChange, handleAddNewQuestion
       <PageTitle title="Create Cohort Application Form" />
       <QuestionContainer>
         {fields.map((field, index) => {
-          const handleChangeAtIndex = handleChange(index)
+          const handleChangeAtIndex = handleChange(index);
+
           return(
             <QuestionWrap key={`${field}-${index}`}>
               <QuestionDiv>
@@ -74,9 +76,19 @@ export default function AddQuestions({fields, handleChange, handleAddNewQuestion
                 />
               </DropdownDiv>
               <CheckboxDiv>
-                <label>Is required? 
-                  <input type="checkbox" name="tempcheckbox" /> {/* Temporary Checkbox: will be replaced by the checkbox component */}
-                </label>
+                <Checkbox
+                  name={`ifRequired${index}`}
+                  data={{
+                    description: 'Is required?', 
+                    type: 'checkbox', 
+                    items: [
+                    {
+                      label: 'Is required?',
+                      value: field.ifRequired,
+                      handleChange: handleChangeAtIndex('ifRequired')
+                    }]
+                  }}
+                />
               </CheckboxDiv>
               <ButtonDiv>
                 <ButtonElem

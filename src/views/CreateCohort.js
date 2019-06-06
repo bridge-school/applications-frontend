@@ -16,14 +16,14 @@ export default function CreateCohort() {
   const [fields, setFields] = useState(
     [
       { 
-        description: null, 
-        type: null, 
-        isRequired: null 
+        description: "", 
+        type: "", 
+        ifRequired: false
       }, 
       { 
-        description: null, 
-        type: null, 
-        isRequired: null 
+        description: "", 
+        type: "", 
+        ifRequired: true
       }
     ]
   );
@@ -44,7 +44,7 @@ export default function CreateCohort() {
   // Handle question input changes
   const handleQuestionChange = (i) => (type) => (e) => {
     const values = [...fields];
-    values[i][type] = e.target.value;
+    values[i][type] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     setFields(values);
   }
 

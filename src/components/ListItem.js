@@ -6,11 +6,14 @@ import { Link } from 'react-router-dom';
 
 const LI = styled.li`
   background-color: ${props => props.theme.grey};
-  padding: 0.75em 1.5em;
+
   margin: 0.2rem 0;
   font-weight: bold;
   font-size: 120%;
   border-radius: ${props => props.theme.borderRadius};
+  a {
+    padding: 0.75em 1.5em;
+  }
   &:hover,
   &:focus {
     background-color: ${props => props.theme.indigo};

@@ -24,14 +24,14 @@ function getColor(type) {
     case 'design':
       return '#00CC9F';
     default:
-      return randomColor;
+      return 'black';
   }
 }
 
 export default function CohortLabel(props) {
   return (
     <Label {...props} backgroundColor={getColor(props.text)}>
-      {props.text}
+      {props.text.replace(/-/g, ' ')}
     </Label>
   );
 }

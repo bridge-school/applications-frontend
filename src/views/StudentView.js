@@ -6,7 +6,6 @@ export default function StudentView() {
   return (
     <div>
       <PageTitle title="Cohort Application Forms" />
-      <p>STUDENT VIEW...</p>
       <ListContainer />
     </div>
   );

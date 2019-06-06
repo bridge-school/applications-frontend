@@ -10,6 +10,7 @@ import ListContainer from '../components/ListContainer';
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
+  margin: 0 0 3rem 0;
 `;
 
 export default function AdminView() {

@@ -34,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
 const Wrapper = styled.main`
   max-width: 64rem;
   margin: 0 auto;
-  padding-top: 2rem;
+  padding: 2rem 1rem 0 1rem;
 `;
 
 class App extends Component {
@@ -44,7 +44,7 @@ class App extends Component {
         <Router>
           <GlobalStyle />
           <div>
-            <Header admin />
+            <Header />
             <Wrapper>
               <Switch>
                 <Route path="/" exact component={StudentView} />

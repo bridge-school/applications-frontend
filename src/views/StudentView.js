@@ -16,7 +16,7 @@ export default function StudentView() {
       <Header>
         <PageTitle title="Cohort Application Forms" />
       </Header>
-      {loading ? <div>loading</div> : <ListContainer cohortData={data} />}      
+      {loading ? <div>loading</div> : <ListContainer cohortData={data} />}
     </div>
   );
 }

@@ -19,11 +19,7 @@ export default function AdminView() {
     <div>
       <Header>
         <PageTitle title="Cohort Application Forms" />
-        <Button
-          text="create application group"
-          uppercase
-          backgroundColor={bridgeTheme.green}
-        />
+        <Button text="create application group" />
       </Header>
       {loading ? <div>loading</div> : <ListContainer cohortData={data} />}
     </div>

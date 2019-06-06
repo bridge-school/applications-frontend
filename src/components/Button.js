@@ -21,10 +21,15 @@ const ButtonElem = styled.button`
 `;
 
 export default function Button(props) {
-  return <ButtonElem {...props}>{props.text}</ButtonElem>;
+  return (
+    <ButtonElem {...props} onClick={props.handleClick}>
+      {props.text}
+    </ButtonElem>
+  );
 }
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,
   width: PropTypes.string,
+  handleClick: PropTypes.func,
 };

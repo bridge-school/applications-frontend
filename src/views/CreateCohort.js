@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PageTitle from '../components/PageTitle';
 import InputDate from '../components/InputDate';
 import Input from '../components/Input';
+import AddQuestions from '../components/AddQuestions';
 
 export default function CreateCohort() {
   const [form, setValues] = useState({
@@ -12,7 +13,27 @@ export default function CreateCohort() {
     dateResponse: ''
   });
 
-  // Update state
+  const [fields, setFields] = useState(
+    [
+      { 
+        description: "", 
+        type: "", 
+        ifRequired: false
+      }, 
+      { 
+        description: "", 
+        type: "", 
+        ifRequired: true
+      }
+    ]
+  );
+  
+  // Handle Form Submission
+  const handleFormSubmit = e => {
+    e.preventDefault();
+  };
+
+  // Update any input field
   const updateField = e => {
     setValues({
       ...form,
@@ -20,10 +41,30 @@ export default function CreateCohort() {
     });
   };
 
+  // Handle question input changes
+  const handleQuestionChange = (i) => (type) => (e) => {
+    const values = [...fields];
+    values[i][type] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    setFields(values);
+  }
+
+  // Handle adding new question
+  const handleAddNewQuestion = (e) => {
+    e.preventDefault();
+  }
+
+  // Handle Removing the question
+  const handleRemoveQuestion = (i) => (e) => {
+    e.preventDefault();
+    const values = [...fields];
+    values.splice(i, 1);
+    setFields(values);
+  }
+
   return (
     <div>
       <PageTitle title="Create Cohort Application Form" />
-      <form action="">
+      <form onSubmit={handleFormSubmit}>
         <Input 
           name="cohortName" 
           type="text" 
@@ -55,6 +96,12 @@ export default function CreateCohort() {
           value={form.dateResponse} 
           label="Date of Response" 
           handleChange={updateField} 
+        />
+        <AddQuestions
+          fields={fields}
+          handleChange={handleQuestionChange}
+          handleAddNewQuestion={handleAddNewQuestion}
+          handleRemoveQuestion={handleRemoveQuestion}
         />
       </form>
     </div>

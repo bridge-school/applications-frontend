@@ -16,26 +16,30 @@ const Legend = styled.legend`
   padding: ${props => props.theme.padding};
 `;
 
-export default function Checkbox() {
-  const data = {
+export default function Checkbox({ name, data }) {
+  data = data ? data : {
     description: 'A Multiple choice question.',
     type: 'checkbox',
     items: [
       {
         label: 'Option a',
         value: 'A',
+        handleChange: {}
       },
       {
         label: 'Option b',
         value: 'B',
+        handleChange: {}
       },
       {
         label: 'Option c',
         value: 'C',
+        handleChange: {}
       },
       {
         label: 'Option d',
         value: 'D',
+        handleChange: {}
       },
     ],
   };
@@ -44,10 +48,16 @@ export default function Checkbox() {
     <div>
       <Fieldset>
         <Legend> {data.description}</Legend>
-        {data.items.map(item => (
-          <CheckboxLabel key={item.value}>
+        {data.items.map((item, index) => (
+          <CheckboxLabel key={index}>
             {item.label}
-            <input type="checkbox" value={item.value} />
+            <input 
+              name={name}
+              type={data.type} 
+              checked={item.value} 
+              value={item.value}
+              onChange={item.handleChange}
+            />
           </CheckboxLabel>
         ))}
       </Fieldset>
@@ -56,5 +66,6 @@ export default function Checkbox() {
 }
 
 Checkbox.propTypes = {
-  data: PropTypes.object.isRequired,
+  name: PropTypes.string,
+  data: PropTypes.object.isRequired
 };

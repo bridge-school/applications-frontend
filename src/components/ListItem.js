@@ -9,7 +9,8 @@ const LI = styled.li`
   padding: 0.75em 1.5em;
   margin: 0.2rem 0;
   font-weight: bold;
-  border-radius: 5px;
+  font-size: 120%;
+  border-radius: ${props => props.theme.borderRadius};
   &:hover,
   &:focus {
     background-color: ${props => props.theme.indigo};
@@ -32,7 +33,7 @@ export default function ListItem({ name, type, url }) {
     <LI>
       <CohortLink to={'apply/' + url}>
         {name}
-        <CohortLabel text={type} width="150px" uppercase />
+        <CohortLabel text={type} />
       </CohortLink>
     </LI>
   );

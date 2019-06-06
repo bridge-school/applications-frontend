@@ -36,13 +36,13 @@ export default function Input({ label, name, type, value, handleChange }) {
               name={name}
               value={value}
               rows="3"
-              onChange={e => handleChange(e)} />
+              onChange={handleChange} />
           : <InputElement 
               id={name} 
               name={name} 
               type={type} 
               value={value}
-              onChange={e => handleChange(e)}
+              onChange={handleChange}
             />
         }
       </label>
@@ -51,6 +51,7 @@ export default function Input({ label, name, type, value, handleChange }) {
 }
 
 Input.propTypes = {
+  index: PropTypes.number,
   label: PropTypes.string,
   name: PropTypes.string,
   type: PropTypes.string,

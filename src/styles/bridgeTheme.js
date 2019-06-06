@@ -5,5 +5,6 @@ export default {
   green: '#08c39d',
   pink: '#eb2c97',
   grey: '#F0F0F0',
+  red: '#FF0000',
   borderRadius: '5px',
 };

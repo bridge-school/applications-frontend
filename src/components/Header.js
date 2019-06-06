@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   padding: ${props => props.theme.padding};
   max-width: 64rem;
   margin: 0 auto;
-  padding: 0.5rem 0;
+  padding: 0.5rem 1rem;
 `;
 
 const Logo = styled.img`

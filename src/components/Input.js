@@ -27,30 +27,29 @@ const TextareaElement = styled.textarea`
 
 export default function Input({ label, name, type, value, handleChange }) {
   return (
-    <div>
-      <label htmlFor={name}>
-        {label}
-        {type === 'textarea' 
-          ? <TextareaElement 
-              id={name} 
-              name={name}
-              value={value}
-              rows="3"
-              onChange={e => handleChange(e)} />
-          : <InputElement 
-              id={name} 
-              name={name} 
-              type={type} 
-              value={value}
-              onChange={e => handleChange(e)}
-            />
-        }
-      </label>
-    </div>
+    <label htmlFor={name}>
+      {label}
+      {type === 'textarea' 
+        ? <TextareaElement 
+            id={name} 
+            name={name}
+            value={value}
+            rows="3"
+            onChange={handleChange} />
+        : <InputElement 
+            id={name} 
+            name={name} 
+            type={type} 
+            value={value}
+            onChange={handleChange}
+          />
+      }
+    </label>
   );
 }
 
 Input.propTypes = {
+  index: PropTypes.number,
   label: PropTypes.string,
   name: PropTypes.string,
   type: PropTypes.string,

@@ -1,8 +1,8 @@
 import React from 'react';
 import PageTitle from '../components/PageTitle';
-import Button from '../components/Button';
 import styled from 'styled-components';
 import { useFetch } from '../hooks/fetch';
+import { Link } from 'react-router-dom'; 
 
 import ListContainer from '../components/ListContainer';
 
@@ -19,7 +19,9 @@ export default function AdminView() {
     <div>
       <Header>
         <PageTitle title="Cohort Application Forms" />
-        <Button text="create application group" />
+        <Link to="/admin/create" className="button-style" title="create application group">
+          Create application group
+        </Link>
       </Header>
       {loading ? <div>loading</div> : <ListContainer cohortData={data} />}
     </div>

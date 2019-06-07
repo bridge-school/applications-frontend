@@ -14,29 +14,17 @@ const SelectBox = styled.select`
   width: 100%;
 `;
 
-export default function Dropdown({ handleChange, value }) {
-  const data = {
-    description: 'Random Multiple choice question.',
-    type: 'checkbox',
-    items: [
-      {
-        label: 'Option a',
-        value: 'A',
-      },
-      {
-        label: 'Option b',
-        value: 'B',
-      },
-    ],
-  };
-
+export default function Dropdown({ data, handleChange, value }) {
+  
   return (
     <div>
       <label>
         {data.description}
         <br />
         <SelectBox onChange={handleChange} value={value}>
-          <option value="" />
+          <option value="">
+            {data.placeholder}
+          </option>
           {data.items.map(item => (
             <option key={data.items.indexOf(item)} value={item.value}>
               {item.label}

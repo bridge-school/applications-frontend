@@ -8,14 +8,13 @@ const Label = styled.div`
   color: white;
   text-align: center;
   width: 16em;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   background: ${p => p.backgroundColor};
   border: 3px solid ${p => p.backgroundColor};
   text-transform: lowercase;
 `;
 
 function getColor(type) {
-  let randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
   switch (type) {
     case 'backend-development':
       return '#00A1D7';
@@ -24,20 +23,18 @@ function getColor(type) {
     case 'design':
       return '#00CC9F';
     default:
-      return randomColor;
+      return 'black';
   }
 }
 
 export default function CohortLabel(props) {
   return (
     <Label {...props} backgroundColor={getColor(props.text)}>
-      {props.text}
+      {props.text.replace(/-/g, ' ').toLowerCase()}
     </Label>
   );
 }
 
 CohortLabel.propTypes = {
   text: PropTypes.string.isRequired,
-  width: PropTypes.string,
-  uppercase: PropTypes.bool,
 };

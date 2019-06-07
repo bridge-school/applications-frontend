@@ -11,31 +11,20 @@ const SelectBox = styled.select`
   background-repeat: no-repeat, repeat;
   background-position: right 0.4rem top 54%, 0 0;
   background-size: 1rem auto, 100%;
+  width: 100%;
 `;
 
-export default function Dropdown() {
-  const data = {
-    description: 'Random Multiple choice question.',
-    type: 'checkbox',
-    items: [
-      {
-        label: 'Option a',
-        value: 'A',
-      },
-      {
-        label: 'Option b',
-        value: 'B',
-      },
-    ],
-  };
-
+export default function Dropdown({ data, handleChange, value }) {
+  
   return (
     <div>
       <label>
         {data.description}
         <br />
-        <SelectBox>
-          <option value="" />
+        <SelectBox onChange={handleChange} value={value}>
+          <option value="">
+            {data.placeholder}
+          </option>
           {data.items.map(item => (
             <option key={data.items.indexOf(item)} value={item.value}>
               {item.label}
@@ -49,4 +38,6 @@ export default function Dropdown() {
 
 Dropdown.propTypes = {
   data: PropTypes.object.isRequired,
+  value: PropTypes.string,
+  handleChange: PropTypes.func
 };

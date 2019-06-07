@@ -9,7 +9,8 @@ import ListContainer from '../components/ListContainer';
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
-  margin: 0 0 3rem 0;
+  align-content: center;
+  margin: 1.5rem 0 3.5rem;
 `;
 
 export default function AdminView() {

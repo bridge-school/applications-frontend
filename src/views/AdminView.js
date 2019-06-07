@@ -20,7 +20,7 @@ export default function AdminView() {
     <div>
       <Header>
         <PageTitle title="Cohort Application Forms" />
-        <Link to="/admin/create" className="button-style" title="create application group">
+        <Link to="/admin/create" className="button-style">
           Create application group
         </Link>
       </Header>

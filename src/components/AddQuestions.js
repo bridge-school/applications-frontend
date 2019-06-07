@@ -64,14 +64,35 @@ export default function AddQuestions({fields, handleChange, handleAddNewQuestion
                   type="text" 
                   value={field.description}
                   handleChange={handleChangeAtIndex('description')}
-                  label="Question" 
+                  label={`Question #${index+1}`} 
                 />
               </QuestionWrap>
               <DropdownWrap>
                 <Dropdown 
                   name={`type${index}`}
                   value={field.type}
-                  data={{description: 'test'}} 
+                  data={{
+                    description: `Question #${index+1} Type`, 
+                    placeholder: "Select question type",
+                    items: [
+                      {
+                        label: 'short answer',
+                        value: 'input',
+                      },
+                      {
+                        label: 'paragraph',
+                        value: 'textarea',
+                      },
+                      {
+                        label: 'checkboxes',
+                        value: 'checkbox',
+                      },
+                      {
+                        label: 'drop down',
+                        value: 'select',
+                      },
+                    ] 
+                  }} 
                   handleChange={handleChangeAtIndex('type')}
                 />
               </DropdownWrap>

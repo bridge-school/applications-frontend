@@ -3,9 +3,10 @@ import PageTitle from '../components/PageTitle';
 import InputDate from '../components/InputDate';
 import Input from '../components/Input';
 import AddQuestions from '../components/AddQuestions';
+import { createCohort } from '../store/actions';
+import { connect } from 'react-redux';
 
-export default function CreateCohort() {
-
+function CreateCohortForm() {
   /**
    * form are the static form fields.
    * setValues is the method to set the state for those
@@ -16,7 +17,7 @@ export default function CreateCohort() {
     cohortType: '',
     dateOpen: '',
     dateClosed: '',
-    dateResponse: ''
+    dateResponse: '',
   });
 
   /**
@@ -24,20 +25,18 @@ export default function CreateCohort() {
    * setFields is the method to set the state for those
    * dynamic form fields.
    */
-  const [fields, setFields] = useState(
-    [
-      {
-        description: "",
-        type: "",
-        ifRequired: false
-      },
-      {
-        description: "",
-        type: "",
-        ifRequired: false
-      }
-    ]
-  );
+  const [fields, setFields] = useState([
+    {
+      description: '',
+      type: '',
+      ifRequired: false,
+    },
+    {
+      description: '',
+      type: '',
+      ifRequired: false,
+    },
+  ]);
 
   // Handle Form Submission
   const handleFormSubmit = e => {
@@ -45,45 +44,46 @@ export default function CreateCohort() {
   };
 
   /**
-   * 
+   *
    * Generic handler for all static fields
    * To save the value as you type.
    */
   const updateField = e => {
     setValues({
       ...form,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   /**
-   * Handler for the inputs that reside in the dynamic question container 
+   * Handler for the inputs that reside in the dynamic question container
    */
-  const handleQuestionChange = (i) => (type) => (e) => {
+  const handleQuestionChange = i => type => e => {
     const values = [...fields];
-    values[i][type] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    values[i][type] =
+      e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     setFields(values);
-  }
+  };
 
   /**
-   * 
+   *
    * Add New Question Button handler.
-   * TODO 
+   * TODO
    */
-  const handleAddNewQuestion = (e) => {
+  const handleAddNewQuestion = e => {
     e.preventDefault();
-  }
+  };
 
   /**
-   * 
-   * Remove question handler. 
+   *
+   * Remove question handler.
    */
-  const handleRemoveQuestion = (i) => (e) => {
+  const handleRemoveQuestion = i => e => {
     e.preventDefault();
     const values = [...fields];
     values.splice(i, 1);
     setFields(values);
-  }
+  };
 
   return (
     <div>
@@ -131,3 +131,14 @@ export default function CreateCohort() {
     </div>
   );
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    createCohort: formData => dispatch(createCohort(formData)),
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(CreateCohortForm);

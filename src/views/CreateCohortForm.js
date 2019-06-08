@@ -15,6 +15,9 @@ const Form = styled.form`
     margin: 2em auto;
     display: block;
   }
+  section {
+    margin: 2em 0 4em;
+  }
 `;
 
 const DropdownWrapper = styled.div`
@@ -63,14 +66,10 @@ function CreateCohortForm({
   const handleFormSubmit = e => {
     e.preventDefault();
     console.log(form);
-    submitCohort(form);
+    // submitCohort(form);
   };
 
-  /**
-   *
-   * Generic handler for all static fields
-   * To save the value as you type.
-   */
+  // Generic handler for all static fields to save the value as you type
   const updateField = e => {
     setValues({
       ...form,
@@ -78,9 +77,7 @@ function CreateCohortForm({
     });
   };
 
-  /**
-   * Handler for the inputs that reside in the dynamic question container
-   */
+  // Handler for the inputs that reside in the dynamic question container
   const handleQuestionChange = i => type => e => {
     const values = [...fields];
     values[i][type] =
@@ -88,15 +85,9 @@ function CreateCohortForm({
     setFields(values);
   };
 
-  /**
-   *
-   * Add New Question Button handler.
-   * Used by the AddQuestions component
-   *
-   */
+  // Add New Question Button handler
   const handleAddNewQuestion = e => {
-    //e.preventDefault();
-    console.log('Adding a new question!');
+    e.preventDefault();
     const values = [...fields];
     values.push({
       description: '',
@@ -106,13 +97,9 @@ function CreateCohortForm({
     setFields(values);
   };
 
-  /**
-   *
-   * Remove question handler.
-   * Used by the AddQuestions component
-   */
+  // Remove question handler. Used by the AddQuestions component
   const handleRemoveQuestion = i => e => {
-    //e.preventDefault();
+    e.preventDefault();
     const values = [...fields];
     values.splice(i, 1);
     setFields(values);
@@ -128,9 +115,9 @@ function CreateCohortForm({
     return <div>Successfully created {newCohort}!</div>;
   }
   return (
-    <div>
-      <PageTitle title="Create Cohort Application Form" />
-      <Form onSubmit={handleFormSubmit}>
+    <Form onSubmit={handleFormSubmit}>
+      <section>
+        <PageTitle title="Create Cohort Application Form" />
         <Input
           name="cohortName"
           type="text"
@@ -185,15 +172,21 @@ function CreateCohortForm({
           label="Date of Response"
           handleChange={updateField}
         />
+      </section>
+      <section>
+        <PageTitle title="Application Questions" />
         <AddQuestions
           fields={fields}
           handleChange={handleQuestionChange}
           handleAddNewQuestion={handleAddNewQuestion}
           handleRemoveQuestion={handleRemoveQuestion}
         />
-        <Button text="create application group" />
-      </Form>
-    </div>
+
+        <Button text="Add new Question" handleClick={handleAddNewQuestion} />
+      </section>
+
+      <Button text="create application group" />
+    </Form>
   );
 }
 

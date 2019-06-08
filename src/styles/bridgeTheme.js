@@ -8,4 +8,5 @@ export default {
   darkGrey: '#979797',
   red: '#FF0000',
   borderRadius: '5px',
+  border: '3px solid #979797',
 };

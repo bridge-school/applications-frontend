@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 const SelectBox = styled.select`
   appearance: none;
-  background-color: transparent;
   padding: 0.5rem 2rem 0.5rem 1rem;
   background-image: url(${caret});
   background-repeat: no-repeat, repeat;
@@ -13,7 +12,6 @@ const SelectBox = styled.select`
   background-size: 1rem auto, 100%;
   width: 100%;
 `;
-
 export default function Dropdown({ data, handleChange, name, value }) {
   return (
     <div>

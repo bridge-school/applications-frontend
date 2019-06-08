@@ -29,6 +29,11 @@ const GlobalStyle = createGlobalStyle`
   button {
     cursor: pointer
   }
+  input, select {
+    background: ${p => p.theme.grey};
+    border: ${p => p.theme.border};
+    border-radius: ${props => props.theme.borderRadius}
+  }
   .button-style {
     border-radius: ${p => p.theme.borderRadius};
     padding: 0.5em;

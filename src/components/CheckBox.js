@@ -27,7 +27,6 @@ const CheckboxLabel = styled.label`
   flex-direction: column-reverse;
   white-space: nowrap;
   &::before {
-    content: '\\2714';
     color: ${props => props.theme.grey};
     font-size: 1.3em;
     padding: ${props => props.theme.padding};

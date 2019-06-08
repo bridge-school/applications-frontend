@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { createCohort } from '../store/actions';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import uuid from 'uuid/v4';
 
 const Form = styled.form`
   button {
@@ -44,24 +45,6 @@ function CreateCohortForm({
     dateResponse: '',
   });
 
-  /**
-   * fields are the dynamic application questions
-   * setFields is the method to set the state for those
-   * dynamic form fields.
-   */
-  const [fields, setFields] = useState([
-    {
-      description: '',
-      type: '',
-      ifRequired: false,
-    },
-    {
-      description: '',
-      type: '',
-      ifRequired: false,
-    },
-  ]);
-
   // Handle Form Submission
   const handleFormSubmit = e => {
     e.preventDefault();
@@ -69,7 +52,7 @@ function CreateCohortForm({
     // submitCohort(form);
   };
 
-  // Generic handler for all static fields to save the value as you type
+  // Generic handler for input fields to save the value as you type
   const updateField = e => {
     setValues({
       ...form,
@@ -77,7 +60,22 @@ function CreateCohortForm({
     });
   };
 
-  // Handler for the inputs that reside in the dynamic question container
+  // ------- Application Questions section
+  const [fields, setFields] = useState([
+    {
+      description: '',
+      type: '',
+      ifRequired: false,
+      id: uuid(),
+    },
+    {
+      description: '',
+      type: '',
+      ifRequired: false,
+      id: uuid(),
+    },
+  ]);
+
   const handleQuestionChange = i => type => e => {
     const values = [...fields];
     values[i][type] =
@@ -85,7 +83,6 @@ function CreateCohortForm({
     setFields(values);
   };
 
-  // Add New Question Button handler
   const handleAddNewQuestion = e => {
     e.preventDefault();
     const values = [...fields];
@@ -93,16 +90,13 @@ function CreateCohortForm({
       description: '',
       type: '',
       ifRequired: false,
+      id: uuid(),
     });
     setFields(values);
   };
 
-  // Remove question handler. Used by the AddQuestions component
-  const handleRemoveQuestion = i => e => {
+  const handleRemoveQuestion = e => {
     e.preventDefault();
-    const values = [...fields];
-    values.splice(i, 1);
-    setFields(values);
   };
 
   if (createCohortError) {
@@ -175,12 +169,17 @@ function CreateCohortForm({
       </section>
       <section>
         <PageTitle title="Application Questions" />
-        <AddQuestions
-          fields={fields}
-          handleChange={handleQuestionChange}
-          handleAddNewQuestion={handleAddNewQuestion}
-          handleRemoveQuestion={handleRemoveQuestion}
-        />
+
+        {fields.map(question => (
+          <AddQuestions
+            data={question}
+            fields={fields}
+            handleChange={handleQuestionChange}
+            handleAddNewQuestion={handleAddNewQuestion}
+            handleRemoveQuestion={handleRemoveQuestion}
+            key={question.id}
+          />
+        ))}
 
         <Button text="Add new Question" handleClick={handleAddNewQuestion} />
       </section>

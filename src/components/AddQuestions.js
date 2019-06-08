@@ -13,7 +13,7 @@ const QuestionContainer = styled.div`
   width: 100%;
 `;
 
-const QuestionOuterWrap = styled.div`
+const QuestionOuterWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -21,21 +21,21 @@ const QuestionOuterWrap = styled.div`
   width: 100%;
 `;
 
-const QuestionWrap = styled.div`
+const InputWrapper = styled.div`
   width: 70%;
   margin-right: 2rem;
 `;
 
-const DropdownWrap = styled.div`
+const DropdownWrapper = styled.div`
   width: 19%;
   margin-right: 2rem;
 `;
 
-const CheckboxWrap = styled.div`
+const CheckboxWrapper = styled.div`
   width: 8%;
 `;
 
-const ButtonWrap = styled.div`
+const ButtonWrapper = styled.div`
   width: 3%;
 `;
 
@@ -57,8 +57,8 @@ export default function AddQuestions({fields, handleChange, handleAddNewQuestion
           const handleChangeAtIndex = handleChange(index);
 
           return(
-            <QuestionOuterWrap key={`${field}-${index}`}>
-              <QuestionWrap>
+            <QuestionOuterWrapper key={`${field}-${index}`}>
+              <InputWrapper>
                 <Input
                   name={`description${index}`} 
                   type="text" 
@@ -66,8 +66,8 @@ export default function AddQuestions({fields, handleChange, handleAddNewQuestion
                   handleChange={handleChangeAtIndex('description')}
                   label={`Question #${index+1}`} 
                 />
-              </QuestionWrap>
-              <DropdownWrap>
+              </InputWrapper>
+              <DropdownWrapper>
                 <Dropdown 
                   name={`type${index}`}
                   value={field.type}
@@ -95,8 +95,8 @@ export default function AddQuestions({fields, handleChange, handleAddNewQuestion
                   }} 
                   handleChange={handleChangeAtIndex('type')}
                 />
-              </DropdownWrap>
-              <CheckboxWrap>
+              </DropdownWrapper>
+              <CheckboxWrapper>
                 <Checkbox
                   name={`ifRequired${index}`}
                   data={{
@@ -110,13 +110,13 @@ export default function AddQuestions({fields, handleChange, handleAddNewQuestion
                     }]
                   }}
                 />
-              </CheckboxWrap>
-              <ButtonWrap>
+              </CheckboxWrapper>
+              <ButtonWrapper>
                 <ButtonElem
                   onClick={handleRemoveQuestion(index)}
                 >-</ButtonElem>
-              </ButtonWrap>
-            </QuestionOuterWrap>
+              </ButtonWrapper>
+            </QuestionOuterWrapper>
           );
         })}
       </QuestionContainer>

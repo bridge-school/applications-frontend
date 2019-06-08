@@ -6,9 +6,6 @@ const InputDateElement = styled.input`
   padding: ${props => props.theme.padding};
   margin: ${props => props.theme.margin} 0;
   color: ${props => props.theme.black};
-  background: ${props => props.theme.inputBackground};
-  border: ${props => props.theme.borderWidth} solid ${props => props.theme.borderColor};
-  border-radius: ${props => props.theme.borderRadius};
   display: block;
 `;
 
@@ -17,11 +14,11 @@ export default function InputDate({ label, name, value, handleChange }) {
     <div>
       <label htmlFor={name}>
         {label}
-        <InputDateElement 
-          id={name} 
-          name={name} 
-          value={value} 
-          type="date" 
+        <InputDateElement
+          id={name}
+          name={name}
+          value={value}
+          type="date"
           onChange={e => handleChange(e)}
         />
       </label>
@@ -33,5 +30,5 @@ InputDate.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string,
   value: PropTypes.string,
-  handleChange: PropTypes.func
+  handleChange: PropTypes.func,
 };

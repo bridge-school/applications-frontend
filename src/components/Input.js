@@ -6,10 +6,10 @@ const InputElement = styled.input`
   padding: ${props => props.theme.padding};
   margin: ${props => props.theme.margin} 0;
   color: ${props => props.theme.black};
-  background: ${props => props.theme.inputBackground};
+  ${'' /* background: ${props => props.theme.inputBackground};
   border: ${props => props.theme.borderWidth} solid
     ${props => props.theme.borderColor};
-  border-radius: ${props => props.theme.borderRadius};
+  border-radius: ${props => props.theme.borderRadius}; */}
   display: block;
   width: 100%;
 `;

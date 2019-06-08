@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 const SelectBox = styled.select`
   appearance: none;
-  background-color: transparent;
   padding: 0.5rem 2rem 0.5rem 1rem;
   background-image: url(${caret});
   background-repeat: no-repeat, repeat;
@@ -15,29 +14,24 @@ const SelectBox = styled.select`
 `;
 
 export default function Dropdown({ data, handleChange, value }) {
-  
   return (
-    <div>
-      <label>
-        {data.description}
-        <br />
-        <SelectBox onChange={handleChange} value={value}>
-          <option value="">
-            {data.placeholder}
+    <label>
+      {data.description}
+      <br />
+      <SelectBox onChange={handleChange} value={value}>
+        <option value="">{data.placeholder}</option>
+        {data.items.map(item => (
+          <option key={data.items.indexOf(item)} value={item.value}>
+            {item.label}
           </option>
-          {data.items.map(item => (
-            <option key={data.items.indexOf(item)} value={item.value}>
-              {item.label}
-            </option>
-          ))}
-        </SelectBox>
-      </label>
-    </div>
+        ))}
+      </SelectBox>
+    </label>
   );
 }
 
 Dropdown.propTypes = {
   data: PropTypes.object.isRequired,
   value: PropTypes.string,
-  handleChange: PropTypes.func
+  handleChange: PropTypes.func,
 };

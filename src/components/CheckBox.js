@@ -32,7 +32,7 @@ const CheckboxLabel = styled.label`
     padding: ${props => props.theme.padding};
     margin-right:${props => props.theme.padding} 
     border-radius: ${props => props.theme.borderRadius};
-    border: solid ${props => props.theme.darkGrey};
+    border: ${props => props.theme.border};
     background: ${props => props.theme.grey};
     text-align: center;
     ${checkBoxSize}

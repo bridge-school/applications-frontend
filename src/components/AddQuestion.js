@@ -56,6 +56,7 @@ export default function AddQuestion({
         <Input
           name={`description${index}`}
           type="text"
+          required
           value={data.description}
           handleChange={handleChangeAtIndex('description')}
           label={`Question #${index + 1}`}
@@ -65,6 +66,7 @@ export default function AddQuestion({
         <Dropdown
           name={`type${index}`}
           value={data.type}
+          required
           data={{
             description: `Question #${index + 1} Type`,
             placeholder: 'Question type',

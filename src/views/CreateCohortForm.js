@@ -65,7 +65,12 @@ function CreateCohortForm({
   // Handle Form Submission
   const handleFormSubmit = e => {
     e.preventDefault();
-    form.questionList = questionList;
+    form.formQuestions = questionList;
+    // to do - filter through DB for duplicate name
+    const cohortSlug =
+      form.cohortName.replace(/ /g, '-') + '-' + form.cohortType.split('-')[0];
+
+    form.cohortSlug = cohortSlug;
     console.log(form);
     submitCohort(form);
   };

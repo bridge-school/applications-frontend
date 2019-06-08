@@ -8,7 +8,7 @@ import Checkbox from './CheckBox';
 const QuestionOuterWrapper = styled.div`
   display: flex;
   align-items: flex-start;
-  padding: ${props => props.theme.padding} 0;
+  padding-bottom: ${props => props.theme.padding};
   width: 100%;
 `;
 

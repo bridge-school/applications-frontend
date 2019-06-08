@@ -19,11 +19,28 @@ const Form = styled.form`
   section {
     margin: 2em 0 4em;
   }
+  h2 {
+    margin-bottom: 1em;
+  }
 `;
 
 const DropdownWrapper = styled.div`
-  width: 19%;
-  margin-right: 2rem;
+  width: 100%;
+  margin: 1.5em 0;
+`;
+
+const Dates = styled.div`
+  display: flex;
+  & > div {
+    flex: 1;
+    margin-right: 2em;
+    &:last-of-type {
+      margin-right: 0;
+    }
+    input {
+      width: 100%;
+    }
+  }
 `;
 
 function CreateCohortForm({
@@ -50,7 +67,7 @@ function CreateCohortForm({
     e.preventDefault();
     form.questionList = questionList;
     console.log(form);
-    // submitCohort(form);
+    submitCohort(form);
   };
 
   // Generic handler for input fields to save the value as you type
@@ -125,6 +142,7 @@ function CreateCohortForm({
         />
         <DropdownWrapper>
           <Dropdown
+            required
             name="cohortType"
             value={form.cohortType}
             data={{
@@ -148,27 +166,29 @@ function CreateCohortForm({
             handleChange={updateField}
           />
         </DropdownWrapper>
-        <InputDate
-          name="dateOpen"
-          value={form.dateOpen}
-          required
-          label="Date Open"
-          handleChange={updateField}
-        />
-        <InputDate
-          name="dateClosed"
-          value={form.dateClosed}
-          required
-          label="Date Closed"
-          handleChange={updateField}
-        />
-        <InputDate
-          name="dateResponse"
-          value={form.dateResponse}
-          required
-          label="Date of Response"
-          handleChange={updateField}
-        />
+        <Dates>
+          <InputDate
+            name="dateOpen"
+            value={form.dateOpen}
+            required
+            label="Date Open"
+            handleChange={updateField}
+          />
+          <InputDate
+            name="dateClosed"
+            value={form.dateClosed}
+            required
+            label="Date Closed"
+            handleChange={updateField}
+          />
+          <InputDate
+            name="dateResponse"
+            value={form.dateResponse}
+            required
+            label="Date of Response"
+            handleChange={updateField}
+          />
+        </Dates>
       </section>
       <section>
         <PageTitle title="Application Questions" />

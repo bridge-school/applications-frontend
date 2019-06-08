@@ -135,6 +135,7 @@ function CreateCohortForm({
           name="cohortName"
           type="text"
           value={form.cohortName}
+          required
           label="Cohort Name"
           handleChange={updateField}
         />
@@ -163,22 +164,24 @@ function CreateCohortForm({
             handleChange={updateField}
           />
         </DropdownWrapper>
-
         <InputDate
           name="dateOpen"
           value={form.dateOpen}
+          required
           label="Date Open"
           handleChange={updateField}
         />
         <InputDate
           name="dateClosed"
           value={form.dateClosed}
+          required
           label="Date Closed"
           handleChange={updateField}
         />
         <InputDate
           name="dateResponse"
           value={form.dateResponse}
+          required
           label="Date of Response"
           handleChange={updateField}
         />

@@ -4,30 +4,30 @@ const initialState = {
   currentCohorts: [],
   allCohorts: [],
   loading: false,
-  error: null,
+  createCohortError: null,
   newCohort: null,
 };
 
 const reducers = (state = initialState, action) => {
   switch (action.type) {
-    case actionType.ERROR:
+    case actionType.CREATE_COHORT_ERROR:
       return {
         ...state,
         newCohort: null,
         loading: false,
-        error: action.payload,
+        createCohortError: action.payload,
       };
     case actionType.CREATE_COHORT_REQUEST:
       return {
         ...state,
         newCohort: null,
         loading: true,
-        error: null,
+        createCohortError: null,
       };
     case actionType.CREATE_COHORT_SUCCESS:
       return {
         ...state,
-        error: null,
+        createCohortError: null,
         loading: false,
         newCohort: action.payload,
       };

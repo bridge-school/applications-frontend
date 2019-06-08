@@ -16,7 +16,12 @@ const Form = styled.form`
   }
 `;
 
-function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
+function CreateCohortForm({
+  submitCohort,
+  createCohortError,
+  newCohort,
+  loading,
+}) {
   /**
    * form are the static form fields.
    * setValues is the method to set the state for those
@@ -97,8 +102,8 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
     setFields(values);
   };
 
-  if (error) {
-    return <div>{error.message}! Please try again.</div>;
+  if (createCohortError) {
+    return <div>{createCohortError.message} Please try again!</div>;
   }
   if (loading) {
     return <div>Submitting your form to the database...</div>;
@@ -157,7 +162,7 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
 const mapStateToProps = state => ({
   loading: state.loading,
   newCohort: state.newCohort,
-  error: state.error,
+  createCohortError: state.createCohortError,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -173,7 +178,7 @@ export default connect(
 
 CreateCohortForm.propTypes = {
   submitCohort: PropTypes.func.isRequired,
-  error: PropTypes.string,
+  createCohortError: PropTypes.object,
   loading: PropTypes.bool,
   newCohort: PropTypes.string,
 };

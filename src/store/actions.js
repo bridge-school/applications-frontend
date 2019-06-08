@@ -1,7 +1,7 @@
 export const actionType = {
-  ERROR: 'ERROR',
   CREATE_COHORT_REQUEST: 'CREATE_COHORT_REQUEST',
   CREATE_COHORT_SUCCESS: 'CREATE_COHORT_SUCCESS',
+  CREATE_COHORT_ERROR: 'CREATE_COHORT_ERROR',
   FETCH_COHORT: 'FETCH_COHORT',
   FETCH_CURRENT_COHORTS: 'FETCH_CURRENT_COHORTS',
   FETCH_ALL_COHORTS: 'FETCH_ALL_COHORTS',
@@ -13,8 +13,8 @@ export const BASE_URL =
     ? 'http://localhost:8081'
     : 'http://applications-backend.bridgeschoolapp.io';
 
-export const error = err => ({
-  type: actionType.ERROR,
+export const createCohortRequestError = err => ({
+  type: actionType.CREATE_COHORT_ERROR,
   payload: err,
 });
 
@@ -47,6 +47,6 @@ export const createCohort = formData => dispatch => {
       dispatch(createCohortSuccess(res.id));
     })
     .catch(err => {
-      dispatch(error(err));
+      dispatch(createCohortRequestError(err));
     });
 };

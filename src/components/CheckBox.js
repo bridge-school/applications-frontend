@@ -30,7 +30,7 @@ const CheckboxLabel = styled.label`
     color: ${props => props.theme.grey};
     font-size: 1.3em;
     padding: ${props => props.theme.padding};
-    margin-right:${props => props.theme.padding} 
+    margin-right: ${props => props.theme.padding};
     border-radius: ${props => props.theme.borderRadius};
     border: ${props => props.theme.border};
     background: ${props => props.theme.grey};

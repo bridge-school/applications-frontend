@@ -29,6 +29,23 @@ const GlobalStyle = createGlobalStyle`
   button {
     cursor: pointer
   }
+  .button-style {
+    border-radius: ${p => p.theme.borderRadius};
+    padding: 0.5em;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    width: ${p => p.width || '24em'};
+    font-size: 1rem;
+    background: ${bridgeTheme.green};
+    border: 3px solid ${bridgeTheme.green};
+    text-transform: uppercase;
+    text-decoration: none;
+    &:hover {
+      color: ${bridgeTheme.green};
+      background: white;
+    }
+  }
 `;
 
 const Wrapper = styled.main`

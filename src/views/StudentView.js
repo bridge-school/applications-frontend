@@ -11,7 +11,7 @@ const Header = styled.header`
 `;
 
 export default function StudentView() {
-  const url = 'http://applications-backend.bridgeschoolapp.io/applications';
+  const url = 'http://applications-backend.bridgeschoolapp.io/applications/current';
   const [data, loading] = useFetch(url);
   return (
     <div>

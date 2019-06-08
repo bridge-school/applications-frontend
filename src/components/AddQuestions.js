@@ -13,7 +13,7 @@ const QuestionContainer = styled.div`
   width: 100%;
 `;
 
-const QuestionOuterWrap = styled.div`
+const QuestionOuterWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -21,21 +21,21 @@ const QuestionOuterWrap = styled.div`
   width: 100%;
 `;
 
-const QuestionWrap = styled.div`
+const InputWrapper = styled.div`
   width: 70%;
   margin-right: 2rem;
 `;
 
-const DropdownWrap = styled.div`
+const DropdownWrapper = styled.div`
   width: 19%;
   margin-right: 2rem;
 `;
 
-const CheckboxWrap = styled.div`
+const CheckboxWrapper = styled.div`
   width: 8%;
 `;
 
-const ButtonWrap = styled.div`
+const ButtonWrapper = styled.div`
   width: 3%;
 `;
 
@@ -62,25 +62,46 @@ export default function AddQuestions({
           const handleChangeAtIndex = handleChange(index);
 
           return (
-            <QuestionOuterWrap key={`${field}-${index}`}>
-              <QuestionWrap>
+            <QuestionOuterWrapper key={`${field}-${index}`}>
+              <InputWrapper>
                 <Input
                   name={`description${index}`}
                   type="text"
                   value={field.description}
                   handleChange={handleChangeAtIndex('description')}
-                  label="Question"
+                  label={`Question #${index + 1}`}
                 />
-              </QuestionWrap>
-              <DropdownWrap>
+              </InputWrapper>
+              <DropdownWrapper>
                 <Dropdown
                   name={`type${index}`}
                   value={field.type}
-                  data={{ description: 'test' }}
+                  data={{
+                    description: `Question #${index + 1} Type`,
+                    placeholder: 'Select question type',
+                    items: [
+                      {
+                        label: 'short answer',
+                        value: 'input',
+                      },
+                      {
+                        label: 'paragraph',
+                        value: 'textarea',
+                      },
+                      {
+                        label: 'checkboxes',
+                        value: 'checkbox',
+                      },
+                      {
+                        label: 'drop down',
+                        value: 'select',
+                      },
+                    ],
+                  }}
                   handleChange={handleChangeAtIndex('type')}
                 />
-              </DropdownWrap>
-              <CheckboxWrap>
+              </DropdownWrapper>
+              <CheckboxWrapper>
                 <Checkbox
                   name={`ifRequired${index}`}
                   data={{
@@ -95,11 +116,11 @@ export default function AddQuestions({
                     ],
                   }}
                 />
-              </CheckboxWrap>
-              <ButtonWrap>
+              </CheckboxWrapper>
+              <ButtonWrapper>
                 <ButtonElem onClick={handleRemoveQuestion(index)}>-</ButtonElem>
-              </ButtonWrap>
-            </QuestionOuterWrap>
+              </ButtonWrapper>
+            </QuestionOuterWrapper>
           );
         })}
       </QuestionContainer>

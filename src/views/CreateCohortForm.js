@@ -48,6 +48,7 @@ function CreateCohortForm({
   // Handle Form Submission
   const handleFormSubmit = e => {
     e.preventDefault();
+    form.questionList = questionList;
     console.log(form);
     // submitCohort(form);
   };

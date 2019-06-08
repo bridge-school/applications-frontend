@@ -75,7 +75,12 @@ const Fieldset = styled.fieldset`
 export default function Checkbox({ name, data }) {
   const checkboxes = data.items.map(item => (
     <Container key={item.value}>
-      <CheckboxInput type="checkbox" value={item.value} name={name} />
+      <CheckboxInput
+        type="checkbox"
+        onChange={item.handleChange}
+        value={item.value}
+        name={name}
+      />
       <CheckboxLabel key={item.value}>{item.label}</CheckboxLabel>
     </Container>
   ));

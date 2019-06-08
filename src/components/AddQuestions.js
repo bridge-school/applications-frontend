@@ -52,6 +52,7 @@ export default function AddQuestions({
   data,
   index,
 }) {
+  const handleChangeAtIndex = handleChange(index);
   return (
     <QuestionOuterWrapper>
       <InputWrapper>
@@ -59,7 +60,7 @@ export default function AddQuestions({
           name={`description${index}`}
           type="text"
           value={data.description}
-          // handleChange={handleChangeAtIndex('description')}
+          handleChange={handleChangeAtIndex('description')}
           label={`Question #${index + 1}`}
         />
       </InputWrapper>
@@ -89,7 +90,7 @@ export default function AddQuestions({
               },
             ],
           }}
-          // handleChange={handleChangeAtIndex('type')}
+          handleChange={handleChangeAtIndex('type')}
         />
       </DropdownWrapper>
       <CheckboxWrapper>
@@ -102,7 +103,7 @@ export default function AddQuestions({
               {
                 label: 'Is required?',
                 value: data.ifRequired,
-                // handleChange: handleChangeAtIndex('ifRequired'),
+                handleChange: handleChangeAtIndex('ifRequired'),
               },
             ],
           }}

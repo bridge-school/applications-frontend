@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import PageTitle from '../components/PageTitle';
 import Input from '../components/Input';
 import Dropdown from '../components/Dropdown';
-import Checkbox from '../components/Fieldset';
+import Checkbox from '../components/CheckBox';
 import Button from '../components/Button';
 import bridgeTheme from '../styles/bridgeTheme';
 
@@ -48,7 +48,12 @@ const ButtonElem = styled.button`
   color: white;
 `;
 
-export default function AddQuestions({fields, handleChange, handleAddNewQuestion, handleRemoveQuestion}) {
+export default function AddQuestions({
+  fields,
+  handleChange,
+  handleAddNewQuestion,
+  handleRemoveQuestion,
+}) {
   return (
     <div>
       <PageTitle title="Application Questions" />
@@ -56,24 +61,24 @@ export default function AddQuestions({fields, handleChange, handleAddNewQuestion
         {fields.map((field, index) => {
           const handleChangeAtIndex = handleChange(index);
 
-          return(
+          return (
             <QuestionOuterWrapper key={`${field}-${index}`}>
               <InputWrapper>
                 <Input
-                  name={`description${index}`} 
-                  type="text" 
+                  name={`description${index}`}
+                  type="text"
                   value={field.description}
                   handleChange={handleChangeAtIndex('description')}
-                  label={`Question #${index+1}`} 
+                  label={`Question #${index + 1}`}
                 />
               </InputWrapper>
               <DropdownWrapper>
-                <Dropdown 
+                <Dropdown
                   name={`type${index}`}
                   value={field.type}
                   data={{
-                    description: `Question #${index+1} Type`, 
-                    placeholder: "Select question type",
+                    description: `Question #${index + 1} Type`,
+                    placeholder: 'Select question type',
                     items: [
                       {
                         label: 'short answer',
@@ -91,8 +96,8 @@ export default function AddQuestions({fields, handleChange, handleAddNewQuestion
                         label: 'drop down',
                         value: 'select',
                       },
-                    ] 
-                  }} 
+                    ],
+                  }}
                   handleChange={handleChangeAtIndex('type')}
                 />
               </DropdownWrapper>
@@ -100,21 +105,20 @@ export default function AddQuestions({fields, handleChange, handleAddNewQuestion
                 <Checkbox
                   name={`ifRequired${index}`}
                   data={{
-                    description: 'Is required?', 
-                    type: 'checkbox', 
+                    description: 'Is required?',
+                    type: 'checkbox',
                     items: [
-                    {
-                      label: 'Is required?',
-                      value: field.ifRequired,
-                      handleChange: handleChangeAtIndex('ifRequired')
-                    }]
+                      {
+                        label: 'Is required?',
+                        value: field.ifRequired,
+                        handleChange: handleChangeAtIndex('ifRequired'),
+                      },
+                    ],
                   }}
                 />
               </CheckboxWrapper>
               <ButtonWrapper>
-                <ButtonElem
-                  onClick={handleRemoveQuestion(index)}
-                >-</ButtonElem>
+                <ButtonElem onClick={handleRemoveQuestion(index)}>-</ButtonElem>
               </ButtonWrapper>
             </QuestionOuterWrapper>
           );
@@ -134,5 +138,5 @@ AddQuestions.propTypes = {
   fields: PropTypes.array,
   handleChange: PropTypes.func,
   handleAddNewQuestion: PropTypes.func,
-  handleRemoveQuestion: PropTypes.func
+  handleRemoveQuestion: PropTypes.func,
 };

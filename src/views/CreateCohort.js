@@ -68,18 +68,30 @@ export default function CreateCohort() {
   /**
    * 
    * Add New Question Button handler.
-   * TODO 
+   * Used by the AddQuestions component
+   * 
    */
   const handleAddNewQuestion = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
+    console.log("Adding a new question!");
+    const values = [...fields];
+    values.push(
+      {
+        description: "",
+        type: "",
+        ifRequired: false
+      }
+    );
+    setFields(values);
   }
 
   /**
    * 
    * Remove question handler. 
+   * Used by the AddQuestions component
    */
   const handleRemoveQuestion = (i) => (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     const values = [...fields];
     values.splice(i, 1);
     setFields(values);

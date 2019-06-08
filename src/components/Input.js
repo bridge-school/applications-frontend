@@ -27,15 +27,24 @@ const TextareaElement = styled.textarea`
   width: 100%;
 `;
 
-export default function Input({ label, name, type, value, handleChange }) {
+export default function Input({
+  label,
+  name,
+  type,
+  value,
+  handleChange,
+  required,
+}) {
   return (
     <label htmlFor={name}>
       {label}
+      {required && '*'}
       {type === 'textarea' ? (
         <TextareaElement
           id={name}
           name={name}
           value={value}
+          required={required}
           rows="3"
           onChange={handleChange}
         />
@@ -44,6 +53,7 @@ export default function Input({ label, name, type, value, handleChange }) {
           id={name}
           name={name}
           type={type}
+          required={required}
           value={value}
           onChange={handleChange}
         />
@@ -54,9 +64,10 @@ export default function Input({ label, name, type, value, handleChange }) {
 
 Input.propTypes = {
   index: PropTypes.number,
-  label: PropTypes.string,
-  name: PropTypes.string,
-  type: PropTypes.string,
-  value: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  required: PropTypes.bool,
   handleChange: PropTypes.func,
 };

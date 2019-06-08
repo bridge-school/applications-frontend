@@ -109,7 +109,12 @@ export default function AddQuestions({
         />
       </CheckboxWrapper>
       <ButtonWrapper>
-        {/* <ButtonElem onClick={handleRemoveQuestion(index)}>-</ButtonElem> */}
+        <ButtonElem
+          title="Delete Question"
+          onClick={e => handleRemoveQuestion(data.id, e)}
+        >
+          x
+        </ButtonElem>
       </ButtonWrapper>
     </QuestionOuterWrapper>
   );

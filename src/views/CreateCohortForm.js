@@ -95,8 +95,10 @@ function CreateCohortForm({
     setQuestionList(values);
   };
 
-  const handleRemoveQuestion = e => {
+  const handleRemoveQuestion = (id, e) => {
     e.preventDefault();
+    const newList = questionList.filter(question => question.id !== id);
+    setQuestionList(newList);
   };
 
   if (createCohortError) {

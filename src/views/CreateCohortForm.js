@@ -4,7 +4,7 @@ import InputDate from '../components/InputDate';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Dropdown from '../components/Dropdown';
-import AddQuestions from '../components/AddQuestions';
+import AddQuestions from '../components/AddQuestion';
 import { connect } from 'react-redux';
 import { createCohort } from '../store/actions';
 import PropTypes from 'prop-types';

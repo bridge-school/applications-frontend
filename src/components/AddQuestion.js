@@ -1,19 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Input from '../components/Input';
-import Dropdown from '../components/Dropdown';
-import Checkbox from '../components/CheckBox';
-
-const QuestionContainer = styled.div`
-  display: block;
-  width: 100%;
-`;
+import Input from './Input';
+import Dropdown from './Dropdown';
+import Checkbox from './CheckBox';
 
 const QuestionOuterWrapper = styled.div`
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   padding: ${props => props.theme.padding} 0;
   width: 100%;
 `;
@@ -24,29 +18,32 @@ const InputWrapper = styled.div`
 `;
 
 const DropdownWrapper = styled.div`
-  width: 19%;
-  margin-right: 2rem;
+  width: 10em;
+  margin-right: 0.9rem;
 `;
 
 const CheckboxWrapper = styled.div`
-  width: 8%;
-`;
-
-const ButtonWrapper = styled.div`
-  width: 3%;
+  width: 5em;
+  margin-top: -2.2rem;
 `;
 
 const ButtonElem = styled.button`
-  width: 24px;
-  height: 24px;
-  display: block;
-  border-radius: 50%;
-  background: #f00;
-  color: white;
+  && {
+    padding: 0.25em 0.5em 0.3em;
+    margin: 1.5rem 0 0 1em;
+    border-radius: 50%;
+    border: 1px solid;
+    font-weight: bold;
+    line-height: 1;
+    background: #e87a7a;
+    color: white;
+    &:hover {
+      background: #d81919;
+    }
+  }
 `;
 
-export default function AddQuestions({
-  fields,
+export default function AddQuestion({
   handleChange,
   handleRemoveQuestion,
   data,
@@ -70,7 +67,7 @@ export default function AddQuestions({
           value={data.type}
           data={{
             description: `Question #${index + 1} Type`,
-            placeholder: 'Select question type',
+            placeholder: 'Question type',
             items: [
               {
                 label: 'short answer',
@@ -101,7 +98,7 @@ export default function AddQuestions({
             type: 'checkbox',
             items: [
               {
-                label: 'Is required?',
+                label: 'Is Required',
                 value: data.ifRequired,
                 handleChange: handleChangeAtIndex('ifRequired'),
               },
@@ -109,20 +106,20 @@ export default function AddQuestions({
           }}
         />
       </CheckboxWrapper>
-      <ButtonWrapper>
-        <ButtonElem
-          title="Delete Question"
-          onClick={e => handleRemoveQuestion(data.id, e)}
-        >
-          x
-        </ButtonElem>
-      </ButtonWrapper>
+
+      <ButtonElem
+        title="Delete Question"
+        onClick={e => handleRemoveQuestion(data.id, e)}
+      >
+        x
+      </ButtonElem>
     </QuestionOuterWrapper>
   );
 }
 
-AddQuestions.propTypes = {
-  fields: PropTypes.array,
+AddQuestion.propTypes = {
+  data: PropTypes.object,
+  index: PropTypes.number,
   handleChange: PropTypes.func,
   handleAddNewQuestion: PropTypes.func,
   handleRemoveQuestion: PropTypes.func,

@@ -25,16 +25,17 @@ const CheckboxLabel = styled.label`
   white-space: nowrap;
   &::before {
     content: '\\2714';
-    color: white;
+    color: ${props => props.theme.grey};
     font-size: 1.3em;
-    padding: 0.5rem;
+    padding: ${props => props.theme.padding};
     padding-top: 0.25rem;
-    border-radius: 5px;
-    border: solid black;
+    margin-top: 0.25rem;
+    border-radius: ${props => props.theme.borderRadius};
+    border: solid ${props => props.theme.darkGrey};
+    background: ${props => props.theme.grey};
     display: inline-block;
     width: 2em;
     height: 2em;
-    margin-right: 0.2em;
     text-align: center;
   }
 `;
@@ -48,24 +49,16 @@ const CheckboxInput = styled.input`
   &:checked + label::before {
     background: ${props => props.theme.green};
     border: solid ${props => props.theme.green};
-  }
-  ${'' /* to do: move these styles to keep this DRY */}
-  &::before {
-    content: '\\2714';
     color: white;
-    font-size: 1.3em;
-    padding: 0.5rem;
-    margin-top: 0.25rem;
-    border-radius: 5px;
-    border: solid black;
+  }
+  &:before {
+    content: '\\2714';
     display: inline-block;
     width: 2em;
     height: 2em;
-    margin-right: 0.2em;
-    text-align: center;
   }
   &:focus + label::before {
-    outline: rgb(59, 153, 252) auto 5px;
+    outline: #3b99fc auto 5px;
   }
 `;
 

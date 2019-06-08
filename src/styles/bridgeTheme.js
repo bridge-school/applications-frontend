@@ -5,9 +5,7 @@ export default {
   green: '#08c39d',
   pink: '#eb2c97',
   grey: '#F0F0F0',
+  darkGrey: '#979797',
   red: '#FF0000',
   borderRadius: '5px',
-  backend: 'lightblue',
-  frontend: '',
-  design: '#08c39d',
 };

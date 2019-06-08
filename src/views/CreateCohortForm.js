@@ -3,6 +3,7 @@ import PageTitle from '../components/PageTitle';
 import InputDate from '../components/InputDate';
 import Button from '../components/Button';
 import Input from '../components/Input';
+import Dropdown from '../components/Dropdown';
 import AddQuestions from '../components/AddQuestions';
 import { connect } from 'react-redux';
 import { createCohort } from '../store/actions';
@@ -14,6 +15,11 @@ const Form = styled.form`
     margin: 2em auto;
     display: block;
   }
+`;
+
+const DropdownWrapper = styled.div`
+  width: 19%;
+  margin-right: 2rem;
 `;
 
 function CreateCohortForm({
@@ -132,13 +138,32 @@ function CreateCohortForm({
           label="Cohort Name"
           handleChange={updateField}
         />
-        <Input
-          name="cohortType"
-          type="text"
-          value={form.cohortType}
-          label="Cohort Type"
-          handleChange={updateField}
-        />
+        <DropdownWrapper>
+          <Dropdown
+            name="cohortType"
+            value={form.cohortType}
+            data={{
+              description: 'Cohort Type',
+              placeholder: 'Select cohort type',
+              items: [
+                {
+                  label: 'Backend Development',
+                  value: 'backend-development',
+                },
+                {
+                  label: 'Frontend Development',
+                  value: 'frontend-development',
+                },
+                {
+                  label: 'Design',
+                  value: 'design',
+                },
+              ],
+            }}
+            handleChange={updateField}
+          />
+        </DropdownWrapper>
+
         <InputDate
           name="dateOpen"
           value={form.dateOpen}

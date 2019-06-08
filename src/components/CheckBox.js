@@ -2,64 +2,97 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const Fieldset = styled.fieldset`
-  border: none;
+const Legend = styled.legend`
+  font-size: 0.8em;
+  font-weight: bold;
 `;
 
 const Container = styled.div`
-  ${'' /* display: flex;
-  div {
-    flex: 1 1 0;
-    margin-right: 1rem;
-    &:last-of-type {
-      margin: 0;
-    }
-  } */}
+  padding: ${props => props.theme.padding};
+`;
+
+const GroupContainer = styled.div`
+  padding: ${props => props.theme.padding};
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 0;
 `;
 
 const CheckboxLabel = styled.label`
-  ${
-    '' /* border: 2px solid ${props => props.theme.darkGrey};
-  border-radius: 5px; */
-  }
   padding: ${props => props.theme.padding};
-`;
-
-const CheckboxInput = styled.div`
-  ${'' /* opacity: 0; */}
-  color: white;
-  width: 25px;
-  height: 25px;
-  border-radius: 5px;
-  background: ${props => props.theme.indigo};
-  border-color: ${props => props.theme.indigo};
-  &:checked + label {
-    opacity: 0;
+  display: flex;
+  flex-direction: column-reverse;
+  white-space: nowrap;
+  &::before {
+    content: '\\2714';
     color: white;
-    background: ${props => props.theme.indigo};
-    border-color: ${props => props.theme.indigo};
+    font-size: 1.3em;
+    padding: 0.5rem;
+    padding-top: 0.25rem;
+    border-radius: 5px;
+    border: solid black;
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    margin-right: 0.2em;
+    text-align: center;
   }
 `;
 
-const Legend = styled.legend`
+const CheckboxInput = styled.input`
   padding: ${props => props.theme.padding};
+  cursor: pointer;
+  opacity: 0;
+  position: relative;
+  top: 2em;
+  &:checked + label::before {
+    background: ${props => props.theme.green};
+    border: solid ${props => props.theme.green};
+  }
+  ${'' /* to do: move these styles to keep this DRY */}
+  &::before {
+    content: '\\2714';
+    color: white;
+    font-size: 1.3em;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    border-radius: 5px;
+    border: solid black;
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    margin-right: 0.2em;
+    text-align: center;
+  }
+  &:focus + label::before {
+    outline: rgb(59, 153, 252) auto 5px;
+  }
 `;
 
-export default function Checkbox({ description, name, items }) {
-  const checkboxes = items.map(item => (
+const Fieldset = styled.fieldset`
+  border: none;
+  label {
+    display: inline-block;
+  }
+  input {
+    position: unset;
+    top: unset;
+  }
+`;
+
+export default function Checkbox({ name, data }) {
+  const checkboxes = data.items.map(item => (
     <Container key={item.value}>
+      <CheckboxInput type="checkbox" value={item.value} name={name} />
       <CheckboxLabel key={item.value}>{item.label}</CheckboxLabel>
-      <CheckboxInput>
-        <input type="checkbox" value={item.value} name={name} />
-      </CheckboxInput>
     </Container>
   ));
 
-  if (items.length > 1) {
+  if (data.items.length > 1) {
     return (
       <Fieldset>
-        <Legend>{description}</Legend>
-        <Container>{checkboxes}</Container>
+        <Legend>{data.description}</Legend>
+        <GroupContainer> {checkboxes} </GroupContainer>
       </Fieldset>
     );
   } else {
@@ -69,6 +102,5 @@ export default function Checkbox({ description, name, items }) {
 
 Checkbox.propTypes = {
   name: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  items: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
 };

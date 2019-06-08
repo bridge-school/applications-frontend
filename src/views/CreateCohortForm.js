@@ -61,7 +61,7 @@ function CreateCohortForm({
   };
 
   // ------- Application Questions section
-  const [fields, setFields] = useState([
+  const [questionList, setQuestionList] = useState([
     {
       description: '',
       type: '',
@@ -77,22 +77,22 @@ function CreateCohortForm({
   ]);
 
   const handleQuestionChange = i => type => e => {
-    const values = [...fields];
+    const values = [...questionList];
     values[i][type] =
       e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    setFields(values);
+    setQuestionList(values);
   };
 
   const handleAddNewQuestion = e => {
     e.preventDefault();
-    const values = [...fields];
+    const values = [...questionList];
     values.push({
       description: '',
       type: '',
       ifRequired: false,
       id: uuid(),
     });
-    setFields(values);
+    setQuestionList(values);
   };
 
   const handleRemoveQuestion = e => {
@@ -170,14 +170,14 @@ function CreateCohortForm({
       <section>
         <PageTitle title="Application Questions" />
 
-        {fields.map(question => (
+        {questionList.map((question, index) => (
           <AddQuestions
             data={question}
-            fields={fields}
             handleChange={handleQuestionChange}
             handleAddNewQuestion={handleAddNewQuestion}
             handleRemoveQuestion={handleRemoveQuestion}
             key={question.id}
+            index={index}
           />
         ))}
 

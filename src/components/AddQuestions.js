@@ -49,75 +49,69 @@ export default function AddQuestions({
   fields,
   handleChange,
   handleRemoveQuestion,
+  data,
+  index,
 }) {
   return (
-    <QuestionContainer>
-      {fields.map((field, index) => {
-        const handleChangeAtIndex = handleChange(index);
-
-        return (
-          <QuestionOuterWrapper key={`${field}-${index}`}>
-            <InputWrapper>
-              <Input
-                name={`description${index}`}
-                type="text"
-                value={field.description}
-                handleChange={handleChangeAtIndex('description')}
-                label={`Question #${index + 1}`}
-              />
-            </InputWrapper>
-            <DropdownWrapper>
-              <Dropdown
-                name={`type${index}`}
-                value={field.type}
-                data={{
-                  description: `Question #${index + 1} Type`,
-                  placeholder: 'Select question type',
-                  items: [
-                    {
-                      label: 'short answer',
-                      value: 'input',
-                    },
-                    {
-                      label: 'paragraph',
-                      value: 'textarea',
-                    },
-                    {
-                      label: 'checkboxes',
-                      value: 'checkbox',
-                    },
-                    {
-                      label: 'drop down',
-                      value: 'select',
-                    },
-                  ],
-                }}
-                handleChange={handleChangeAtIndex('type')}
-              />
-            </DropdownWrapper>
-            <CheckboxWrapper>
-              <Checkbox
-                name={`ifRequired${index}`}
-                data={{
-                  description: 'Is required?',
-                  type: 'checkbox',
-                  items: [
-                    {
-                      label: 'Is required?',
-                      value: field.ifRequired,
-                      handleChange: handleChangeAtIndex('ifRequired'),
-                    },
-                  ],
-                }}
-              />
-            </CheckboxWrapper>
-            <ButtonWrapper>
-              <ButtonElem onClick={handleRemoveQuestion(index)}>-</ButtonElem>
-            </ButtonWrapper>
-          </QuestionOuterWrapper>
-        );
-      })}
-    </QuestionContainer>
+    <QuestionOuterWrapper>
+      <InputWrapper>
+        <Input
+          name={`description${index}`}
+          type="text"
+          value={data.description}
+          // handleChange={handleChangeAtIndex('description')}
+          label={`Question #${index + 1}`}
+        />
+      </InputWrapper>
+      <DropdownWrapper>
+        <Dropdown
+          name={`type${index}`}
+          value={data.type}
+          data={{
+            description: `Question #${index + 1} Type`,
+            placeholder: 'Select question type',
+            items: [
+              {
+                label: 'short answer',
+                value: 'input',
+              },
+              {
+                label: 'paragraph',
+                value: 'textarea',
+              },
+              {
+                label: 'checkboxes',
+                value: 'checkbox',
+              },
+              {
+                label: 'drop down',
+                value: 'select',
+              },
+            ],
+          }}
+          // handleChange={handleChangeAtIndex('type')}
+        />
+      </DropdownWrapper>
+      <CheckboxWrapper>
+        <Checkbox
+          name={`ifRequired${index}`}
+          data={{
+            description: 'Is required?',
+            type: 'checkbox',
+            items: [
+              {
+                label: 'Is required?',
+                value: data.ifRequired,
+                // handleChange: handleChangeAtIndex('ifRequired'),
+              },
+            ],
+          }}
+        />
+      </CheckboxWrapper>
+      <ButtonWrapper>
+        {/* <ButtonElem onClick={handleRemoveQuestion(index)}>-</ButtonElem> */}
+      </ButtonWrapper>
+    </QuestionOuterWrapper>
   );
 }
 

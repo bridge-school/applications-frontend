@@ -18,45 +18,6 @@ export default function StudentView() {
       <Header>
         <PageTitle title="Cohort Application Forms" />
       </Header>
-      <Checkbox
-        name={`test`}
-        data={{
-          description: 'Is required?',
-          type: 'checkbox',
-          items: [
-            {
-              label: 'option 1',
-              value: 'test',
-              handleChange: 'test',
-            },
-            {
-              label: 'option 2',
-              value: 'test',
-              handleChange: 'test',
-            },
-            {
-              label: 'option 3',
-              value: 'test',
-              handleChange: 'test',
-            },
-          ],
-        }}
-      />
-
-      <Checkbox
-        name={`test`}
-        data={{
-          description: 'Is required?',
-          type: 'checkbox',
-          items: [
-            {
-              label: 'option 1',
-              value: 'test',
-              handleChange: 'test',
-            },
-          ],
-        }}
-      />
       {loading ? <div>loading</div> : <ListContainer cohortData={data} />}
     </div>
   );

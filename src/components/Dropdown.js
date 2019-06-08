@@ -35,6 +35,7 @@ export default function Dropdown({ data, handleChange, name, value }) {
 
 Dropdown.propTypes = {
   data: PropTypes.object.isRequired,
-  value: PropTypes.string,
-  handleChange: PropTypes.func,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };

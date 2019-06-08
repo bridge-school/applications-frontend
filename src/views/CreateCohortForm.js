@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
 import PageTitle from '../components/PageTitle';
 import InputDate from '../components/InputDate';
+import Button from '../components/Button';
 import Input from '../components/Input';
 import AddQuestions from '../components/AddQuestions';
-import { createCohort } from '../store/actions';
 import { connect } from 'react-redux';
+import { createCohort } from '../store/actions';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-function CreateCohortForm() {
+const Form = styled.form`
+  button {
+    margin: 2em auto;
+    display: block;
+  }
+`;
+
+function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
   /**
    * form are the static form fields.
    * setValues is the method to set the state for those
@@ -41,6 +51,8 @@ function CreateCohortForm() {
   // Handle Form Submission
   const handleFormSubmit = e => {
     e.preventDefault();
+    console.log(form);
+    submitCohort(form);
   };
 
   /**
@@ -85,10 +97,19 @@ function CreateCohortForm() {
     setFields(values);
   };
 
+  if (error) {
+    return <div>{error.message}! Please try again.</div>;
+  }
+  if (loading) {
+    return <div>Submitting your form to the database...</div>;
+  }
+  if (newCohort) {
+    return <div>Successfully created {newCohort}!</div>;
+  }
   return (
     <div>
       <PageTitle title="Create Cohort Application Form" />
-      <form onSubmit={handleFormSubmit}>
+      <Form onSubmit={handleFormSubmit}>
         <Input
           name="cohortName"
           type="text"
@@ -127,18 +148,32 @@ function CreateCohortForm() {
           handleAddNewQuestion={handleAddNewQuestion}
           handleRemoveQuestion={handleRemoveQuestion}
         />
-      </form>
+        <Button text="create application group" />
+      </Form>
     </div>
   );
 }
 
+const mapStateToProps = state => ({
+  loading: state.loading,
+  newCohort: state.newCohort,
+  error: state.error,
+});
+
 const mapDispatchToProps = dispatch => {
   return {
-    createCohort: formData => dispatch(createCohort(formData)),
+    submitCohort: formData => dispatch(createCohort(formData)),
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CreateCohortForm);
+
+CreateCohortForm.propTypes = {
+  submitCohort: PropTypes.func.isRequired,
+  error: PropTypes.string,
+  loading: PropTypes.bool,
+  newCohort: PropTypes.string,
+};

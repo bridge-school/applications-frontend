@@ -4,7 +4,7 @@ import InputDate from '../components/InputDate';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Dropdown from '../components/Dropdown';
-import AddQuestions from '../components/AddQuestion';
+import AddQuestion from '../components/AddQuestion';
 import { connect } from 'react-redux';
 import { createCohort } from '../store/actions';
 import PropTypes from 'prop-types';
@@ -199,7 +199,7 @@ function CreateCohortForm({
         <PageTitle title="Application Questions" />
 
         {questionList.map((question, index) => (
-          <AddQuestions
+          <AddQuestion
             data={question}
             handleChange={handleQuestionChange}
             handleAddNewQuestion={handleAddNewQuestion}

@@ -6,7 +6,7 @@ import bridgeTheme from './styles/bridgeTheme';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AdminView from './views/AdminView';
 import StudentView from './views/StudentView';
-import CreateCohort from './views/CreateCohort';
+import CreateCohortForm from './views/CreateCohortForm';
 import CohortForm from './views/CohortForm';
 import NotFound from './views/NotFound';
 import Header from './components/Header';
@@ -66,7 +66,11 @@ class App extends Component {
               <Switch>
                 <Route path="/" exact component={StudentView} />
                 <Route path="/admin" exact component={AdminView} />
-                <Route path="/admin/create" exact component={CreateCohort} />
+                <Route
+                  path="/admin/create"
+                  exact
+                  component={CreateCohortForm}
+                />
                 <Route path="/apply" exact component={StudentView} />
                 <Route path="/apply/:coID" component={CohortForm} />
                 <Route component={NotFound} />

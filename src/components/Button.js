@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
 export default function Button(props) {
   return (
     <button className="button-style" onClick={props.handleClick}>
@@ -12,5 +11,5 @@ export default function Button(props) {
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,
-  handleClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func,
 };

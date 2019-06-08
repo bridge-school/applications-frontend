@@ -1,11 +1,27 @@
 import React, { useState } from 'react';
 import PageTitle from '../components/PageTitle';
 import InputDate from '../components/InputDate';
+import Button from '../components/Button';
 import Input from '../components/Input';
 import AddQuestions from '../components/AddQuestions';
+import { connect } from 'react-redux';
+import { createCohort } from '../store/actions';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-export default function CreateCohort() {
+const Form = styled.form`
+  button {
+    margin: 2em auto;
+    display: block;
+  }
+`;
 
+function CreateCohortForm({
+  submitCohort,
+  createCohortError,
+  newCohort,
+  loading,
+}) {
   /**
    * form are the static form fields.
    * setValues is the method to set the state for those
@@ -16,7 +32,7 @@ export default function CreateCohort() {
     cohortType: '',
     dateOpen: '',
     dateClosed: '',
-    dateResponse: ''
+    dateResponse: '',
   });
 
   /**
@@ -24,83 +40,91 @@ export default function CreateCohort() {
    * setFields is the method to set the state for those
    * dynamic form fields.
    */
-  const [fields, setFields] = useState(
-    [
-      {
-        description: "",
-        type: "",
-        ifRequired: false
-      },
-      {
-        description: "",
-        type: "",
-        ifRequired: false
-      }
-    ]
-  );
+  const [fields, setFields] = useState([
+    {
+      description: '',
+      type: '',
+      ifRequired: false,
+    },
+    {
+      description: '',
+      type: '',
+      ifRequired: false,
+    },
+  ]);
 
   // Handle Form Submission
   const handleFormSubmit = e => {
     e.preventDefault();
+    console.log(form);
+    submitCohort(form);
   };
 
   /**
-   * 
+   *
    * Generic handler for all static fields
    * To save the value as you type.
    */
   const updateField = e => {
     setValues({
       ...form,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   /**
-   * Handler for the inputs that reside in the dynamic question container 
+   * Handler for the inputs that reside in the dynamic question container
    */
-  const handleQuestionChange = (i) => (type) => (e) => {
+  const handleQuestionChange = i => type => e => {
     const values = [...fields];
-    values[i][type] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    values[i][type] =
+      e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     setFields(values);
-  }
+  };
 
   /**
-   * 
+   *
    * Add New Question Button handler.
    * Used by the AddQuestions component
-   * 
+   *
    */
-  const handleAddNewQuestion = (e) => {
+  const handleAddNewQuestion = e => {
     //e.preventDefault();
-    console.log("Adding a new question!");
+    console.log('Adding a new question!');
     const values = [...fields];
-    values.push(
-      {
-        description: "",
-        type: "",
-        ifRequired: false
-      }
-    );
+    values.push({
+      description: '',
+      type: '',
+      ifRequired: false,
+    });
     setFields(values);
-  }
+  };
 
   /**
-   * 
-   * Remove question handler. 
+   *
+   * Remove question handler.
    * Used by the AddQuestions component
    */
-  const handleRemoveQuestion = (i) => (e) => {
+  const handleRemoveQuestion = i => e => {
     //e.preventDefault();
     const values = [...fields];
     values.splice(i, 1);
     setFields(values);
-  }
+  };
 
+  if (createCohortError) {
+    return <div>{createCohortError.message} Please try again!</div>;
+  }
+  if (loading) {
+    return <div>Submitting your form to the database...</div>;
+  }
+  if (newCohort) {
+    return <div>Successfully created {newCohort}!</div>;
+  }
   return (
     <div>
       <PageTitle title="Create Cohort Application Form" />
-      <form onSubmit={handleFormSubmit}>
+      <Form onSubmit={handleFormSubmit}>
         <Input
           name="cohortName"
           type="text"
@@ -139,7 +163,32 @@ export default function CreateCohort() {
           handleAddNewQuestion={handleAddNewQuestion}
           handleRemoveQuestion={handleRemoveQuestion}
         />
-      </form>
+        <Button text="create application group" />
+      </Form>
     </div>
   );
 }
+
+const mapStateToProps = state => ({
+  loading: state.loading,
+  newCohort: state.newCohort,
+  createCohortError: state.createCohortError,
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    submitCohort: formData => dispatch(createCohort(formData)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreateCohortForm);
+
+CreateCohortForm.propTypes = {
+  submitCohort: PropTypes.func.isRequired,
+  createCohortError: PropTypes.object,
+  loading: PropTypes.bool,
+  newCohort: PropTypes.string,
+};

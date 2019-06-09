@@ -4,22 +4,43 @@ import InputDate from '../components/InputDate';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Dropdown from '../components/Dropdown';
-import AddQuestions from '../components/AddQuestions';
+import AddQuestion from '../components/AddQuestion';
 import { connect } from 'react-redux';
 import { createCohort } from '../store/actions';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import uuid from 'uuid/v4';
 
 const Form = styled.form`
   button {
     margin: 2em auto;
     display: block;
   }
+  section {
+    margin: 2em 0 4em;
+  }
+  h2 {
+    margin-bottom: 1em;
+  }
 `;
 
 const DropdownWrapper = styled.div`
-  width: 19%;
-  margin-right: 2rem;
+  width: 100%;
+  margin: 1.5em 0;
+`;
+
+const Dates = styled.div`
+  display: flex;
+  & > div {
+    flex: 1;
+    margin-right: 2em;
+    &:last-of-type {
+      margin-right: 0;
+    }
+    input {
+      width: 100%;
+    }
+  }
 `;
 
 function CreateCohortForm({
@@ -41,36 +62,20 @@ function CreateCohortForm({
     dateResponse: '',
   });
 
-  /**
-   * fields are the dynamic application questions
-   * setFields is the method to set the state for those
-   * dynamic form fields.
-   */
-  const [fields, setFields] = useState([
-    {
-      description: '',
-      type: '',
-      ifRequired: false,
-    },
-    {
-      description: '',
-      type: '',
-      ifRequired: false,
-    },
-  ]);
-
   // Handle Form Submission
   const handleFormSubmit = e => {
     e.preventDefault();
+    form.formQuestions = questionList;
+    // to do - filter through DB for duplicate name
+    const cohortSlug =
+      form.cohortName.replace(/ /g, '-') + '-' + form.cohortType.split('-')[0];
+
+    form.cohortSlug = cohortSlug;
     console.log(form);
     submitCohort(form);
   };
 
-  /**
-   *
-   * Generic handler for all static fields
-   * To save the value as you type.
-   */
+  // Generic handler for input fields to save the value as you type
   const updateField = e => {
     setValues({
       ...form,
@@ -78,44 +83,45 @@ function CreateCohortForm({
     });
   };
 
-  /**
-   * Handler for the inputs that reside in the dynamic question container
-   */
+  // ------- Application Questions section
+  const [questionList, setQuestionList] = useState([
+    {
+      description: '',
+      type: '',
+      ifRequired: false,
+      id: uuid(),
+    },
+    {
+      description: '',
+      type: '',
+      ifRequired: false,
+      id: uuid(),
+    },
+  ]);
+
   const handleQuestionChange = i => type => e => {
-    const values = [...fields];
+    const values = [...questionList];
     values[i][type] =
       e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    setFields(values);
+    setQuestionList(values);
   };
 
-  /**
-   *
-   * Add New Question Button handler.
-   * Used by the AddQuestions component
-   *
-   */
   const handleAddNewQuestion = e => {
-    //e.preventDefault();
-    console.log('Adding a new question!');
-    const values = [...fields];
+    e.preventDefault();
+    const values = [...questionList];
     values.push({
       description: '',
       type: '',
       ifRequired: false,
+      id: uuid(),
     });
-    setFields(values);
+    setQuestionList(values);
   };
 
-  /**
-   *
-   * Remove question handler.
-   * Used by the AddQuestions component
-   */
-  const handleRemoveQuestion = i => e => {
-    //e.preventDefault();
-    const values = [...fields];
-    values.splice(i, 1);
-    setFields(values);
+  const handleRemoveQuestion = (id, e) => {
+    e.preventDefault();
+    const newList = questionList.filter(question => question.id !== id);
+    setQuestionList(newList);
   };
 
   if (createCohortError) {
@@ -128,9 +134,9 @@ function CreateCohortForm({
     return <div>Successfully created {newCohort}!</div>;
   }
   return (
-    <div>
-      <PageTitle title="Create Cohort Application Form" />
-      <Form onSubmit={handleFormSubmit}>
+    <Form onSubmit={handleFormSubmit}>
+      <section>
+        <PageTitle title="Create Cohort Application Form" />
         <Input
           name="cohortName"
           type="text"
@@ -141,6 +147,7 @@ function CreateCohortForm({
         />
         <DropdownWrapper>
           <Dropdown
+            required
             name="cohortType"
             value={form.cohortType}
             data={{
@@ -164,36 +171,49 @@ function CreateCohortForm({
             handleChange={updateField}
           />
         </DropdownWrapper>
-        <InputDate
-          name="dateOpen"
-          value={form.dateOpen}
-          required
-          label="Date Open"
-          handleChange={updateField}
-        />
-        <InputDate
-          name="dateClosed"
-          value={form.dateClosed}
-          required
-          label="Date Closed"
-          handleChange={updateField}
-        />
-        <InputDate
-          name="dateResponse"
-          value={form.dateResponse}
-          required
-          label="Date of Response"
-          handleChange={updateField}
-        />
-        <AddQuestions
-          fields={fields}
-          handleChange={handleQuestionChange}
-          handleAddNewQuestion={handleAddNewQuestion}
-          handleRemoveQuestion={handleRemoveQuestion}
-        />
-        <Button text="create application group" />
-      </Form>
-    </div>
+        <Dates>
+          <InputDate
+            name="dateOpen"
+            value={form.dateOpen}
+            required
+            label="Date Open"
+            handleChange={updateField}
+          />
+          <InputDate
+            name="dateClosed"
+            value={form.dateClosed}
+            required
+            label="Date Closed"
+            handleChange={updateField}
+          />
+          <InputDate
+            name="dateResponse"
+            value={form.dateResponse}
+            required
+            label="Date of Response"
+            handleChange={updateField}
+          />
+        </Dates>
+      </section>
+      <section>
+        <PageTitle title="Application Questions" />
+
+        {questionList.map((question, index) => (
+          <AddQuestion
+            data={question}
+            handleChange={handleQuestionChange}
+            handleAddNewQuestion={handleAddNewQuestion}
+            handleRemoveQuestion={handleRemoveQuestion}
+            key={question.id}
+            index={index}
+          />
+        ))}
+
+        <Button text="Add new Question" handleClick={handleAddNewQuestion} />
+      </section>
+
+      <Button text="create application group" />
+    </Form>
   );
 }
 

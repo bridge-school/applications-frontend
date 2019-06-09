@@ -28,7 +28,7 @@ const CheckboxLabel = styled.label`
   white-space: nowrap;
   &::before {
     color: ${props => props.theme.grey};
-    font-size: 1.3em;
+    font-size: 1.15rem;
     padding: ${props => props.theme.padding};
     margin-right: ${props => props.theme.padding};
     border-radius: ${props => props.theme.borderRadius};
@@ -40,7 +40,6 @@ const CheckboxLabel = styled.label`
 `;
 
 const CheckboxInput = styled.input`
-  padding: ${props => props.theme.padding};
   cursor: pointer;
   opacity: 0;
   position: relative;
@@ -75,7 +74,12 @@ const Fieldset = styled.fieldset`
 export default function Checkbox({ name, data }) {
   const checkboxes = data.items.map(item => (
     <Container key={item.value}>
-      <CheckboxInput type="checkbox" value={item.value} name={name} />
+      <CheckboxInput
+        type="checkbox"
+        onChange={item.handleChange}
+        value={item.value}
+        name={name}
+      />
       <CheckboxLabel key={item.value}>{item.label}</CheckboxLabel>
     </Container>
   ));

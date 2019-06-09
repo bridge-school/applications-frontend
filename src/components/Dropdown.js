@@ -12,13 +12,24 @@ const SelectBox = styled.select`
   background-size: 1rem auto, 100%;
   width: 100%;
 `;
-export default function Dropdown({ data, handleChange, name, value }) {
+export default function Dropdown({
+  required,
+  data,
+  handleChange,
+  name,
+  value,
+}) {
   return (
     <div>
       <label>
-        {data.description}
+        {required ? `${data.description}*` : data.description}
         <br />
-        <SelectBox name={name} onChange={handleChange} value={value}>
+        <SelectBox
+          required={required}
+          name={name}
+          onChange={handleChange}
+          value={value}
+        >
           <option value="">{data.placeholder}</option>
           {data.items.map(item => (
             <option key={data.items.indexOf(item)} value={item.value}>
@@ -33,6 +44,7 @@ export default function Dropdown({ data, handleChange, name, value }) {
 
 Dropdown.propTypes = {
   data: PropTypes.object.isRequired,
+  required: PropTypes.bool,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,

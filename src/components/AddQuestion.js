@@ -94,15 +94,15 @@ export default function AddQuestion({
       </DropdownWrapper>
       <CheckboxWrapper>
         <Checkbox
-          name={`ifRequired${index}`}
+          name={`isRequired${index}`}
           data={{
             description: 'Is required?',
             type: 'checkbox',
             items: [
               {
                 label: 'Is Required',
-                value: data.ifRequired,
-                handleChange: handleChangeAtIndex('ifRequired'),
+                value: data.isRequired,
+                handleChange: handleChangeAtIndex('isRequired'),
               },
             ],
           }}

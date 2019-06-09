@@ -88,13 +88,13 @@ function CreateCohortForm({
     {
       description: '',
       type: '',
-      ifRequired: false,
+      isRequired: false,
       id: uuid(),
     },
     {
       description: '',
       type: '',
-      ifRequired: false,
+      isRequired: false,
       id: uuid(),
     },
   ]);
@@ -112,7 +112,7 @@ function CreateCohortForm({
     values.push({
       description: '',
       type: '',
-      ifRequired: false,
+      isRequired: false,
       id: uuid(),
     });
     setQuestionList(values);

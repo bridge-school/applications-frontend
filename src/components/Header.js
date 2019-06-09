@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 
 const Logo = styled.img`
   height: 2rem;
-  margin: 0.25rem 3rem 0.25rem 0;
+  margin: 0.6rem 3rem 0.25rem 0;
 `;
 
 const Title = styled.h1`

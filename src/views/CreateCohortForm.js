@@ -84,19 +84,16 @@ function CreateCohortForm({
   };
 
   // ------- Application Questions section
+  const populateQuestionsList = () => ({
+    description: '',
+    type: '',
+    isRequired: false,
+    id: uuid(),
+  });
+
   const [questionList, setQuestionList] = useState([
-    {
-      description: '',
-      type: '',
-      isRequired: false,
-      id: uuid(),
-    },
-    {
-      description: '',
-      type: '',
-      isRequired: false,
-      id: uuid(),
-    },
+    populateQuestionsList(),
+    populateQuestionsList(),
   ]);
 
   const handleQuestionChange = i => type => e => {
@@ -108,14 +105,7 @@ function CreateCohortForm({
 
   const handleAddNewQuestion = e => {
     e.preventDefault();
-    const values = [...questionList];
-    values.push({
-      description: '',
-      type: '',
-      isRequired: false,
-      id: uuid(),
-    });
-    setQuestionList(values);
+    setQuestionList([...questionList, populateQuestionsList()]);
   };
 
   const handleRemoveQuestion = (id, e) => {

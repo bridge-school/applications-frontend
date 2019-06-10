@@ -39,7 +39,7 @@ export default function Input({
         <TextareaElement
           id={name}
           name={name}
-          value={value}
+          value={value || ''}
           required={required}
           rows="3"
           onChange={handleChange}
@@ -50,7 +50,7 @@ export default function Input({
           name={name}
           type={type}
           required={required}
-          value={value}
+          value={value || ''}
           onChange={handleChange}
         />
       )}

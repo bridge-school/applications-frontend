@@ -77,7 +77,7 @@ export default function Checkbox({ name, data }) {
       <CheckboxInput
         type="checkbox"
         onChange={item.handleChange}
-        value={item.value}
+        checked={item.value}
         name={name}
       />
       <CheckboxLabel key={item.value}>{item.label}</CheckboxLabel>

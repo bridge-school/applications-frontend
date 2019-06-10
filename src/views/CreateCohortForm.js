@@ -68,7 +68,9 @@ function CreateCohortForm({
     form.formQuestions = questionList;
     // to do - filter through DB for duplicate name
     const cohortSlug =
-      form.cohortName.replace(/ /g, '-') + '-' + form.cohortType.split('-')[0];
+      form.cohortName.toLowerCase().replace(/ /g, '-') +
+      '-' +
+      form.cohortType.split('-')[0];
 
     form.cohortSlug = cohortSlug;
     console.log(form);
@@ -84,19 +86,16 @@ function CreateCohortForm({
   };
 
   // ------- Application Questions section
+  const populateQuestionsList = () => ({
+    description: '',
+    type: '',
+    isRequired: false,
+    id: uuid(),
+  });
+
   const [questionList, setQuestionList] = useState([
-    {
-      description: '',
-      type: '',
-      ifRequired: false,
-      id: uuid(),
-    },
-    {
-      description: '',
-      type: '',
-      ifRequired: false,
-      id: uuid(),
-    },
+    populateQuestionsList(),
+    populateQuestionsList(),
   ]);
 
   const handleQuestionChange = i => type => e => {
@@ -108,14 +107,7 @@ function CreateCohortForm({
 
   const handleAddNewQuestion = e => {
     e.preventDefault();
-    const values = [...questionList];
-    values.push({
-      description: '',
-      type: '',
-      ifRequired: false,
-      id: uuid(),
-    });
-    setQuestionList(values);
+    setQuestionList([...questionList, populateQuestionsList()]);
   };
 
   const handleRemoveQuestion = (id, e) => {

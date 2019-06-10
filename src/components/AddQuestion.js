@@ -29,7 +29,7 @@ const CheckboxWrapper = styled.div`
 
 const ButtonElem = styled.button`
   && {
-    padding: 0.25em 0.5em 0.3em;
+    padding: 0.25em 0.5em 0.35em;
     margin: 1.5rem 0 0 1em;
     border-radius: 50%;
     border: 1px solid;
@@ -94,15 +94,15 @@ export default function AddQuestion({
       </DropdownWrapper>
       <CheckboxWrapper>
         <Checkbox
-          name={`ifRequired${index}`}
+          name={`isRequired${index}`}
           data={{
             description: 'Is required?',
             type: 'checkbox',
             items: [
               {
                 label: 'Is Required',
-                value: data.ifRequired,
-                handleChange: handleChangeAtIndex('ifRequired'),
+                value: data.isRequired,
+                handleChange: handleChangeAtIndex('isRequired'),
               },
             ],
           }}

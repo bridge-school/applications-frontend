@@ -49,14 +49,19 @@ const reducers = (state = initialState, action) => {
         loading: false,
         allCohorts: action.payload,
       };
-    // case actionType.FETCH_CURRENT_COHORTS:
-    //   return {
-    //     ...state,
-    //   };
-    // case actionType.FETCH_ALL_COHORTS:
-    //   return {
-    //     ...state,
-    //   };
+    case actionType.FETCH_CURRENT_COHORTS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case actionType.FETCH_CURRENT_COHORTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        currentCohorts: action.payload,
+      };
+
     // case actionType.STUDENT_SUBMISSION:
     //   return {
     //     ...state,

@@ -8,7 +8,7 @@ import Checkbox from './CheckBox';
 const QuestionOuterWrapper = styled.div`
   display: flex;
   align-items: flex-start;
-  padding-bottom: ${props => props.theme.padding};
+  margin-bottom: 1rem;
   width: 100%;
 `;
 
@@ -69,22 +69,25 @@ export default function AddQuestion({
           required
           data={{
             description: `Question #${index + 1} Type`,
-            placeholder: 'Question type',
             items: [
               {
-                label: 'short answer',
+                label: 'Short Answer',
                 value: 'input',
               },
               {
-                label: 'paragraph',
+                label: 'Paragraph',
                 value: 'textarea',
               },
               {
-                label: 'checkboxes',
+                label: 'Single Choice',
+                value: 'radio',
+              },
+              {
+                label: 'Checkboxes',
                 value: 'checkbox',
               },
               {
-                label: 'drop down',
+                label: 'Dropdown',
                 value: 'select',
               },
             ],

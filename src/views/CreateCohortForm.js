@@ -100,8 +100,26 @@ function CreateCohortForm({
 
   const handleQuestionChange = i => type => e => {
     const values = [...questionList];
-    values[i][type] =
-      e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    console.log('e target name: ', e.target.name);
+    switch (e.target.name) {
+      case 'isRequired' + i:
+        values[i][type] = e.target.checked;
+        break;
+      case 'type' + i:
+        values[i]['hasMultiQuestion'] =
+          e.target.value === 'checkbox' || e.target.value === 'select';
+        values[i]['multiValues'] = '';
+        values[i][type] = e.target.value;
+        break;
+      case 'multiDescription' + i:
+        values[i]['multiValues'] = e.target.value;
+        break;
+      case 'description' + i:
+      default:
+        values[i][type] = e.target.value;
+    }
+
+    console.log(values);
     setQuestionList(values);
   };
 
@@ -155,7 +173,7 @@ function CreateCohortForm({
                   value: 'frontend-development',
                 },
                 {
-                  label: 'Design',
+                  label: 'Product Design',
                   value: 'design',
                 },
               ],

@@ -28,7 +28,7 @@ const reducers = (state = initialState, action) => {
         ...state,
         newCohort: null,
         loading: true,
-        createCohortError: null,
+        error: null,
       };
     case actionType.CREATE_COHORT_SUCCESS:
       return {

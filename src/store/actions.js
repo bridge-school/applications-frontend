@@ -21,10 +21,6 @@ export const error = errorMsg => ({
   payload: errorMsg,
 });
 
-export const createCohortRequestError = err => ({
-  type: actionType.CREATE_COHORT_ERROR,
-  payload: err,
-});
 export const createCohortRequest = () => ({
   type: actionType.CREATE_COHORT_REQUEST,
 });
@@ -48,12 +44,8 @@ export const createCohort = formData => dispatch => {
       }
       return res.json();
     })
-    .then(res => {
-      dispatch(createCohortSuccess(res.id));
-    })
-    .catch(err => {
-      dispatch(createCohortRequestError(err));
-    });
+    .then(res => dispatch(createCohortSuccess(res.id)))
+    .catch(err => dispatch(error(err)));
 };
 
 export const fetchAllCohortsRequest = () => ({

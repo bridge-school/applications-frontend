@@ -52,12 +52,7 @@ const Note = styled.p`
   color: #555;
 `;
 
-function CreateCohortForm({
-  submitCohort,
-  createCohortError,
-  newCohort,
-  loading,
-}) {
+function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
   /**
    * form are the static form fields.
    * setValues is the method to set the state for those

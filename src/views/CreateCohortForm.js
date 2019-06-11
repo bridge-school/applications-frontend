@@ -99,10 +99,13 @@ function CreateCohortForm({
     populateQuestionsList(),
   ]);
 
+  // Handler for all inputs within the Question Wrapper Component.
   const handleQuestionChange = i => type => e => {
     const values = [...questionList];
     values[i][type] =
       e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+
+    e.target.type === 'select' && e.target.value === '';
     setQuestionList(values);
   };
 

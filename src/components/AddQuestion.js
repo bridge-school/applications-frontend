@@ -118,6 +118,19 @@ export default function AddQuestion({
       >
         x
       </ButtonElem>
+
+      {data.multiChoice && (
+        <InputWrapper>
+          <Input
+            name={`description${index}`}
+            type="text"
+            required
+            value={data.description}
+            handleChange={handleChangeAtIndex('description')}
+            label={`Question #${index + 1}`}
+          />
+        </InputWrapper>
+      )}
     </QuestionOuterWrapper>
   );
 }

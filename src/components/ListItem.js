@@ -31,10 +31,10 @@ const CohortLink = styled(Link)`
   text-decoration: none;
 `;
 
-export default function ListItem({ name, type, url }) {
+export default function ListItem({ name, type, url, id }) {
   return (
     <LI>
-      <CohortLink to={'apply/' + url}>
+      <CohortLink to={{ pathname: `apply/${url}`, state: { id } }}>
         {name}
         <CohortLabel text={type} />
       </CohortLink>
@@ -46,4 +46,5 @@ ListItem.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };

@@ -32,29 +32,31 @@ export default function Input({
   required,
 }) {
   return (
-    <label htmlFor={name}>
-      {label}
-      {required && '*'}
-      {type === 'textarea' ? (
-        <TextareaElement
-          id={name}
-          name={name}
-          value={value}
-          required={required}
-          rows="3"
-          onChange={handleChange}
-        />
-      ) : (
-        <InputElement
-          id={name}
-          name={name}
-          type={type}
-          required={required}
-          value={value}
-          onChange={handleChange}
-        />
-      )}
-    </label>
+    <div>
+      <label htmlFor={name}>
+        {label}
+        {required && '*'}
+        {type === 'textarea' ? (
+          <TextareaElement
+            id={name}
+            name={name}
+            value={value || ''}
+            required={required}
+            rows="3"
+            onChange={handleChange}
+          />
+        ) : (
+          <InputElement
+            id={name}
+            name={name}
+            type={type}
+            required={required}
+            value={value || ''}
+            onChange={handleChange}
+          />
+        )}
+      </label>
+    </div>
   );
 }
 
@@ -63,7 +65,7 @@ Input.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   required: PropTypes.bool,
   handleChange: PropTypes.func.isRequired,
 };

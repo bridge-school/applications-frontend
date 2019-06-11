@@ -17,6 +17,7 @@ const QuestionInnerWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   padding-bottom: ${props => props.theme.padding};
+  margin-bottom: 1rem;
   width: 100%;
 `;
 
@@ -124,7 +125,6 @@ export default function AddQuestion({
           x
         </ButtonElem>
       </QuestionInnerWrapper>
-
       {data.hasMultiQuestion && (
         <QuestionInnerWrapper>
           <InputWrapper>

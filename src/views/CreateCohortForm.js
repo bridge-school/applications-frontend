@@ -31,6 +31,7 @@ const DropdownWrapper = styled.div`
 
 const Dates = styled.div`
   display: flex;
+  margin: 2rem 0;
   & > div {
     flex: 1;
     margin-right: 2em;
@@ -73,7 +74,7 @@ function CreateCohortForm({
       form.cohortType.split('-')[0];
 
     form.cohortSlug = cohortSlug;
-    console.log(form);
+    console.log(JSON.stringify(form));
     submitCohort(form);
   };
 

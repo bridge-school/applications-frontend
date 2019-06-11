@@ -10,6 +10,12 @@ const initialState = {
 
 const reducers = (state = initialState, action) => {
   switch (action.type) {
+    case actionType.ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     case actionType.CREATE_COHORT_ERROR:
       return {
         ...state,
@@ -31,18 +37,31 @@ const reducers = (state = initialState, action) => {
         loading: false,
         newCohort: action.payload,
       };
-    // case actionType.FETCH_COHORT:
-    //   return {
-    //     ...state,
-    //   };
-    // case actionType.FETCH_CURRENT_COHORTS:
-    //   return {
-    //     ...state,
-    //   };
-    // case actionType.FETCH_ALL_COHORTS:
-    //   return {
-    //     ...state,
-    //   };
+    case actionType.FETCH_ALL_COHORTS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case actionType.FETCH_ALL_COHORTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        allCohorts: action.payload,
+      };
+    case actionType.FETCH_CURRENT_COHORTS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case actionType.FETCH_CURRENT_COHORTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        currentCohorts: action.payload,
+      };
+
     // case actionType.STUDENT_SUBMISSION:
     //   return {
     //     ...state,

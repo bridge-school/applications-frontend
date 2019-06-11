@@ -66,15 +66,25 @@ function CreateCohortForm({
   // Handle Form Submission
   const handleFormSubmit = e => {
     e.preventDefault();
-    form.formQuestions = questionList;
-    // to do - filter through DB for duplicate name
-    const cohortSlug =
-      form.cohortName.toLowerCase().replace(/ /g, '-') +
-      '-' +
-      form.cohortType.split('-')[0];
+    const splitName = form.cohortType.split('-');
 
-    form.cohortSlug = cohortSlug;
-    console.log(JSON.stringify(form));
+    // to do - filter through DB for duplicate name
+    const setCohortSlug =
+      form.cohortName.toLowerCase().replace(/ /g, '-') + '-' + splitName[0];
+    form.cohortSlug = setCohortSlug;
+
+    const setCohortDisplayName = () => {
+      const capitalized = [];
+      splitName.forEach(word =>
+        capitalized.push(word.charAt(0).toUpperCase() + word.slice(1))
+      );
+      return `${capitalized.join(' ')} – ${form.cohortName}`;
+    };
+    form.cohortDisplayName = setCohortDisplayName();
+
+    form.formQuestions = questionList;
+
+    console.log(form);
     submitCohort(form);
   };
 
@@ -145,7 +155,6 @@ function CreateCohortForm({
             value={form.cohortType}
             data={{
               description: 'Cohort Type',
-              placeholder: 'Select cohort type',
               items: [
                 {
                   label: 'Backend Development',

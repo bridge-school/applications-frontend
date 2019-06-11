@@ -11,7 +11,7 @@ const List = styled.ul`
 export default function ListContainer({ cohortData }) {
   return (
     <List>
-      {cohortData.data.map(li => (
+      {cohortData.map(li => (
         <ListItem
           key={li.id}
           name={li.cohortName}
@@ -24,5 +24,5 @@ export default function ListContainer({ cohortData }) {
 }
 
 ListContainer.propTypes = {
-  cohortData: PropTypes.object.isRequired,
+  cohortData: PropTypes.array.isRequired,
 };

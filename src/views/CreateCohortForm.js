@@ -44,7 +44,20 @@ const Dates = styled.div`
   }
 `;
 
-function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
+const Note = styled.p`
+  font-style: italic;
+  line-height: 1.2;
+  max-width: 41em;
+  margin-bottom: 2em;
+  color: #555;
+`;
+
+function CreateCohortForm({
+  submitCohort,
+  createCohortError,
+  newCohort,
+  loading,
+}) {
   /**
    * form are the static form fields.
    * setValues is the method to set the state for those
@@ -61,25 +74,43 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
   // Handle Form Submission
   const handleFormSubmit = e => {
     e.preventDefault();
-    const splitName = form.cohortType.split('-');
 
     // to do - filter through DB for duplicate name
-    const setCohortSlug =
-      form.cohortName.toLowerCase().replace(/ /g, '-') + '-' + splitName[0];
-    form.cohortSlug = setCohortSlug;
+    const cohortSlug =
+      form.cohortName.toLowerCase().replace(/ /g, '-') +
+      '-' +
+      form.cohortType.split('-')[0];
+    form.cohortSlug = cohortSlug;
 
-    const setCohortDisplayName = () => {
-      const capitalized = [];
-      splitName.forEach(word =>
-        capitalized.push(word.charAt(0).toUpperCase() + word.slice(1))
-      );
-      return `${capitalized.join(' ')} – ${form.cohortName}`;
-    };
-    form.cohortDisplayName = setCohortDisplayName();
+    const defaultQuestions = [
+      {
+        description: 'Full Name',
+        type: 'input',
+        isRequired: true,
+        id: 'fullName',
+      },
+      {
+        description: 'Email',
+        type: 'email',
+        isRequired: true,
+        id: 'email',
+      },
+      {
+        description: 'How do you identify?',
+        type: 'checkbox',
+        isRequired: true,
+        id: 'identify',
+      },
+      {
+        description: 'What pronouns should we use?',
+        type: 'checkbox',
+        isRequired: true,
+        id: 'pronouns',
+      },
+    ];
+    form.formQuestions = [...defaultQuestions, ...questionList];
 
-    form.formQuestions = questionList;
-
-    console.log(form);
+    console.log(JSON.stringify(form));
     submitCohort(form);
   };
 
@@ -194,6 +225,13 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
       </section>
       <section>
         <PageTitle title="Application Questions" />
+
+        <Note>
+          Note: <strong>Full Name</strong>, <strong>Email</strong>,{' '}
+          <strong>How do you identify?</strong>, and{' '}
+          <strong>What pronouns should we use?</strong> will be required
+          questions added to the beginning of the form.
+        </Note>
 
         {questionList.map((question, index) => (
           <AddQuestion

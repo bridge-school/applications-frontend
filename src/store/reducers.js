@@ -4,8 +4,8 @@ const initialState = {
   currentCohorts: [],
   allCohorts: [],
   loading: false,
-  createCohortError: null,
   newCohort: null,
+  selectedCohort: null,
 };
 
 const reducers = (state = initialState, action) => {
@@ -15,13 +15,6 @@ const reducers = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload,
-      };
-    case actionType.CREATE_COHORT_ERROR:
-      return {
-        ...state,
-        newCohort: null,
-        loading: false,
-        createCohortError: action.payload,
       };
     case actionType.CREATE_COHORT_REQUEST:
       return {
@@ -33,7 +26,6 @@ const reducers = (state = initialState, action) => {
     case actionType.CREATE_COHORT_SUCCESS:
       return {
         ...state,
-        createCohortError: null,
         loading: false,
         newCohort: action.payload,
       };
@@ -60,6 +52,19 @@ const reducers = (state = initialState, action) => {
         ...state,
         loading: false,
         currentCohorts: action.payload,
+      };
+    case actionType.FETCH_SELECTED_COHORT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+        selectedCohort: null,
+      };
+    case actionType.FETCH_SELECTED_COHORT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        selectedCohort: action.payload,
       };
 
     // case actionType.STUDENT_SUBMISSION:

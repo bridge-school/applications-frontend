@@ -65,15 +65,6 @@ const egData = {
 };
 
 export default function CohortForm() {
-  const displayCohortName = () => {
-    const splitName = egData.cohortType.split('-');
-    const capitalized = [];
-    splitName.forEach(word =>
-      capitalized.push(word.charAt(0).toUpperCase() + word.slice(1))
-    );
-    return `${capitalized.join(' ')} – ${egData.cohortName}`;
-  };
-
   const [formData, setFormData] = useState({});
 
   const updateInput = e => {
@@ -126,7 +117,7 @@ export default function CohortForm() {
   return (
     <Form onSubmit={handleSubmit}>
       <PageTitle title="Apply for Bridge" />
-      <CohortName>{displayCohortName()}</CohortName>
+      {/* <CohortName>{displayCohortName()}</CohortName> */}
 
       {displayForm()}
 

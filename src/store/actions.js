@@ -3,10 +3,12 @@ export const actionType = {
   CREATE_COHORT_REQUEST: 'CREATE_COHORT_REQUEST',
   CREATE_COHORT_SUCCESS: 'CREATE_COHORT_SUCCESS',
   CREATE_COHORT_ERROR: 'CREATE_COHORT_ERROR',
-  FETCH_COHORT: 'FETCH_COHORT',
-  FETCH_CURRENT_COHORTS: 'FETCH_CURRENT_COHORTS',
   FETCH_ALL_COHORTS_REQUEST: 'FETCH_ALL_COHORTS_REQUEST',
   FETCH_ALL_COHORTS_SUCCESS: 'FETCH_ALL_COHORTS_SUCCESS',
+  FETCH_CURRENT_COHORTS_REQUEST: 'FETCH_CURRENT_COHORTS_REQUEST',
+  FETCH_CURRENT_COHORTS_SUCCESS: 'FETCH_CURRENT_COHORTS_SUCCESS',
+  FETCH_SELECTED_COHORT_REQUEST: 'FETCH_SELECTED_COHORT_REQUEST',
+  FETCH_SELECTED_COHORT_SUCCESS: 'FETCH_SELECTED_COHORT_SUCCESS',
 
   STUDENT_SUBMISSION: 'STUDENT_SUBMISSION',
 };
@@ -21,11 +23,7 @@ export const error = errorMsg => ({
   payload: errorMsg,
 });
 
-export const createCohortRequestError = err => ({
-  type: actionType.CREATE_COHORT_ERROR,
-  payload: err,
-});
-
+// ---------- CREATE a cohort form
 export const createCohortRequest = () => ({
   type: actionType.CREATE_COHORT_REQUEST,
 });
@@ -51,14 +49,11 @@ export const createCohort = formData => dispatch => {
       }
       return res.json();
     })
-    .then(res => {
-      dispatch(createCohortSuccess(res.id));
-    })
-    .catch(err => {
-      dispatch(createCohortRequestError(err));
-    });
+    .then(res => dispatch(createCohortSuccess(res.id)))
+    .catch(err => dispatch(error(err)));
 };
 
+// ---------- display ALL forms
 export const fetchAllCohortsRequest = () => ({
   type: actionType.FETCH_ALL_COHORTS_REQUEST,
 });
@@ -81,3 +76,64 @@ export const fetchAllCohorts = () => dispatch => {
     .then(res => dispatch(fetchAllCohortsSuccess(res.data)))
     .catch(err => dispatch(error(err)));
 };
+
+// ---------- display CURRENT cohorts only
+export const fetchCurrentCohortsRequest = () => ({
+  type: actionType.FETCH_CURRENT_COHORTS_REQUEST,
+});
+
+export const fetchCurrentCohortsSuccess = currentCohorts => ({
+  type: actionType.FETCH_CURRENT_COHORTS_SUCCESS,
+  payload: currentCohorts,
+});
+
+export const fetchCurrentCohorts = () => dispatch => {
+  dispatch(fetchCurrentCohortsRequest());
+
+  fetch(`${BASE_URL}/applications/current`)
+    .then(res => {
+      if (!res.ok) throw new Error(res.statusText);
+      return res.json();
+    })
+    .then(res => dispatch(fetchCurrentCohortsSuccess(res.data)))
+    .catch(err => dispatch(error(err)));
+};
+
+// ---------- display ONE cohort form
+export const fetchSelectedCohortRequest = () => ({
+  type: actionType.FETCH_SELECTED_COHORT_REQUEST,
+});
+
+export const fetchSelectedCohortSuccess = selectedCohort => ({
+  type: actionType.FETCH_SELECTED_COHORT_SUCCESS,
+  payload: selectedCohort,
+});
+
+export const fetchSelectedCohort = applicationId => dispatch => {
+  dispatch(fetchSelectedCohortRequest());
+
+  fetch(`${BASE_URL}/applications/${applicationId}`)
+    .then(res => {
+      if (!res.ok) throw new Error(res.statusText);
+      return res.json();
+    })
+    .then(res => dispatch(fetchSelectedCohortSuccess(res.data)))
+    .catch(err => dispatch(error(err)));
+};
+
+// fetch(`${BASE_URL}/applications/apply`, {
+//   method: 'POST',
+//   body: JSON.stringify(formData),
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+// })
+//   .then(res => {
+//     if (!res.ok) {
+//       throw new Error(res.statusText);
+//     }
+//     return res.json();
+//   })
+//   .then(res => dispatch(createCohortSuccess(res.id)))
+//   .catch(err => dispatch(error(err)));
+// };

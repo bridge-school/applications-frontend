@@ -10,6 +10,8 @@ import CreateCohortForm from './views/CreateCohortForm';
 import CohortForm from './views/CohortForm';
 import NotFound from './views/NotFound';
 import Header from './components/Header';
+import { Provider as ReduxProvider } from 'react-redux';
+import store from './store/store';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -62,28 +64,30 @@ const Wrapper = styled.main`
 class App extends Component {
   render() {
     return (
-      <ThemeProvider theme={bridgeTheme}>
-        <Router>
-          <GlobalStyle />
-          <div>
-            <Header />
-            <Wrapper>
-              <Switch>
-                <Route path="/" exact component={StudentView} />
-                <Route path="/admin" exact component={AdminView} />
-                <Route
-                  path="/admin/create"
-                  exact
-                  component={CreateCohortForm}
-                />
-                <Route path="/apply" exact component={StudentView} />
-                <Route path="/apply/:coID" component={CohortForm} />
-                <Route component={NotFound} />
-              </Switch>
-            </Wrapper>
-          </div>
-        </Router>
-      </ThemeProvider>
+      <ReduxProvider store={store}>
+        <ThemeProvider theme={bridgeTheme}>
+          <Router>
+            <GlobalStyle />
+            <div>
+              <Header />
+              <Wrapper>
+                <Switch>
+                  <Route path="/" exact component={StudentView} />
+                  <Route path="/admin" exact component={AdminView} />
+                  <Route
+                    path="/admin/create"
+                    exact
+                    component={CreateCohortForm}
+                  />
+                  <Route path="/apply" exact component={StudentView} />
+                  <Route path="/apply/:coID" component={CohortForm} />
+                  <Route component={NotFound} />
+                </Switch>
+              </Wrapper>
+            </div>
+          </Router>
+        </ThemeProvider>
+      </ReduxProvider>
     );
   }
 }

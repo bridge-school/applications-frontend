@@ -44,12 +44,15 @@ const Dates = styled.div`
   }
 `;
 
-function CreateCohortForm({
-  submitCohort,
-  createCohortError,
-  newCohort,
-  loading,
-}) {
+const Note = styled.p`
+  font-style: italic;
+  line-height: 1.2;
+  max-width: 41em;
+  margin-bottom: 2em;
+  color: #555;
+`;
+
+function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
   /**
    * form are the static form fields.
    * setValues is the method to set the state for those
@@ -66,14 +69,42 @@ function CreateCohortForm({
   // Handle Form Submission
   const handleFormSubmit = e => {
     e.preventDefault();
-    form.formQuestions = questionList;
+
     // to do - filter through DB for duplicate name
     const cohortSlug =
       form.cohortName.toLowerCase().replace(/ /g, '-') +
       '-' +
       form.cohortType.split('-')[0];
-
     form.cohortSlug = cohortSlug;
+
+    const defaultQuestions = [
+      {
+        description: 'Full Name',
+        type: 'input',
+        isRequired: true,
+        id: 'fullName',
+      },
+      {
+        description: 'Email',
+        type: 'email',
+        isRequired: true,
+        id: 'email',
+      },
+      {
+        description: 'How do you identify?',
+        type: 'checkbox',
+        isRequired: true,
+        id: 'identify',
+      },
+      {
+        description: 'What pronouns should we use?',
+        type: 'checkbox',
+        isRequired: true,
+        id: 'pronouns',
+      },
+    ];
+    form.formQuestions = [...defaultQuestions, ...questionList];
+
     console.log(JSON.stringify(form));
     submitCohort(form);
   };
@@ -120,8 +151,8 @@ function CreateCohortForm({
     setQuestionList(newList);
   };
 
-  if (createCohortError) {
-    return <div>{createCohortError.message} Please try again!</div>;
+  if (error) {
+    return <div>{error.message} Please try again!</div>;
   }
   if (loading) {
     return <div>Submitting your form to the database...</div>;
@@ -148,7 +179,6 @@ function CreateCohortForm({
             value={form.cohortType}
             data={{
               description: 'Cohort Type',
-              placeholder: 'Select cohort type',
               items: [
                 {
                   label: 'Backend Development',
@@ -194,6 +224,13 @@ function CreateCohortForm({
       <section>
         <PageTitle title="Application Questions" />
 
+        <Note>
+          Note: <strong>Full Name</strong>, <strong>Email</strong>,{' '}
+          <strong>How do you identify?</strong>, and{' '}
+          <strong>What pronouns should we use?</strong> will be required
+          questions added to the beginning of the form.
+        </Note>
+
         {questionList.map((question, index) => (
           <AddQuestion
             data={question}
@@ -216,7 +253,7 @@ function CreateCohortForm({
 const mapStateToProps = state => ({
   loading: state.loading,
   newCohort: state.newCohort,
-  createCohortError: state.createCohortError,
+  error: state.error,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -232,7 +269,7 @@ export default connect(
 
 CreateCohortForm.propTypes = {
   submitCohort: PropTypes.func.isRequired,
-  createCohortError: PropTypes.object,
+  error: PropTypes.object,
   loading: PropTypes.bool,
   newCohort: PropTypes.string,
 };

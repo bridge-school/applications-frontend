@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { fetchSelectedCohort } from '../store/actions';
 import PageTitle from '../components/PageTitle';
 import Input from '../components/Input';
 import Radio from '../components/Radio';
-import styled from 'styled-components';
 import Button from '../components/Button';
+import { connect } from 'react-redux';
 
 const Form = styled.form`
   margin: 2em 0;
@@ -23,48 +26,17 @@ const CohortName = styled.p`
   margin: 0.5em 0;
 `;
 
-const egData = {
-  cohortName: 'cohort 8',
-  cohortType: 'frontend-development',
-  dateOpen: '2019-06-11',
-  dateClosed: '2019-06-29',
-  dateResponse: '2019-06-15',
-  formQuestions: [
-    {
-      description: 'Full Name',
-      type: 'text',
-      isRequired: true,
-      id: '010c8de6-b13d-493b-adb8-',
-    },
-    {
-      description: 'Email',
-      type: 'email',
-      isRequired: true,
-      id: '010c8de6-b13d-adb8-560d55d055a1',
-    },
-    {
-      description: 'How do you identify?',
-      type: 'checkbox',
-      isRequired: false,
-      id: 'a1e30a65-422f-40aa-b4d9-4914aa246403',
-    },
-    {
-      description: 'Radio - How do you identify?',
-      type: 'radio',
-      isRequired: false,
-      id: 'a1e30a65-422f-40aa-b4d9',
-    },
-    {
-      description: 'Why do you want to attend Bridge?',
-      type: 'textarea',
-      isRequired: true,
-      id: '010c8de6-b13d-493b-adb8-560d55d055a1',
-    },
-  ],
-  cohortSlug: 'cohort-8-frontend',
-};
+function CohortForm({
+  error,
+  loading,
+  getSelectedCohort,
+  location,
+  selectedCohort,
+}) {
+  useEffect(() => {
+    getSelectedCohort(location.state.id);
+  }, [getSelectedCohort, location.state.id]);
 
-export default function CohortForm() {
   const [formData, setFormData] = useState({});
 
   const updateInput = e => {
@@ -80,7 +52,7 @@ export default function CohortForm() {
   };
 
   const displayForm = () => {
-    return egData.formQuestions.map(question => {
+    return selectedCohort.formQuestions.map(question => {
       const inputProps = {
         type: question.type,
         label: question.description,
@@ -93,7 +65,6 @@ export default function CohortForm() {
 
       switch (question.type) {
         case 'text':
-        case 'email':
         case 'checkbox':
           return <Input {...inputProps} />;
         case 'textarea':
@@ -114,14 +85,50 @@ export default function CohortForm() {
     });
   };
 
+  if (error) {
+    return <div>{error.message} Please try again!</div>;
+  }
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  // if (newSubmission) {
+  //   return <div>Successfully created {newCohort}!</div>;
+  // }
+
   return (
-    <Form onSubmit={handleSubmit}>
-      <PageTitle title="Apply for Bridge" />
-      {/* <CohortName>{displayCohortName()}</CohortName> */}
+    selectedCohort && (
+      <Form onSubmit={handleSubmit}>
+        <PageTitle title="Apply for Bridge" />
+        <CohortName>{selectedCohort.cohortDisplayName}</CohortName>
 
-      {displayForm()}
+        {displayForm()}
 
-      <Button text="apply for bridge" />
-    </Form>
+        <Button text="apply for bridge" />
+      </Form>
+    )
   );
 }
+
+const mapStateToProps = state => ({
+  loading: state.loading,
+  error: state.error,
+  selectedCohort: state.selectedCohort,
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getSelectedCohort: applicationID =>
+      dispatch(fetchSelectedCohort(applicationID)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CohortForm);
+
+CohortForm.propTypes = {
+  getSelectedCohort: PropTypes.func.isRequired,
+  error: PropTypes.object,
+  loading: PropTypes.bool,
+};

@@ -70,6 +70,10 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
   const handleFormSubmit = e => {
     e.preventDefault();
 
+    // The comma-separated questions need to be converted to
+    // an array of objects
+    convertMultiQuestion();
+
     // to do - filter through DB for duplicate name
     const cohortSlug =
       form.cohortName.toLowerCase().replace(/ /g, '-') +
@@ -117,6 +121,29 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
     });
   };
 
+  // Converting Mutiple Choice Questions to an array before sending
+  // off to the DB.
+  const convertMultiQuestion = () => {
+    const values = [...questionList];
+
+    values.forEach(question => {
+      if (question.multiValues) {
+        let questionAnswers = question.multiValues.split(',');
+
+        question.options = questionAnswers
+          .filter(answer => answer !== '')
+          .map(answer => {
+            return {
+              label: answer.trim(),
+              value: uuid(),
+            };
+          });
+      }
+    });
+
+    setQuestionList(values);
+  };
+
   // ------- Application Questions section
   const populateQuestionsList = () => ({
     description: '',
@@ -130,10 +157,30 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
     populateQuestionsList(),
   ]);
 
-  const handleQuestionChange = i => type => e => {
+  // ADD QUESTION INPUT HANDLERS
+
+  // Used by Description input and Options additional input.
+  const updateQuestionInputField = i => type => e => {
     const values = [...questionList];
-    values[i][type] =
-      e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    //console.log('target.value: ', e.target.value);
+    values[i][type] = e.target.value;
+    //console.log(values);
+    setQuestionList(values);
+  };
+
+  const updateQuestionTypeField = i => type => e => {
+    const values = [...questionList];
+    values[i][type] = e.target.value;
+
+    //console.log(values);
+    setQuestionList(values);
+  };
+
+  const updateQuestionRequiredField = i => type => e => {
+    const values = [...questionList];
+    values[i][type] = e.target.checked;
+
+    //console.log(values);
     setQuestionList(values);
   };
 
@@ -186,7 +233,7 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
                   value: 'frontend-development',
                 },
                 {
-                  label: 'Design',
+                  label: 'Product Design',
                   value: 'design',
                 },
               ],
@@ -225,13 +272,16 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
           Note: <strong>Full Name</strong>, <strong>Email</strong>,{' '}
           <strong>How do you identify?</strong>, and{' '}
           <strong>What pronouns should we use?</strong> will be required
-          questions added to the beginning of the form.
+          questions added to the beginning of the student&rsquo;s application
+          form.
         </Note>
 
         {questionList.map((question, index) => (
           <AddQuestion
             data={question}
-            handleChange={handleQuestionChange}
+            handleInputChange={updateQuestionInputField}
+            handleTypeChange={updateQuestionTypeField}
+            handleRequiredChange={updateQuestionRequiredField}
             handleAddNewQuestion={handleAddNewQuestion}
             handleRemoveQuestion={handleRemoveQuestion}
             key={question.id}

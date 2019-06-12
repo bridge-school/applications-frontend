@@ -53,10 +53,9 @@ const ButtonElem = styled.button`
 `;
 
 export default function AddQuestion({
-  handleDescriptionChange,
+  handleInputChange,
   handleTypeChange,
   handleRequiredChange,
-  handleMultiChange,
   handleRemoveQuestion,
   data,
   index,
@@ -71,7 +70,7 @@ export default function AddQuestion({
             type="text"
             required
             value={data.description}
-            handleChange={handleDescriptionChange(index)('description')}
+            handleChange={handleInputChange(index)('description')}
             label={`Question #${index + 1}`}
           />
         </InputWrapper>
@@ -128,7 +127,7 @@ export default function AddQuestion({
           x
         </ButtonElem>
       </QuestionInnerWrapper>
-      {data.hasMultiQuestion && (
+      {(data.type === 'checkbox' || data.type === 'select') && (
         <QuestionInnerWrapper>
           <InputWrapper>
             <Input
@@ -136,7 +135,7 @@ export default function AddQuestion({
               type="text"
               required
               value={data.multiValues}
-              handleChange={handleMultiChange(index)('multiValues')}
+              handleChange={handleInputChange(index)('multiValues')}
               label={`Answer Values for Question #${index +
                 1} (as comma-separated values)`}
             />
@@ -150,10 +149,9 @@ export default function AddQuestion({
 AddQuestion.propTypes = {
   data: PropTypes.object,
   index: PropTypes.number,
-  handleDescriptionChange: PropTypes.func,
+  handleInputChange: PropTypes.func,
   handleTypeChange: PropTypes.func,
   handleRequiredChange: PropTypes.func,
-  handleMultiChange: PropTypes.func,
   handleAddNewQuestion: PropTypes.func,
   handleRemoveQuestion: PropTypes.func,
 };

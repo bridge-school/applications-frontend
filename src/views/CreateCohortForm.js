@@ -125,21 +125,16 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
   // off to the DB.
   const convertMultiQuestion = () => {
     const values = [...questionList];
-    const mappedAnswers = [];
     values.forEach(question => {
-      if (question.hasMultiQuestion) {
+      if (question.multiValues) {
         let questionAnswers = question.multiValues.split(',');
 
-        mappedAnswers.push(
-          questionAnswers.map(answer => {
-            return {
-              label: answer.trim(),
-              value: uuid(),
-            };
-          })
-        );
-
-        question.options = mappedAnswers;
+        question.options = questionAnswers.map(answer => {
+          return {
+            label: answer.trim(),
+            value: uuid(),
+          };
+        });
       }
     });
 
@@ -161,10 +156,11 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
 
   // ADD QUESTION INPUT HANDLERS
 
-  const updateQuestionDescriptionField = i => type => e => {
+  // Used by Description input and Options additional input.
+  const updateQuestionInputField = i => type => e => {
     const values = [...questionList];
+    //console.log('target.value: ', e.target.value);
     values[i][type] = e.target.value;
-
     //console.log(values);
     setQuestionList(values);
   };
@@ -172,9 +168,6 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
   const updateQuestionTypeField = i => type => e => {
     const values = [...questionList];
     values[i][type] = e.target.value;
-
-    values[i]['hasMultiQuestion'] =
-      e.target.value === 'checkbox' || e.target.value === 'select';
 
     //console.log(values);
     setQuestionList(values);
@@ -184,14 +177,6 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
     const values = [...questionList];
     values[i][type] = e.target.checked;
 
-    //console.log(values);
-    setQuestionList(values);
-  };
-
-  const updateQuestionOptionsField = i => type => e => {
-    const values = [...questionList];
-    //console.log('target.value: ', e.target.value);
-    values[i][type] = e.target.value;
     //console.log(values);
     setQuestionList(values);
   };
@@ -291,10 +276,9 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
         {questionList.map((question, index) => (
           <AddQuestion
             data={question}
-            handleDescriptionChange={updateQuestionDescriptionField}
+            handleInputChange={updateQuestionInputField}
             handleTypeChange={updateQuestionTypeField}
             handleRequiredChange={updateQuestionRequiredField}
-            handleMultiChange={updateQuestionOptionsField}
             handleAddNewQuestion={handleAddNewQuestion}
             handleRemoveQuestion={handleRemoveQuestion}
             key={question.id}

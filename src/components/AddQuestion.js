@@ -53,12 +53,15 @@ const ButtonElem = styled.button`
 `;
 
 export default function AddQuestion({
-  handleChange,
+  handleDescriptionChange,
+  handleTypeChange,
+  handleRequiredChange,
+  handleMultiChange,
   handleRemoveQuestion,
   data,
   index,
 }) {
-  const handleChangeAtIndex = handleChange(index);
+  //const handleChangeAtIndex = handleChange(index);
   return (
     <QuestionOuterWrapper>
       <QuestionInnerWrapper>
@@ -68,7 +71,7 @@ export default function AddQuestion({
             type="text"
             required
             value={data.description}
-            handleChange={handleChangeAtIndex('description')}
+            handleChange={handleDescriptionChange(index)('description')}
             label={`Question #${index + 1}`}
           />
         </InputWrapper>
@@ -99,7 +102,7 @@ export default function AddQuestion({
                 },
               ],
             }}
-            handleChange={handleChangeAtIndex('type')}
+            handleChange={handleTypeChange(index)('type')}
           />
         </DropdownWrapper>
         <CheckboxWrapper>
@@ -112,7 +115,7 @@ export default function AddQuestion({
                 {
                   label: 'Is Required',
                   value: data.isRequired,
-                  handleChange: handleChangeAtIndex('isRequired'),
+                  handleChange: handleRequiredChange(index)('isRequired'),
                 },
               ],
             }}
@@ -129,12 +132,13 @@ export default function AddQuestion({
         <QuestionInnerWrapper>
           <InputWrapper>
             <Input
-              name={`multiDescription${index}`}
+              name={`multiValues${index}`}
               type="text"
               required
               value={data.multiValues}
-              handleChange={handleChangeAtIndex('multiDescription')}
-              label={`Answer Values for Question #${index + 1}`}
+              handleChange={handleMultiChange(index)('multiValues')}
+              label={`Answer Values for Question #${index +
+                1} (as comma-separated values)`}
             />
           </InputWrapper>
         </QuestionInnerWrapper>
@@ -146,7 +150,10 @@ export default function AddQuestion({
 AddQuestion.propTypes = {
   data: PropTypes.object,
   index: PropTypes.number,
-  handleChange: PropTypes.func,
+  handleDescriptionChange: PropTypes.func,
+  handleTypeChange: PropTypes.func,
+  handleRequiredChange: PropTypes.func,
+  handleMultiChange: PropTypes.func,
   handleAddNewQuestion: PropTypes.func,
   handleRemoveQuestion: PropTypes.func,
 };

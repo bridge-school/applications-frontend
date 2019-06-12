@@ -70,6 +70,10 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
   const handleFormSubmit = e => {
     e.preventDefault();
 
+    // The comma-separated questions need to be converted to
+    // an array of objects
+    convertMultiQuestion();
+
     // to do - filter through DB for duplicate name
     const cohortSlug =
       form.cohortName.toLowerCase().replace(/ /g, '-') +
@@ -117,6 +121,32 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
     });
   };
 
+  // Converting Mutiple Choice Questions to an array before sending
+  // off to the DB.
+  const convertMultiQuestion = () => {
+    const values = [...questionList];
+    const mappedAnswers = [];
+    values.forEach(question => {
+      if (question.hasMultiQuestion) {
+        let questionAnswers = question.multiValues.split(',');
+
+        mappedAnswers.push(
+          questionAnswers.map(answer => {
+            return {
+              label: answer,
+              value: uuid(),
+            };
+          })
+        );
+
+        question.options = mappedAnswers;
+      }
+    });
+
+    setQuestionList(values);
+    console.log('convertMulti, values: ', values);
+  };
+
   // ------- Application Questions section
   const populateQuestionsList = () => ({
     description: '',
@@ -130,28 +160,40 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
     populateQuestionsList(),
   ]);
 
-  const handleQuestionChange = i => type => e => {
-    const values = [...questionList];
-    console.log('e target name: ', e.target.name);
-    switch (e.target.name) {
-      case 'isRequired' + i:
-        values[i][type] = e.target.checked;
-        break;
-      case 'type' + i:
-        values[i]['hasMultiQuestion'] =
-          e.target.value === 'checkbox' || e.target.value === 'select';
-        values[i]['multiValues'] = '';
-        values[i][type] = e.target.value;
-        break;
-      case 'multiDescription' + i:
-        values[i]['multiValues'] = e.target.value;
-        break;
-      case 'description' + i:
-      default:
-        values[i][type] = e.target.value;
-    }
+  // DYNAMIC QUESTION INPUT HANDLERS
 
-    console.log(values);
+  const handleDynamicQuestionDescriptionChange = i => type => e => {
+    const values = [...questionList];
+    values[i][type] = e.target.value;
+
+    //console.log(values);
+    setQuestionList(values);
+  };
+
+  const handleDynamicQuestionTypeChange = i => type => e => {
+    const values = [...questionList];
+    values[i][type] = e.target.value;
+
+    values[i]['hasMultiQuestion'] =
+      e.target.value === 'checkbox' || e.target.value === 'select';
+
+    //console.log(values);
+    setQuestionList(values);
+  };
+
+  const handleDynamicQuestionRequiredChange = i => type => e => {
+    const values = [...questionList];
+    values[i][type] = e.target.checked;
+
+    //console.log(values);
+    setQuestionList(values);
+  };
+
+  const handleDynamicQuestionOptionsChange = i => type => e => {
+    const values = [...questionList];
+    //console.log('target.value: ', e.target.value);
+    values[i][type] = e.target.value;
+    //console.log(values);
     setQuestionList(values);
   };
 
@@ -249,7 +291,10 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
         {questionList.map((question, index) => (
           <AddQuestion
             data={question}
-            handleChange={handleQuestionChange}
+            handleDescriptionChange={handleDynamicQuestionDescriptionChange}
+            handleTypeChange={handleDynamicQuestionTypeChange}
+            handleRequiredChange={handleDynamicQuestionRequiredChange}
+            handleMultiChange={handleDynamicQuestionOptionsChange}
             handleAddNewQuestion={handleAddNewQuestion}
             handleRemoveQuestion={handleRemoveQuestion}
             key={question.id}

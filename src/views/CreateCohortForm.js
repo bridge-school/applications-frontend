@@ -125,16 +125,19 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
   // off to the DB.
   const convertMultiQuestion = () => {
     const values = [...questionList];
+
     values.forEach(question => {
       if (question.multiValues) {
         let questionAnswers = question.multiValues.split(',');
 
-        question.options = questionAnswers.map(answer => {
-          return {
-            label: answer.trim(),
-            value: uuid(),
-          };
-        });
+        question.options = questionAnswers
+          .filter(answer => answer !== '')
+          .map(answer => {
+            return {
+              label: answer.trim(),
+              value: uuid(),
+            };
+          });
       }
     });
 

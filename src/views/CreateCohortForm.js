@@ -133,7 +133,7 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
         mappedAnswers.push(
           questionAnswers.map(answer => {
             return {
-              label: answer,
+              label: answer.trim(),
               value: uuid(),
             };
           })
@@ -144,7 +144,6 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
     });
 
     setQuestionList(values);
-    console.log('convertMulti, values: ', values);
   };
 
   // ------- Application Questions section
@@ -160,9 +159,9 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
     populateQuestionsList(),
   ]);
 
-  // DYNAMIC QUESTION INPUT HANDLERS
+  // ADD QUESTION INPUT HANDLERS
 
-  const handleDynamicQuestionDescriptionChange = i => type => e => {
+  const updateQuestionDescriptionField = i => type => e => {
     const values = [...questionList];
     values[i][type] = e.target.value;
 
@@ -170,7 +169,7 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
     setQuestionList(values);
   };
 
-  const handleDynamicQuestionTypeChange = i => type => e => {
+  const updateQuestionTypeField = i => type => e => {
     const values = [...questionList];
     values[i][type] = e.target.value;
 
@@ -181,7 +180,7 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
     setQuestionList(values);
   };
 
-  const handleDynamicQuestionRequiredChange = i => type => e => {
+  const updateQuestionRequiredField = i => type => e => {
     const values = [...questionList];
     values[i][type] = e.target.checked;
 
@@ -189,7 +188,7 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
     setQuestionList(values);
   };
 
-  const handleDynamicQuestionOptionsChange = i => type => e => {
+  const updateQuestionOptionsField = i => type => e => {
     const values = [...questionList];
     //console.log('target.value: ', e.target.value);
     values[i][type] = e.target.value;
@@ -285,16 +284,17 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
           Note: <strong>Full Name</strong>, <strong>Email</strong>,{' '}
           <strong>How do you identify?</strong>, and{' '}
           <strong>What pronouns should we use?</strong> will be required
-          questions added to the beginning of the form.
+          questions added to the beginning of the student&rsquo;s application
+          form.
         </Note>
 
         {questionList.map((question, index) => (
           <AddQuestion
             data={question}
-            handleDescriptionChange={handleDynamicQuestionDescriptionChange}
-            handleTypeChange={handleDynamicQuestionTypeChange}
-            handleRequiredChange={handleDynamicQuestionRequiredChange}
-            handleMultiChange={handleDynamicQuestionOptionsChange}
+            handleDescriptionChange={updateQuestionDescriptionField}
+            handleTypeChange={updateQuestionTypeField}
+            handleRequiredChange={updateQuestionRequiredField}
+            handleMultiChange={updateQuestionOptionsField}
             handleAddNewQuestion={handleAddNewQuestion}
             handleRemoveQuestion={handleRemoveQuestion}
             key={question.id}

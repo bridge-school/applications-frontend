@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import PageTitle from '../components/PageTitle';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ListContainer from '../components/ListContainer';
-import { fetchAllCohorts } from '../store/actions';
+import { fetchAllCohorts } from '../store/actions/appActions';
 
 const Header = styled.header`
   display: flex;
@@ -14,10 +15,13 @@ const Header = styled.header`
   margin: 1.5rem 0 3.5rem;
 `;
 
-function AdminView({ error, allCohorts, loading, getAllCohorts }) {
+function AdminView({ error, allCohorts, loading, getAllCohorts, auth }) {
   useEffect(() => {
     getAllCohorts();
   }, [getAllCohorts]);
+
+  // If not loggedin redirect
+  if (!auth.uid) return <Redirect to="/login" />;
 
   if (error) {
     return <div>Error! {error.message}</div>;
@@ -41,9 +45,10 @@ function AdminView({ error, allCohorts, loading, getAllCohorts }) {
 }
 
 const mapStateToProps = state => ({
-  error: state.error,
-  loading: state.loading,
-  allCohorts: state.allCohorts,
+  error: state.app.error,
+  loading: state.app.loading,
+  allCohorts: state.app.allCohorts,
+  auth: state.firebase.auth,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -62,4 +67,5 @@ AdminView.propTypes = {
   allCohorts: PropTypes.array,
   loading: PropTypes.bool,
   getAllCohorts: PropTypes.func,
+  auth: PropTypes.object.isRequired,
 };

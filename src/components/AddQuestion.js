@@ -8,12 +8,21 @@ import Checkbox from './CheckBox';
 const QuestionOuterWrapper = styled.div`
   display: flex;
   align-items: flex-start;
+  flex-direction: column;
+  padding-bottom: ${props => props.theme.padding};
+  width: 100%;
+`;
+
+const QuestionInnerWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: ${props => props.theme.padding};
   margin-bottom: 1rem;
   width: 100%;
 `;
 
 const InputWrapper = styled.div`
-  width: 70%;
+  width: 66%;
   margin-right: 2rem;
 `;
 
@@ -44,92 +53,94 @@ const ButtonElem = styled.button`
 `;
 
 export default function AddQuestion({
-  handleChange,
+  handleInputChange,
+  handleTypeChange,
+  handleRequiredChange,
   handleRemoveQuestion,
   data,
   index,
 }) {
-  const handleChangeAtIndex = handleChange(index);
+  //const handleChangeAtIndex = handleChange(index);
   return (
     <QuestionOuterWrapper>
-      <InputWrapper>
-        <Input
-          name={`description${index}`}
-          type="text"
-          required
-          value={data.description}
-          handleChange={handleChangeAtIndex('description')}
-          label={`Question #${index + 1}`}
-        />
-      </InputWrapper>
-      <DropdownWrapper>
-        <Dropdown
-          name={`type${index}`}
-          value={data.type}
-          required
-          data={{
-            description: `Question #${index + 1} Type`,
-            items: [
-              {
-                label: 'Short Answer',
-                value: 'input',
-              },
-              {
-                label: 'Paragraph',
-                value: 'textarea',
-              },
-              {
-                label: 'Single Choice',
-                value: 'radio',
-              },
-              {
-                label: 'Checkboxes',
-                value: 'checkbox',
-              },
-              {
-                label: 'Dropdown',
-                value: 'select',
-              },
-            ],
-          }}
-          handleChange={handleChangeAtIndex('type')}
-        />
-      </DropdownWrapper>
-      <CheckboxWrapper>
-        <Checkbox
-          name={`isRequired${index}`}
-          data={{
-            description: 'Is required?',
-            type: 'checkbox',
-            items: [
-              {
-                label: 'Is Required',
-                value: data.isRequired,
-                handleChange: handleChangeAtIndex('isRequired'),
-              },
-            ],
-          }}
-        />
-      </CheckboxWrapper>
-
-      <ButtonElem
-        title="Delete Question"
-        onClick={e => handleRemoveQuestion(data.id, e)}
-      >
-        x
-      </ButtonElem>
-
-      {data.multiChoice && (
+      <QuestionInnerWrapper>
         <InputWrapper>
           <Input
             name={`description${index}`}
             type="text"
             required
             value={data.description}
-            handleChange={handleChangeAtIndex('description')}
+            handleChange={handleInputChange(index)('description')}
             label={`Question #${index + 1}`}
           />
         </InputWrapper>
+        <DropdownWrapper>
+          <Dropdown
+            name={`type${index}`}
+            value={data.type}
+            required
+            data={{
+              description: `Question #${index + 1} Type`,
+              placeholder: 'Question type',
+              items: [
+                {
+                  label: 'short answer',
+                  value: 'input',
+                },
+                {
+                  label: 'paragraph',
+                  value: 'textarea',
+                },
+                {
+                  label: 'checkboxes',
+                  value: 'checkbox',
+                },
+                {
+                  label: 'drop down',
+                  value: 'select',
+                },
+              ],
+            }}
+            handleChange={handleTypeChange(index)('type')}
+          />
+        </DropdownWrapper>
+        <CheckboxWrapper>
+          <Checkbox
+            name={`isRequired${index}`}
+            data={{
+              description: 'Is required?',
+              type: 'checkbox',
+              items: [
+                {
+                  label: 'Is Required',
+                  value: data.isRequired,
+                  handleChange: handleRequiredChange(index)('isRequired'),
+                },
+              ],
+            }}
+          />
+        </CheckboxWrapper>
+        <ButtonElem
+          title="Delete Question"
+          onClick={e => handleRemoveQuestion(data.id, e)}
+        >
+          x
+        </ButtonElem>
+      </QuestionInnerWrapper>
+      {(data.type === 'checkbox' || data.type === 'select') && (
+        <QuestionInnerWrapper>
+          <InputWrapper>
+            <Input
+              name={`multiValues${index}`}
+              type="text"
+              required
+              value={data.multiValues}
+              handleChange={handleInputChange(index)('multiValues')}
+              label={`Answer Values for Question #${index +
+                1} (as comma-separated values)`}
+            />
+          </InputWrapper>
+        </QuestionInnerWrapper>
       )}
     </QuestionOuterWrapper>
   );
@@ -138,7 +149,9 @@ export default function AddQuestion({
 AddQuestion.propTypes = {
   data: PropTypes.object,
   index: PropTypes.number,
-  handleChange: PropTypes.func,
+  handleInputChange: PropTypes.func,
+  handleTypeChange: PropTypes.func,
+  handleRequiredChange: PropTypes.func,
   handleAddNewQuestion: PropTypes.func,
   handleRemoveQuestion: PropTypes.func,
 };

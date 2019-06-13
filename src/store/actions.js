@@ -49,7 +49,7 @@ export const createCohort = formData => dispatch => {
       }
       return res.json();
     })
-    .then(res => dispatch(createCohortSuccess(res.id)))
+    .then(res => dispatch(createCohortSuccess(res.message)))
     .catch(err => dispatch(error(err)));
 };
 

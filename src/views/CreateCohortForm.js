@@ -10,6 +10,7 @@ import { createCohort } from '../store/actions';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import uuid from 'uuid/v4';
+import { Link } from 'react-router-dom';
 
 const Form = styled.form`
   button {
@@ -202,7 +203,16 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
     return <div>Submitting your form to the database...</div>;
   }
   if (newCohort) {
-    return <div>Successfully created {newCohort}!</div>;
+    return (
+      <div>
+        <p>
+          <strong>{newCohort}</strong>
+        </p>
+        <p>
+          <Link to="/">Go back to homepage</Link>
+        </p>
+      </div>
+    );
   }
   return (
     <Form onSubmit={handleFormSubmit}>

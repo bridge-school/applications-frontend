@@ -34,6 +34,7 @@ function CohortForm({
   selectedCohort,
 }) {
   useEffect(() => {
+    // getting the selected cohort's id via the router's state object - passed in from ListItem.js
     getSelectedCohort(location.state.id);
   }, [getSelectedCohort, location.state.id]);
 

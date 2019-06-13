@@ -35,7 +35,7 @@ function CohortForm({
 }) {
   const [formIdFound, setFormIdFound] = useState(false);
   useEffect(() => {
-    // check if location.state is not undefined
+    // check if location.state is not undefined (e.g. it's undefined if a random string is put after '/apply')
     if (location.state) {
       // getting the selected cohort's id via the router's state object - passed in from ListItem.js
       getSelectedCohort(location.state.id);

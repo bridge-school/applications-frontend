@@ -33,10 +33,17 @@ function CohortForm({
   location,
   selectedCohort,
 }) {
+  const [formIdFound, setFormIdFound] = useState(false);
   useEffect(() => {
-    // getting the selected cohort's id via the router's state object - passed in from ListItem.js
-    getSelectedCohort(location.state.id);
-  }, [getSelectedCohort, location.state.id]);
+    // check if location.state is not undefined
+    if (location.state) {
+      // getting the selected cohort's id via the router's state object - passed in from ListItem.js
+      getSelectedCohort(location.state.id);
+      setFormIdFound(true);
+    } else {
+      setFormIdFound(false);
+    }
+  }, [getSelectedCohort, location.state]);
 
   const [formData, setFormData] = useState({});
 
@@ -65,7 +72,8 @@ function CohortForm({
       };
 
       switch (question.type) {
-        case 'text':
+        case 'input':
+        case 'email':
         case 'checkbox':
           return <Input {...inputProps} />;
         case 'textarea':
@@ -96,6 +104,9 @@ function CohortForm({
   //   return <div>Successfully created {newCohort}!</div>;
   // }
 
+  if (!formIdFound) {
+    return <div>Application not found. Please try again.</div>;
+  }
   return (
     selectedCohort && (
       <Form onSubmit={handleSubmit}>

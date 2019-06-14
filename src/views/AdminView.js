@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Loading from '../components/Loading';
 import ListContainer from '../components/ListContainer';
 import { fetchAllCohorts } from '../store/actions/appActions';
 
@@ -23,13 +24,9 @@ function AdminView({ error, allCohorts, loading, getAllCohorts, auth }) {
   // If not loggedin redirect
   if (!auth.uid) return <Redirect to="/login" />;
 
-  if (error) {
-    return <div>Error! {error.message}</div>;
-  }
+  if (error) return <div>Error! {error.message}</div>;
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) return <Loading />;
 
   return (
     <div>

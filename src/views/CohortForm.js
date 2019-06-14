@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { fetchSelectedCohort } from '../store/actions/appActions';
+import {
+  fetchSelectedCohort,
+  studentSubmission,
+} from '../store/actions/appActions';
 import PageTitle from '../components/PageTitle';
+import Loading from '../components/Loading';
 import Input from '../components/Input';
+import Congrats from '../components/Congrats';
 import Radio from '../components/Radio';
 import Button from '../components/Button';
 import { connect } from 'react-redux';
@@ -13,9 +18,6 @@ const Form = styled.form`
   button {
     margin: 2em auto;
     display: block;
-  }
-  & div {
-    margin: 1em 0;
   }
 `;
 
@@ -32,10 +34,20 @@ function CohortForm({
   getSelectedCohort,
   location,
   selectedCohort,
+  successfulSubmission,
+  sendStudentSubmission,
 }) {
+  // state for valid form ID
+  const [formIdFound, setFormIdFound] = useState(false);
+
   useEffect(() => {
-    getSelectedCohort(location.state.id);
-  }, [getSelectedCohort, location.state.id]);
+    // check if location.state is not undefined (e.g. it's undefined if a random string is put after '/apply')
+    if (location.state) {
+      // getting the selected cohort's id via the router's state object - passed in from ListItem.js
+      getSelectedCohort(location.state.id);
+      setFormIdFound(true);
+    }
+  }, [getSelectedCohort, location.state]);
 
   const [formData, setFormData] = useState({});
 
@@ -48,7 +60,7 @@ function CohortForm({
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('SEND', formData);
+    sendStudentSubmission(formData);
   };
 
   const displayForm = () => {
@@ -64,7 +76,8 @@ function CohortForm({
       };
 
       switch (question.type) {
-        case 'text':
+        case 'input':
+        case 'email':
         case 'checkbox':
           return <Input {...inputProps} />;
         case 'textarea':
@@ -88,13 +101,13 @@ function CohortForm({
   if (error) {
     return <div>{error.message} Please try again!</div>;
   }
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  // if (newSubmission) {
-  //   return <div>Successfully created {newCohort}!</div>;
-  // }
+  if (loading) return <Loading />;
 
+  if (successfulSubmission) return <Congrats cohortInfo={selectedCohort} />;
+
+  if (!formIdFound) {
+    return <div>Application not found. Please try again.</div>;
+  }
   return (
     selectedCohort && (
       <Form onSubmit={handleSubmit}>
@@ -113,12 +126,14 @@ const mapStateToProps = state => ({
   loading: state.app.loading,
   error: state.app.error,
   selectedCohort: state.app.selectedCohort,
+  successfulSubmission: state.app.successfulSubmission,
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     getSelectedCohort: applicationID =>
       dispatch(fetchSelectedCohort(applicationID)),
+    sendStudentSubmission: formData => dispatch(studentSubmission(formData)),
   };
 };
 
@@ -128,8 +143,10 @@ export default connect(
 )(CohortForm);
 
 CohortForm.propTypes = {
-  getSelectedCohort: PropTypes.func.isRequired,
+  getSelectedCohort: PropTypes.func,
   error: PropTypes.object,
   loading: PropTypes.bool,
+  sendStudentSubmission: PropTypes.func,
   selectedCohort: PropTypes.object,
+  successfulSubmission: PropTypes.bool,
 };

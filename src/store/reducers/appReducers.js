@@ -1,4 +1,4 @@
-import { actionType } from './actions';
+import { actionType } from '../actions/appActions';
 
 const initialState = {
   currentCohorts: [],

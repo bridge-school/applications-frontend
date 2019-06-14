@@ -1,6 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import reducers from './reducers';
+import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
+import firebaseConfig from '../config/firebaseConfig';
+import reducers from './reducers/rootReducer';
 
 // Logger middleware
 const logger = store => next => action => {
@@ -19,12 +21,21 @@ function createReduxStore(mode = 'development') {
   if (mode === 'development') {
     return createStore(
       reducers,
-      composeEnhancers(applyMiddleware(logger, thunk))
+      composeEnhancers(
+        applyMiddleware(logger, thunk.withExtraArgument({ getFirebase })),
+        reactReduxFirebase(firebaseConfig) // redux binding for firebase
+      )
     );
   }
 
   // Production store
-  return createStore(reducers, applyMiddleware(thunk));
+  return createStore(
+    reducers,
+    compose(
+      applyMiddleware(thunk.withExtraArgument({ getFirebase })),
+      reactReduxFirebase(firebaseConfig) // redux binding for firebase
+    )
+  );
 }
 
 const store = createReduxStore();

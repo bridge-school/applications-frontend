@@ -4,6 +4,7 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import styled from 'styled-components';
 import bridgeTheme from './styles/bridgeTheme';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import LoginView from './views/Login';
 import AdminView from './views/AdminView';
 import StudentView from './views/StudentView';
 import CreateCohortForm from './views/CreateCohortForm';
@@ -35,6 +36,11 @@ const GlobalStyle = createGlobalStyle`
     background: ${p => p.theme.grey};
     border: ${p => p.theme.border};
     border-radius: ${props => props.theme.borderRadius}
+  }
+  .nav-link-style {
+    color: white;
+    text-decoration: none;
+    margin-left: 24px;
   }
   .button-style {
     border-radius: ${p => p.theme.borderRadius};
@@ -74,6 +80,7 @@ class App extends Component {
                 <Switch>
                   <Route path="/" exact component={StudentView} />
                   <Route path="/admin" exact component={AdminView} />
+                  <Route path="/login" exact component={LoginView} />
                   <Route
                     path="/admin/create"
                     exact

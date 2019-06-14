@@ -54,7 +54,6 @@ const ButtonElem = styled.button`
 
 export default function AddQuestion({
   handleInputChange,
-  handleTypeChange,
   handleRequiredChange,
   handleRemoveQuestion,
   data,
@@ -101,7 +100,7 @@ export default function AddQuestion({
                 },
               ],
             }}
-            handleChange={handleTypeChange(index)('type')}
+            handleChange={handleInputChange(index)('type')}
           />
         </DropdownWrapper>
         <CheckboxWrapper>
@@ -150,7 +149,6 @@ AddQuestion.propTypes = {
   data: PropTypes.object,
   index: PropTypes.number,
   handleInputChange: PropTypes.func,
-  handleTypeChange: PropTypes.func,
   handleRequiredChange: PropTypes.func,
   handleAddNewQuestion: PropTypes.func,
   handleRemoveQuestion: PropTypes.func,

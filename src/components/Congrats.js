@@ -14,10 +14,10 @@ const Page = styled.div`
     font-weight: bold;
   }
   p {
-    font-size: 150%;
+    font-size: 140%;
   }
   a {
-    margin-top: 3.5em;
+    margin-top: 4em;
   }
 `;
 
@@ -35,11 +35,16 @@ export default function Congrats({ cohortInfo }) {
       <HorizontalRule />
       <Emoji>🎉</Emoji>
       <p>
-        You have successfully applied for <strong>{cohortDisplayName}</strong>.
+        You have successfully submitted your application to{' '}
+        <strong>{cohortDisplayName}</strong>.
       </p>
       <p>
-        We'll be responding to all applicants on
+        Applications will be open until `Close Date`.
         {/* {dateResponse.toDate()}  */}
+      </p>
+      <p>
+        All applicants will hear back from the Bridge team by `Date of
+        Response`.
       </p>
       <BackToHomeLink />
     </Page>

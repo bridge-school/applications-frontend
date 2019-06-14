@@ -1,16 +1,20 @@
 export const actionType = {
   ERROR: 'ERROR',
-  CREATE_COHORT_REQUEST: 'CREATE_COHORT_REQUEST',
-  CREATE_COHORT_SUCCESS: 'CREATE_COHORT_SUCCESS',
-  CREATE_COHORT_ERROR: 'CREATE_COHORT_ERROR',
+
   FETCH_ALL_COHORTS_REQUEST: 'FETCH_ALL_COHORTS_REQUEST',
   FETCH_ALL_COHORTS_SUCCESS: 'FETCH_ALL_COHORTS_SUCCESS',
+
   FETCH_CURRENT_COHORTS_REQUEST: 'FETCH_CURRENT_COHORTS_REQUEST',
   FETCH_CURRENT_COHORTS_SUCCESS: 'FETCH_CURRENT_COHORTS_SUCCESS',
+
   FETCH_SELECTED_COHORT_REQUEST: 'FETCH_SELECTED_COHORT_REQUEST',
   FETCH_SELECTED_COHORT_SUCCESS: 'FETCH_SELECTED_COHORT_SUCCESS',
 
-  STUDENT_SUBMISSION: 'STUDENT_SUBMISSION',
+  CREATE_COHORT_REQUEST: 'CREATE_COHORT_REQUEST',
+  CREATE_COHORT_SUCCESS: 'CREATE_COHORT_SUCCESS',
+
+  STUDENT_SUBMISSION_REQUEST: 'STUDENT_SUBMISSION_REQUEST',
+  STUDENT_SUBMISSION_SUCCESS: 'STUDENT_SUBMISSION_SUCCESS',
 };
 
 export const BASE_URL =
@@ -121,19 +125,32 @@ export const fetchSelectedCohort = applicationId => dispatch => {
     .catch(err => dispatch(error(err)));
 };
 
-// fetch(`${BASE_URL}/applications/apply`, {
-//   method: 'POST',
-//   body: JSON.stringify(formData),
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-// })
-//   .then(res => {
-//     if (!res.ok) {
-//       throw new Error(res.statusText);
-//     }
-//     return res.json();
-//   })
-//   .then(res => dispatch(createCohortSuccess(res.id)))
-//   .catch(err => dispatch(error(err)));
-// };
+// ---------- student SUBMISSION to a cohort
+export const studentSubmissionRequest = () => ({
+  type: actionType.STUDENT_SUBMISSION_REQUEST,
+});
+
+export const studentSubmissionSuccess = createdID => ({
+  type: actionType.STUDENT_SUBMISSION_SUCCESS,
+  payload: createdID,
+});
+
+export const studentSubmission = formData => dispatch => {
+  dispatch(studentSubmissionRequest());
+
+  fetch(`${BASE_URL}/applications/apply`, {
+    method: 'POST',
+    body: JSON.stringify(formData),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Error submitting application.');
+      }
+      return res.json();
+    })
+    .then(res => dispatch(studentSubmissionSuccess(res.message)))
+    .catch(err => dispatch(error(err)));
+};

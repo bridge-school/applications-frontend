@@ -19,29 +19,27 @@ const Page = styled.div`
   a {
     margin-top: 4em;
   }
-`;
-
-const Emoji = styled.span`
-  font-size: 400%;
-  margin: 1em;
-  display: block;
+  .emoji {
+    font-size: 400%;
+    margin: 1em;
+    display: block;
+  }
 `;
 
 export default function Congrats({ cohortInfo }) {
-  const { cohortDisplayName, dateResponse } = cohortInfo;
+  const { cohortDisplayName } = cohortInfo;
   return (
     <Page>
       <PageTitle title="Congratulations!" />
       <HorizontalRule />
-      <Emoji>🎉</Emoji>
+      <span className="emoji" role="img" aria-label="Party popper emoji">
+        🎉
+      </span>
       <p>
         You have successfully submitted your application to{' '}
         <strong>{cohortDisplayName}</strong>.
       </p>
-      <p>
-        Applications will be open until `Close Date`.
-        {/* {dateResponse.toDate()}  */}
-      </p>
+      <p>Applications will be open until `Close Date`.</p>
       <p>
         All applicants will hear back from the Bridge team by `Date of
         Response`.

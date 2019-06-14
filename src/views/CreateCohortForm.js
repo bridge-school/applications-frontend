@@ -77,11 +77,21 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
     convertMultiQuestion();
 
     // to do - filter through DB for duplicate name
+    const cohortTypeSplitAtDash = form.cohortType.split('-');
     const cohortSlug =
       form.cohortName.toLowerCase().replace(/ /g, '-') +
       '-' +
-      form.cohortType.split('-')[0];
+      cohortTypeSplitAtDash[0];
     form.cohortSlug = cohortSlug;
+
+    const titleCaseCohortType = cohortTypeSplitAtDash.map(
+      word => word.charAt(0).toUpperCase() + word.slice(1)
+    );
+
+    const cohortDisplayName = `${form.cohortName} - ${titleCaseCohortType.join(
+      ' '
+    )}`;
+    form.cohortDisplayName = cohortDisplayName;
 
     const defaultQuestions = [
       {

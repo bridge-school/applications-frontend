@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import logo from '../images/bridge-logo.svg';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logOut } from '../store/actions/authActions';
 
 const TopBar = styled.header`
   background: ${props => props.theme.indigo};
@@ -30,12 +32,18 @@ const Title = styled.h1`
   margin: 0;
 `;
 
-const Admin = styled.p`
+const AdminLinks = styled.div`
   margin-left: auto;
   font-size: 0.8rem;
 `;
 
-export default function Header({ admin }) {
+function Header({ auth, logOut }) {
+  // Handle Logout
+  const handleLogout = e => {
+    e.preventDefault();
+    logOut();
+  };
+
   return (
     <TopBar>
       <Wrapper>
@@ -43,12 +51,43 @@ export default function Header({ admin }) {
           <Logo src={logo} alt="Bridge Logo" />
         </Link>
         <Title>Cohort Application</Title>
-        {admin && <Admin>Admin View</Admin>}
+        {auth.uid ? (
+          <AdminLinks>
+            <Link className="nav-link-style" to="/admin">
+              Admin View
+            </Link>
+            <Link className="nav-link-style" to="/" onClick={handleLogout}>
+              Logout
+            </Link>
+          </AdminLinks>
+        ) : (
+          <AdminLinks>
+            <Link className="nav-link-style" to="/login">
+              Login
+            </Link>
+          </AdminLinks>
+        )}
       </Wrapper>
     </TopBar>
   );
 }
 
+const mapDispatchToProps = {
+  logOut,
+};
+
+const mapStateToProps = state => {
+  return {
+    auth: state.firebase.auth,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);
+
 Header.propTypes = {
-  admin: PropTypes.bool,
+  auth: PropTypes.object,
+  logOut: PropTypes.func.isRequired,
 };

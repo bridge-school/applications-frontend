@@ -6,7 +6,8 @@ import Input from '../components/Input';
 import Dropdown from '../components/Dropdown';
 import AddQuestion from '../components/AddQuestion';
 import { connect } from 'react-redux';
-import { createCohort } from '../store/actions';
+import { Redirect } from 'react-router-dom';
+import { createCohort } from '../store/actions/appActions';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import uuid from 'uuid/v4';
@@ -52,7 +53,7 @@ const Note = styled.p`
   color: #555;
 `;
 
-function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
+function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
   /**
    * form are the static form fields.
    * setValues is the method to set the state for those
@@ -195,6 +196,9 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
     setQuestionList(newList);
   };
 
+  // If not loggedin redirect
+  if (!auth.uid) return <Redirect to="/login" />;
+
   if (error) {
     return <div>{error.message} Please try again!</div>;
   }
@@ -298,9 +302,10 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading }) {
 }
 
 const mapStateToProps = state => ({
-  loading: state.loading,
-  newCohort: state.newCohort,
-  error: state.error,
+  loading: state.app.loading,
+  newCohort: state.app.newCohort,
+  error: state.app.error,
+  auth: state.firebase.auth,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -319,4 +324,5 @@ CreateCohortForm.propTypes = {
   error: PropTypes.object,
   loading: PropTypes.bool,
   newCohort: PropTypes.string,
+  auth: PropTypes.object.isRequired,
 };

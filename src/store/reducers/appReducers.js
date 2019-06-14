@@ -33,6 +33,7 @@ const reducers = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        newCohort: null,
         error: null,
       };
     case actionType.FETCH_ALL_COHORTS_SUCCESS:

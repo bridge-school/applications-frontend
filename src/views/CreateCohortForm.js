@@ -111,7 +111,7 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
     form.formQuestions = [...defaultQuestions, ...questionList];
 
     console.log('CREATING', form);
-    // submitCohort(form);
+    submitCohort(form);
   };
 
   // Generic handler for input fields to save the value as you type
@@ -158,16 +158,11 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
     populateQuestionsList(),
   ]);
 
-  // Used by Description input and Options additional input.
   const updateQuestionInputField = i => type => e => {
     const values = [...questionList];
-    values[i][type] = e.target.value;
-    setQuestionList(values);
-  };
-
-  const updateQuestionRequiredField = i => type => e => {
-    const values = [...questionList];
-    values[i][type] = e.target.checked;
+    type === 'isRequired'
+      ? (values[i][type] = e.target.checked)
+      : (values[i][type] = e.target.value);
     setQuestionList(values);
   };
 
@@ -270,7 +265,6 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
           <AddQuestion
             data={question}
             handleInputChange={updateQuestionInputField}
-            handleRequiredChange={updateQuestionRequiredField}
             handleAddNewQuestion={handleAddNewQuestion}
             handleRemoveQuestion={handleRemoveQuestion}
             key={question.id}

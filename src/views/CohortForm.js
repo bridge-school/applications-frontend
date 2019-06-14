@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { fetchSelectedCohort } from '../store/actions';
+import { fetchSelectedCohort } from '../store/actions/appActions';
 import PageTitle from '../components/PageTitle';
 import Input from '../components/Input';
 import Radio from '../components/Radio';
@@ -122,9 +122,9 @@ function CohortForm({
 }
 
 const mapStateToProps = state => ({
-  loading: state.loading,
-  error: state.error,
-  selectedCohort: state.selectedCohort,
+  loading: state.app.loading,
+  error: state.app.error,
+  selectedCohort: state.app.selectedCohort,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -143,4 +143,5 @@ CohortForm.propTypes = {
   getSelectedCohort: PropTypes.func.isRequired,
   error: PropTypes.object,
   loading: PropTypes.bool,
+  selectedCohort: PropTypes.object,
 };

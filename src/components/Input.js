@@ -2,25 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+const Container = styled.div`
+  margin: 1.5em 0;
+`;
+
 const InputElement = styled.input`
-  padding: ${props => props.theme.padding};
-  margin: ${props => props.theme.margin} 0;
-  color: ${props => props.theme.black};
+  padding: 0.55em;
   display: block;
   width: 100%;
 `;
 
 const TextareaElement = styled.textarea`
-  padding: ${props => props.theme.padding};
-  margin: ${props => props.theme.margin} 0;
-  color: ${props => props.theme.black};
-  background: ${props => props.theme.inputBackground};
-  border: ${props => props.theme.borderWidth} solid
-    ${props => props.theme.borderColor};
-  border-radius: ${props => props.theme.borderRadius};
   display: block;
-  border-radius: ${props => props.theme.borderRadius};
   width: 100%;
+  padding: 0.6em;
 `;
 
 export default function Input({
@@ -32,7 +27,7 @@ export default function Input({
   required,
 }) {
   return (
-    <div>
+    <Container>
       <label htmlFor={name}>
         {label}
         {required && '*'}
@@ -56,7 +51,7 @@ export default function Input({
           />
         )}
       </label>
-    </div>
+    </Container>
   );
 }
 

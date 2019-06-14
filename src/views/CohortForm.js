@@ -19,9 +19,6 @@ const Form = styled.form`
     margin: 2em auto;
     display: block;
   }
-  & div {
-    margin: 1em 0;
-  }
 `;
 
 const CohortName = styled.p`

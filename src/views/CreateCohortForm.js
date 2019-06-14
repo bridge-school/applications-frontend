@@ -47,11 +47,10 @@ const Dates = styled.div`
 `;
 
 const Note = styled.p`
-  font-style: italic;
   line-height: 1.2;
   max-width: 41em;
   margin-bottom: 2em;
-  color: #555;
+  color: #666;
 `;
 
 function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {

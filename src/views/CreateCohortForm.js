@@ -7,7 +7,7 @@ import Dropdown from '../components/Dropdown';
 import AddQuestion from '../components/AddQuestion';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { createCohort } from '../store/actions/appActions';
+import { createCohort, updateCohort } from '../store/actions/appActions';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import uuid from 'uuid/v4';
@@ -55,6 +55,7 @@ const Note = styled.p`
 
 function CreateCohortForm({
   submitCohort,
+  dispatchUpdate,
   error,
   newCohort,
   loading,
@@ -120,6 +121,7 @@ function CreateCohortForm({
     if (editMode) {
       form.formQuestions = [...questionList];
       console.log(form, 'UPDATE');
+      dispatchUpdate(form.id, form);
     } else {
       const defaultQuestions = [
         {
@@ -369,6 +371,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     submitCohort: formData => dispatch(createCohort(formData)),
+    dispatchUpdate: (id, formData) => dispatch(updateCohort(id, formData)),
   };
 };
 
@@ -379,6 +382,7 @@ export default connect(
 
 CreateCohortForm.propTypes = {
   submitCohort: PropTypes.func.isRequired,
+  dispatchUpdate: PropTypes.func.isRequired,
   error: PropTypes.object,
   loading: PropTypes.bool,
   newCohort: PropTypes.string,

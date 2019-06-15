@@ -11,6 +11,7 @@ import Input from '../components/Input';
 import Congrats from '../components/Congrats';
 import Radio from '../components/Radio';
 import Button from '../components/Button';
+import CheckBox from '../components/CheckBox';
 import { connect } from 'react-redux';
 
 const Form = styled.form`
@@ -78,19 +79,24 @@ function CohortForm({
       switch (question.type) {
         case 'input':
         case 'email':
-        case 'checkbox':
           return <Input {...inputProps} />;
+        case 'checkbox':
+          return (
+            <CheckBox
+              {...inputProps}
+              description={question.description}
+              items={question.options}
+            />
+          );
         case 'textarea':
           return <Input {...inputProps} rows={question.rows} />;
         case 'radio':
         case 'select':
           return (
             <Radio
+              {...inputProps}
               description={question.description}
-              name={question.id}
-              key={question.id}
-              // TO DO
-              items={['one', 'two', 'three']}
+              items={question.options}
             />
           );
         default:

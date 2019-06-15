@@ -78,20 +78,24 @@ export default function AddQuestion({
               description: `Question #${index + 1} Type`,
               items: [
                 {
-                  label: 'short answer',
+                  label: 'Short Answer',
                   value: 'input',
                 },
                 {
-                  label: 'paragraph',
+                  label: 'Paragraph',
                   value: 'textarea',
                 },
                 {
-                  label: 'checkboxes',
+                  label: 'Checkboxes',
                   value: 'checkbox',
                 },
                 {
-                  label: 'drop down',
+                  label: 'Dropdown',
                   value: 'select',
+                },
+                {
+                  label: 'Email',
+                  value: 'email',
                 },
               ],
             }}

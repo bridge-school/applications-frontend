@@ -52,8 +52,6 @@ const ButtonElem = styled.button`
 
 export default function AddQuestion({
   handleInputChange,
-  handleTypeChange,
-  handleRequiredChange,
   handleRemoveQuestion,
   data,
   index,
@@ -98,7 +96,7 @@ export default function AddQuestion({
                 },
               ],
             }}
-            handleChange={handleTypeChange(index)('type')}
+            handleChange={handleInputChange(index)('type')}
           />
         </DropdownWrapper>
         <CheckboxWrapper>
@@ -111,7 +109,7 @@ export default function AddQuestion({
                 {
                   label: 'Is Required',
                   value: data.isRequired,
-                  handleChange: handleRequiredChange(index)('isRequired'),
+                  handleChange: handleInputChange(index)('isRequired'),
                 },
               ],
             }}
@@ -147,8 +145,6 @@ AddQuestion.propTypes = {
   data: PropTypes.object,
   index: PropTypes.number,
   handleInputChange: PropTypes.func,
-  handleTypeChange: PropTypes.func,
-  handleRequiredChange: PropTypes.func,
   handleAddNewQuestion: PropTypes.func,
   handleRemoveQuestion: PropTypes.func,
 };

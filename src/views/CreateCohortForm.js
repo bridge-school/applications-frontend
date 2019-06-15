@@ -120,7 +120,7 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
     ];
     form.formQuestions = [...defaultQuestions, ...questionList];
 
-    console.log(JSON.stringify(form));
+    console.log('CREATING', form);
     submitCohort(form);
   };
 
@@ -168,30 +168,11 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
     populateQuestionsList(),
   ]);
 
-  // ADD QUESTION INPUT HANDLERS
-
-  // Used by Description input and Options additional input.
   const updateQuestionInputField = i => type => e => {
     const values = [...questionList];
-    //console.log('target.value: ', e.target.value);
-    values[i][type] = e.target.value;
-    //console.log(values);
-    setQuestionList(values);
-  };
-
-  const updateQuestionTypeField = i => type => e => {
-    const values = [...questionList];
-    values[i][type] = e.target.value;
-
-    //console.log(values);
-    setQuestionList(values);
-  };
-
-  const updateQuestionRequiredField = i => type => e => {
-    const values = [...questionList];
-    values[i][type] = e.target.checked;
-
-    //console.log(values);
+    type === 'isRequired'
+      ? (values[i][type] = e.target.checked)
+      : (values[i][type] = e.target.value);
     setQuestionList(values);
   };
 
@@ -303,8 +284,6 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
           <AddQuestion
             data={question}
             handleInputChange={updateQuestionInputField}
-            handleTypeChange={updateQuestionTypeField}
-            handleRequiredChange={updateQuestionRequiredField}
             handleAddNewQuestion={handleAddNewQuestion}
             handleRemoveQuestion={handleRemoveQuestion}
             key={question.id}

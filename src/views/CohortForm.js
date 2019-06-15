@@ -83,6 +83,7 @@ function CohortForm({
         case 'textarea':
           return <Input {...inputProps} rows={question.rows} />;
         case 'radio':
+        case 'select':
           return (
             <Radio
               description={question.description}

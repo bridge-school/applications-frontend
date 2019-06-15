@@ -36,7 +36,13 @@ const Header = styled.header`
 `;
 
 const EditLink = styled(Link)`
-  text-align: right;
+  && {
+    border-color: ${p => p.theme.indigo};
+    background: ${p => p.theme.indigo};
+    &:hover {
+      color: ${p => p.theme.indigo};
+    }
+  }
 `;
 
 function CohortForm({

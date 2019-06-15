@@ -110,16 +110,48 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
         type: 'checkbox',
         isRequired: true,
         id: 'identify',
+        options: [
+          {
+            label: 'Man',
+            value: 'man',
+          },
+          {
+            label: 'Woman',
+            value: 'woman',
+          },
+          {
+            label: 'Agender',
+            value: 'agender',
+          },
+          {
+            label: 'Non-Binary',
+            value: 'nonbinary',
+          },
+        ],
       },
       {
         description: 'What pronouns should we use?',
         type: 'checkbox',
         isRequired: true,
         id: 'pronouns',
+        options: [
+          {
+            label: 'He/Him',
+            value: 'him',
+          },
+          {
+            label: 'She/Her',
+            value: 'her',
+          },
+          {
+            label: 'They/Them',
+            value: 'them',
+          },
+        ],
       },
     ];
-    form.formQuestions = [...defaultQuestions, ...questionList];
 
+    form.formQuestions = [...defaultQuestions, ...questionList];
     console.log('CREATING', form);
     submitCohort(form);
   };
@@ -190,12 +222,12 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
   // If not loggedin redirect
   if (!auth.uid) return <Redirect to="/login" />;
 
-  if (error) {
-    return <div>{error.message} Please try again!</div>;
-  }
-  if (loading) {
-    return <div>Submitting your form to the database...</div>;
-  }
+  // if (error) {
+  //   return <div>{error.message} Please try again!</div>;
+  // }
+  // if (loading) {
+  //   return <div>Submitting your form to the database...</div>;
+  // }
   if (newCohort) {
     return (
       <div>
@@ -209,93 +241,101 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
     );
   }
   return (
-    <Form onSubmit={handleFormSubmit}>
-      <section>
-        <PageTitle title="Create Cohort Application Form" />
-        <Input
-          name="cohortName"
-          type="text"
-          value={form.cohortName}
-          required
-          label="Cohort Name"
-          handleChange={updateField}
-        />
-        <DropdownWrapper>
-          <Dropdown
+    <>
+      {loading && (
+        <div className="loading-msg">
+          Submitting your form to the database...
+        </div>
+      )}
+      {error && <div>{error.message} Please try again!</div>}
+      <Form onSubmit={handleFormSubmit}>
+        <section>
+          <PageTitle title="Create Cohort Application Form" />
+          <Input
+            name="cohortName"
+            type="text"
+            value={form.cohortName}
             required
-            name="cohortType"
-            value={form.cohortType}
-            data={{
-              description: 'Cohort Type',
-              items: [
-                {
-                  label: 'Backend Development',
-                  value: 'backend-development',
-                },
-                {
-                  label: 'Frontend Development',
-                  value: 'frontend-development',
-                },
-                {
-                  label: 'Product Design',
-                  value: 'design',
-                },
-              ],
-            }}
+            label="Cohort Name"
             handleChange={updateField}
           />
-        </DropdownWrapper>
-        <Dates>
-          <InputDate
-            name="dateOpen"
-            value={form.dateOpen}
-            required
-            label="Date Open"
-            handleChange={updateField}
-          />
-          <InputDate
-            name="dateClosed"
-            value={form.dateClosed}
-            required
-            label="Date Closed"
-            handleChange={updateField}
-          />
-          <InputDate
-            name="dateResponse"
-            value={form.dateResponse}
-            required
-            label="Date of Response"
-            handleChange={updateField}
-          />
-        </Dates>
-      </section>
-      <section>
-        <PageTitle title="Application Questions" />
+          <DropdownWrapper>
+            <Dropdown
+              required
+              name="cohortType"
+              value={form.cohortType}
+              data={{
+                description: 'Cohort Type',
+                items: [
+                  {
+                    label: 'Backend Development',
+                    value: 'backend-development',
+                  },
+                  {
+                    label: 'Frontend Development',
+                    value: 'frontend-development',
+                  },
+                  {
+                    label: 'Product Design',
+                    value: 'design',
+                  },
+                ],
+              }}
+              handleChange={updateField}
+            />
+          </DropdownWrapper>
+          <Dates>
+            <InputDate
+              name="dateOpen"
+              value={form.dateOpen}
+              required
+              label="Date Open"
+              handleChange={updateField}
+            />
+            <InputDate
+              name="dateClosed"
+              value={form.dateClosed}
+              required
+              label="Date Closed"
+              handleChange={updateField}
+            />
+            <InputDate
+              name="dateResponse"
+              value={form.dateResponse}
+              required
+              label="Date of Response"
+              handleChange={updateField}
+            />
+          </Dates>
+        </section>
+        <section>
+          <PageTitle title="Application Questions" />
 
-        <Note>
-          Note: <strong>Full Name</strong>, <strong>Email</strong>,{' '}
-          <strong>How do you identify?</strong>, and{' '}
-          <strong>What pronouns should we use?</strong> will be required
-          questions added to the beginning of the student&rsquo;s application
-          form.
-        </Note>
+          <Note>
+            Note: <strong>Full Name</strong>, <strong>Email</strong>,{' '}
+            <strong>How do you identify?</strong>, and{' '}
+            <strong>What pronouns should we use?</strong> will be required
+            questions added to the beginning of the student&rsquo;s application
+            form.
+          </Note>
 
-        {questionList.map((question, index) => (
-          <AddQuestion
-            data={question}
-            handleInputChange={updateQuestionInputField}
-            handleAddNewQuestion={handleAddNewQuestion}
-            handleRemoveQuestion={handleRemoveQuestion}
-            key={question.id}
-            index={index}
-          />
-        ))}
+          {questionList.map((question, index) => (
+            <AddQuestion
+              data={question}
+              handleInputChange={updateQuestionInputField}
+              handleAddNewQuestion={handleAddNewQuestion}
+              handleRemoveQuestion={handleRemoveQuestion}
+              key={question.id}
+              index={index}
+            />
+          ))}
 
-        <Button text="Add new Question" handleClick={handleAddNewQuestion} />
-      </section>
+          <Button text="Add new Question" handleClick={handleAddNewQuestion} />
+        </section>
 
-      <Button text="create application group" />
-    </Form>
+        <Button text="create application group" />
+      </Form>
+    </>
   );
 }
 
@@ -304,6 +344,7 @@ const mapStateToProps = state => ({
   newCohort: state.app.newCohort,
   error: state.app.error,
   auth: state.firebase.auth,
+  cohortSlug: state.app.cohortSlug,
 });
 
 const mapDispatchToProps = dispatch => {

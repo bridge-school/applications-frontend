@@ -11,19 +11,29 @@ const Header = styled.header`
   margin: 0 0 3rem 0;
 `;
 
-function StudentView({ error, loading, getCurrentCohorts, currentCohorts }) {
+export function StudentView({
+  error,
+  loading,
+  getCurrentCohorts,
+  currentCohorts,
+}) {
   useEffect(() => {
     getCurrentCohorts();
   }, [getCurrentCohorts]);
 
   if (error) {
-    return <div>Error! {error.message}</div>;
+    return (
+      <div>
+        <p>Error!</p>
+        <p>{error.message}</p>
+      </div>
+    );
   }
   if (loading) return <Loading />;
 
   return (
     <div>
-      <Header>
+      <Header data-testid="header">
         <PageTitle title="Cohort Application Forms" />
       </Header>
       <ListContainer cohortData={currentCohorts} />

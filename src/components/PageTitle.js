@@ -10,7 +10,7 @@ const Title = styled.h2`
 `;
 
 export default function PageTitle({ title }) {
-  return <Title>{title}</Title>;
+  return <Title data-testid="h2tag">{title}</Title>;
 }
 
 PageTitle.propTypes = {

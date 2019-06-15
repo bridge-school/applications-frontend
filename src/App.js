@@ -7,7 +7,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LoginView from './views/Login';
 import AdminView from './views/AdminView';
 import StudentView from './views/StudentView';
-import EditCohortForm from './views/EditCohortForm';
 import CreateCohortForm from './views/CreateCohortForm';
 import CohortForm from './views/CohortForm';
 import NotFound from './views/NotFound';
@@ -88,7 +87,11 @@ class App extends Component {
                     exact
                     component={CreateCohortForm}
                   />
-                  <Route path="/admin/:coID" exact component={EditCohortForm} />
+                  <Route
+                    path="/admin/:coID"
+                    exact
+                    component={CreateCohortForm}
+                  />
                   <Route path="/apply" exact component={StudentView} />
                   <Route path="/apply/:coID" component={CohortForm} />
 

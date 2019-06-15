@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import PageTitle from '../components/PageTitle';
 import ListContainer from '../components/ListContainer';
 import styled from 'styled-components';
+import Loading from '../components/Loading';
 import { fetchCurrentCohorts } from '../store/actions/appActions';
 
 const Header = styled.header`
@@ -18,10 +19,7 @@ function StudentView({ error, loading, getCurrentCohorts, currentCohorts }) {
   if (error) {
     return <div>Error! {error.message}</div>;
   }
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) return <Loading />;
 
   return (
     <div>

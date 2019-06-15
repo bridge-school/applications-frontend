@@ -11,6 +11,7 @@ import { createCohort, fetchCohortSlug } from '../store/actions/appActions';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import uuid from 'uuid/v4';
+import { Link } from 'react-router-dom';
 
 const Form = styled.form`
   button {
@@ -46,11 +47,10 @@ const Dates = styled.div`
 `;
 
 const Note = styled.p`
-  font-style: italic;
   line-height: 1.2;
   max-width: 41em;
   margin-bottom: 2em;
-  color: #555;
+  color: #666;
 `;
 
 function CreateCohortForm({
@@ -84,15 +84,26 @@ function CreateCohortForm({
     convertMultiQuestion();
 
     // to do - filter through DB for duplicate name
+    const cohortTypeSplitAtDash = form.cohortType.split('-');
     const cohortSlug =
       form.cohortName.toLowerCase().replace(/ /g, '-') +
       '-' +
-      form.cohortType.split('-')[0];
+      cohortTypeSplitAtDash[0];
     form.cohortSlug = cohortSlug;
 
     fetchSlug(cohortSlug); // if DB has result, slugExists = true
 
     if (slugExists !== null && !slugExists) {
+      
+      const titleCaseCohortType = cohortTypeSplitAtDash.map(
+        word => word.charAt(0).toUpperCase() + word.slice(1)
+      );
+
+      const cohortDisplayName = `${form.cohortName} - ${titleCaseCohortType.join(
+        ' '
+      )}`;
+      form.cohortDisplayName = cohortDisplayName;
+      
       const defaultQuestions = [
         {
           description: 'Full Name',
@@ -121,8 +132,7 @@ function CreateCohortForm({
       ];
 
       form.formQuestions = [...defaultQuestions, ...questionList];
-
-      console.log(JSON.stringify(form));
+      console.log('CREATING', form);
       submitCohort(form);
     }
   };
@@ -171,30 +181,11 @@ function CreateCohortForm({
     populateQuestionsList(),
   ]);
 
-  // ADD QUESTION INPUT HANDLERS
-
-  // Used by Description input and Options additional input.
   const updateQuestionInputField = i => type => e => {
     const values = [...questionList];
-    //console.log('target.value: ', e.target.value);
-    values[i][type] = e.target.value;
-    //console.log(values);
-    setQuestionList(values);
-  };
-
-  const updateQuestionTypeField = i => type => e => {
-    const values = [...questionList];
-    values[i][type] = e.target.value;
-
-    //console.log(values);
-    setQuestionList(values);
-  };
-
-  const updateQuestionRequiredField = i => type => e => {
-    const values = [...questionList];
-    values[i][type] = e.target.checked;
-
-    //console.log(values);
+    type === 'isRequired'
+      ? (values[i][type] = e.target.checked)
+      : (values[i][type] = e.target.value);
     setQuestionList(values);
   };
 
@@ -219,7 +210,16 @@ function CreateCohortForm({
   //   return <div>Submitting your form to the database...</div>;
   // }
   if (newCohort) {
-    return <div>Successfully created {newCohort}!</div>;
+    return (
+      <div>
+        <p>
+          <strong>{newCohort}</strong>
+        </p>
+        <p>
+          <Link to="/">Go back to homepage</Link>
+        </p>
+      </div>
+    );
   }
   return (
     <>
@@ -279,52 +279,50 @@ function CreateCohortForm({
               label="Date Open"
               handleChange={updateField}
             />
-            <InputDate
-              name="dateClosed"
-              value={form.dateClosed}
-              required
-              label="Date Closed"
-              handleChange={updateField}
-            />
-            <InputDate
-              name="dateResponse"
-              value={form.dateResponse}
-              required
-              label="Date of Response"
-              handleChange={updateField}
-            />
-          </Dates>
-        </section>
-        <section>
-          <PageTitle title="Application Questions" />
+          <InputDate
+            name="dateClosed"
+            value={form.dateClosed}
+            required
+            label="Date Closed"
+            handleChange={updateField}
+          />
+          <InputDate
+            name="dateResponse"
+            value={form.dateResponse}
+            required
+            label="Date of Response"
+            handleChange={updateField}
+          />
+        </Dates>
+      </section>
+      <section>
+        <PageTitle title="Application Questions" />
 
-          <Note>
-            Note: <strong>Full Name</strong>, <strong>Email</strong>,{' '}
-            <strong>How do you identify?</strong>, and{' '}
-            <strong>What pronouns should we use?</strong> will be required
-            questions added to the beginning of the student&rsquo;s application
-            form.
-          </Note>
+        <Note>
+          Note: <strong>Full Name</strong>, <strong>Email</strong>,{' '}
+          <strong>How do you identify?</strong>, and{' '}
+          <strong>What pronouns should we use?</strong> will be required
+          questions added to the beginning of the student&rsquo;s application
+          form.
+        </Note>
 
-          {questionList.map((question, index) => (
-            <AddQuestion
-              data={question}
-              handleInputChange={updateQuestionInputField}
-              handleTypeChange={updateQuestionTypeField}
-              handleRequiredChange={updateQuestionRequiredField}
-              handleAddNewQuestion={handleAddNewQuestion}
-              handleRemoveQuestion={handleRemoveQuestion}
-              key={question.id}
-              index={index}
-            />
-          ))}
+        {questionList.map((question, index) => (
+          <AddQuestion
+            data={question}
+            handleInputChange={updateQuestionInputField}
+            handleAddNewQuestion={handleAddNewQuestion}
+            handleRemoveQuestion={handleRemoveQuestion}
+            key={question.id}
+            index={index}
+          />
+        ))}
 
-          <Button text="Add new Question" handleClick={handleAddNewQuestion} />
-        </section>
+        <Button text="Add new Question" handleClick={handleAddNewQuestion} />
+      </section>
 
-        <Button text="create application group" />
-      </Form>
-    </>
+      <Button text="create application group" />
+    </Form>
+  </>
   );
 }
 

@@ -26,14 +26,15 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.15;
   }
   label {
-    font-size: 0.8em;
+    font-size: 0.95em;
     font-weight: bold;
   }  
   button {
     cursor: pointer
   }
-  input, select {
+  input, select, textarea {
     background: ${p => p.theme.grey};
+    margin-top: .25em;
     border: ${p => p.theme.border};
     border-radius: ${props => props.theme.borderRadius}
   }

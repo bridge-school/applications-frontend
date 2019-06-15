@@ -16,14 +16,12 @@ const QuestionOuterWrapper = styled.div`
 const QuestionInnerWrapper = styled.div`
   display: flex;
   align-items: flex-start;
-  padding-bottom: ${props => props.theme.padding};
-  margin-bottom: 1rem;
   width: 100%;
 `;
 
 const InputWrapper = styled.div`
   width: 66%;
-  margin-right: 2rem;
+  margin: -1.5em 2rem 0 0;
 `;
 
 const DropdownWrapper = styled.div`
@@ -39,7 +37,7 @@ const CheckboxWrapper = styled.div`
 const ButtonElem = styled.button`
   && {
     padding: 0.25em 0.5em 0.35em;
-    margin: 1.5rem 0 0 1em;
+    margin: 1.75rem 0 0 1em;
     border-radius: 50%;
     border: 1px solid;
     font-weight: bold;
@@ -54,8 +52,6 @@ const ButtonElem = styled.button`
 
 export default function AddQuestion({
   handleInputChange,
-  handleTypeChange,
-  handleRequiredChange,
   handleRemoveQuestion,
   data,
   index,
@@ -81,7 +77,6 @@ export default function AddQuestion({
             required
             data={{
               description: `Question #${index + 1} Type`,
-              placeholder: 'Question type',
               items: [
                 {
                   label: 'short answer',
@@ -101,7 +96,7 @@ export default function AddQuestion({
                 },
               ],
             }}
-            handleChange={handleTypeChange(index)('type')}
+            handleChange={handleInputChange(index)('type')}
           />
         </DropdownWrapper>
         <CheckboxWrapper>
@@ -114,7 +109,7 @@ export default function AddQuestion({
                 {
                   label: 'Is Required',
                   value: data.isRequired,
-                  handleChange: handleRequiredChange(index)('isRequired'),
+                  handleChange: handleInputChange(index)('isRequired'),
                 },
               ],
             }}
@@ -150,8 +145,6 @@ AddQuestion.propTypes = {
   data: PropTypes.object,
   index: PropTypes.number,
   handleInputChange: PropTypes.func,
-  handleTypeChange: PropTypes.func,
-  handleRequiredChange: PropTypes.func,
   handleAddNewQuestion: PropTypes.func,
   handleRemoveQuestion: PropTypes.func,
 };

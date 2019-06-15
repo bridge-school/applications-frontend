@@ -110,12 +110,44 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
         type: 'checkbox',
         isRequired: true,
         id: 'identify',
+        options: [
+          {
+            label: 'Man',
+            value: 'man',
+          },
+          {
+            label: 'Woman',
+            value: 'woman',
+          },
+          {
+            label: 'Agender',
+            value: 'agender',
+          },
+          {
+            label: 'Non-Binary',
+            value: 'nonbinary',
+          },
+        ],
       },
       {
         description: 'What pronouns should we use?',
         type: 'checkbox',
         isRequired: true,
         id: 'pronouns',
+        options: [
+          {
+            label: 'He/Him',
+            value: 'him',
+          },
+          {
+            label: 'She/Her',
+            value: 'her',
+          },
+          {
+            label: 'They/Them',
+            value: 'them',
+          },
+        ],
       },
     ];
 

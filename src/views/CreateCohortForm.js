@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PageTitle from '../components/PageTitle';
 import InputDate from '../components/InputDate';
 import Button from '../components/Button';
@@ -53,12 +53,16 @@ const Note = styled.p`
   color: #666;
 `;
 
-function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
-  /**
-   * form are the static form fields.
-   * setValues is the method to set the state for those
-   * static form fields.
-   */
+function CreateCohortForm({
+  submitCohort,
+  error,
+  newCohort,
+  loading,
+  auth,
+  location,
+}) {
+  const [editMode, setEditMode] = useState(false);
+
   const [form, setValues] = useState({
     cohortName: '',
     cohortType: '',
@@ -66,6 +70,28 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
     dateClosed: '',
     dateResponse: '',
   });
+
+  // ------- Application Questions section
+  const populateQuestionsList = () => ({
+    description: '',
+    type: '',
+    isRequired: false,
+    id: uuid(),
+  });
+
+  const [questionList, setQuestionList] = useState([
+    populateQuestionsList(),
+    populateQuestionsList(),
+  ]);
+
+  useEffect(() => {
+    // if formData was included in the link to this component, then populate it with that formData for editing purposes
+    if (location.state && location.state.formData) {
+      setEditMode(true);
+      setValues(location.state.formData);
+      setQuestionList(location.state.formData.formQuestions);
+    }
+  }, [location.state]);
 
   // Handle Form Submission
   const handleFormSubmit = e => {
@@ -75,7 +101,6 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
     // an array of objects
     convertMultiQuestion();
 
-    // to do - filter through DB for duplicate name
     const cohortTypeSplitAtDash = form.cohortType.split('-');
     const cohortSlug =
       form.cohortName.toLowerCase().replace(/ /g, '-') +
@@ -92,68 +117,74 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
     )}`;
     form.cohortDisplayName = cohortDisplayName;
 
-    const defaultQuestions = [
-      {
-        description: 'Full Name',
-        type: 'input',
-        isRequired: true,
-        id: 'fullName',
-      },
-      {
-        description: 'Email',
-        type: 'email',
-        isRequired: true,
-        id: 'email',
-      },
-      {
-        description: 'How do you identify?',
-        type: 'checkbox',
-        isRequired: true,
-        id: 'identify',
-        options: [
-          {
-            label: 'Man',
-            value: 'man',
-          },
-          {
-            label: 'Woman',
-            value: 'woman',
-          },
-          {
-            label: 'Agender',
-            value: 'agender',
-          },
-          {
-            label: 'Non-Binary',
-            value: 'nonbinary',
-          },
-        ],
-      },
-      {
-        description: 'What pronouns should we use?',
-        type: 'checkbox',
-        isRequired: true,
-        id: 'pronouns',
-        options: [
-          {
-            label: 'He/Him',
-            value: 'him',
-          },
-          {
-            label: 'She/Her',
-            value: 'her',
-          },
-          {
-            label: 'They/Them',
-            value: 'them',
-          },
-        ],
-      },
-    ];
-
-    form.formQuestions = [...defaultQuestions, ...questionList];
-    console.log('CREATING', form);
-    submitCohort(form);
+    if (editMode) {
+      form.formQuestions = [...questionList];
+      console.log(form, 'UPDATE');
+    } else {
+      const defaultQuestions = [
+        {
+          description: 'Full Name',
+          type: 'input',
+          isRequired: true,
+          id: 'fullName',
+        },
+        {
+          description: 'Email',
+          type: 'email',
+          isRequired: true,
+          id: 'email',
+        },
+        {
+          description: 'How do you identify?',
+          type: 'checkbox',
+          isRequired: true,
+          id: 'identify',
+          multiValues: 'Man, Woman, Agender, Non-Binary',
+          options: [
+            {
+              label: 'Man',
+              value: 'man',
+            },
+            {
+              label: 'Woman',
+              value: 'woman',
+            },
+            {
+              label: 'Agender',
+              value: 'agender',
+            },
+            {
+              label: 'Non-Binary',
+              value: 'nonbinary',
+            },
+          ],
+        },
+        {
+          description: 'What pronouns should we use?',
+          type: 'checkbox',
+          isRequired: true,
+          id: 'pronouns',
+          multiValues: 'He/Him, She/Her, They/Them',
+          options: [
+            {
+              label: 'He/Him',
+              value: 'him',
+            },
+            {
+              label: 'She/Her',
+              value: 'her',
+            },
+            {
+              label: 'They/Them',
+              value: 'them',
+            },
+          ],
+        },
+      ];
+      form.formQuestions = [...defaultQuestions, ...questionList];
+      console.log('CREATING', form);
+      submitCohort(form);
+    }
   };
 
   // Generic handler for input fields to save the value as you type
@@ -187,19 +218,6 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
     setQuestionList(values);
   };
 
-  // ------- Application Questions section
-  const populateQuestionsList = () => ({
-    description: '',
-    type: '',
-    isRequired: false,
-    id: uuid(),
-  });
-
-  const [questionList, setQuestionList] = useState([
-    populateQuestionsList(),
-    populateQuestionsList(),
-  ]);
-
   const updateQuestionInputField = i => type => e => {
     const values = [...questionList];
     type === 'isRequired'
@@ -222,12 +240,6 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
   // If not loggedin redirect
   if (!auth.uid) return <Redirect to="/login" />;
 
-  // if (error) {
-  //   return <div>{error.message} Please try again!</div>;
-  // }
-  // if (loading) {
-  //   return <div>Submitting your form to the database...</div>;
-  // }
   if (newCohort) {
     return (
       <div>
@@ -250,7 +262,13 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
       {error && <div>{error.message} Please try again!</div>}
       <Form onSubmit={handleFormSubmit}>
         <section>
-          <PageTitle title="Create Cohort Application Form" />
+          <PageTitle
+            title={
+              editMode
+                ? `EDIT ${form.cohortDisplayName} Application`
+                : 'Create Cohort Application Form'
+            }
+          />
           <Input
             name="cohortName"
             type="text"
@@ -308,6 +326,7 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
             />
           </Dates>
         </section>
+
         <section>
           <PageTitle title="Application Questions" />
 
@@ -364,4 +383,5 @@ CreateCohortForm.propTypes = {
   loading: PropTypes.bool,
   newCohort: PropTypes.string,
   auth: PropTypes.object.isRequired,
+  location: PropTypes.object,
 };

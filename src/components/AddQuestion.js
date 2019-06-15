@@ -56,7 +56,6 @@ export default function AddQuestion({
   data,
   index,
 }) {
-  //const handleChangeAtIndex = handleChange(index);
   return (
     <QuestionOuterWrapper>
       <QuestionInnerWrapper>
@@ -145,6 +144,5 @@ AddQuestion.propTypes = {
   data: PropTypes.object,
   index: PropTypes.number,
   handleInputChange: PropTypes.func,
-  handleAddNewQuestion: PropTypes.func,
   handleRemoveQuestion: PropTypes.func,
 };

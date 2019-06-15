@@ -6,6 +6,8 @@ const initialState = {
   loading: false,
   newCohort: null,
   selectedCohort: null,
+  cohortSlug: null,
+  slugExists: null,
 };
 
 const reducers = (state = initialState, action) => {
@@ -65,6 +67,33 @@ const reducers = (state = initialState, action) => {
         ...state,
         loading: false,
         selectedCohort: action.payload,
+      };
+    case actionType.FETCH_COHORT_SLUG_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+        cohortSlug: null,
+        slugExists: null,
+      };
+    case actionType.FETCH_COHORT_SLUG_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        cohortSlug: action.payload,
+        slugExists: null,
+      };
+    case actionType.COHORT_SLUG_EXISTS:
+      return {
+        ...state,
+        loading: false,
+        slugExists: true,
+      };
+    case actionType.COHORT_SLUG_NOT_EXIST:
+      return {
+        ...state,
+        loading: false,
+        slugExists: false,
       };
 
     // case actionType.STUDENT_SUBMISSION:

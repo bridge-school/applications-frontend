@@ -9,6 +9,10 @@ export const actionType = {
   FETCH_CURRENT_COHORTS_SUCCESS: 'FETCH_CURRENT_COHORTS_SUCCESS',
   FETCH_SELECTED_COHORT_REQUEST: 'FETCH_SELECTED_COHORT_REQUEST',
   FETCH_SELECTED_COHORT_SUCCESS: 'FETCH_SELECTED_COHORT_SUCCESS',
+  FETCH_COHORT_SLUG_REQUEST: 'FETCH_COHORT_SLUG_REQUEST',
+  FETCH_COHORT_SLUG_SUCCESS: 'FETCH_COHORT_SLUG_SUCCESS',
+  COHORT_SLUG_EXISTS: 'COHORT_SLUG_EXISTS',
+  COHORT_SLUG_NOT_EXIST: 'COHORT_SLUG_NOT_EXIST',
 
   STUDENT_SUBMISSION: 'STUDENT_SUBMISSION',
 };
@@ -120,6 +124,37 @@ export const fetchSelectedCohort = applicationId => dispatch => {
     .then(res => dispatch(fetchSelectedCohortSuccess(res.data)))
     .catch(err => dispatch(error(err)));
 };
+
+// ---------- query the DB for an existing Cohort
+export const fetchCohortSlugRequest = () => ({
+  type: actionType.FETCH_COHORT_SLUG_REQUEST,
+});
+
+export const fetchCohortSlug = slug => dispatch => {
+  // Sets the state to Loading in the app
+  dispatch(fetchCohortSlugRequest());
+
+  fetch(`${BASE_URL}/applications/slug/${slug}`)
+    .then(res => {
+      if (!res.ok) throw new Error(res.statusText);
+      return res.json();
+    })
+    .then(res => {
+      //console.log('what is res now: ', res);
+      if (res.slugExists) {
+        dispatch(setCohortAlreadyExists());
+      } else {
+        dispatch(setCohortDoesNotExist());
+      }
+    })
+    .catch(err => dispatch(error(err)));
+};
+export const setCohortDoesNotExist = () => ({
+  type: actionType.COHORT_SLUG_NOT_EXIST,
+});
+export const setCohortAlreadyExists = () => ({
+  type: actionType.COHORT_SLUG_EXISTS,
+});
 
 // fetch(`${BASE_URL}/applications/apply`, {
 //   method: 'POST',

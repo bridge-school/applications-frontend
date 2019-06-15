@@ -1,21 +1,10 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { cleanup } from '@testing-library/react';
 import 'jest-dom/extend-expect';
 import { StudentView } from './StudentView';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducers from '../store/reducers/appReducers';
+import { renderWithRedux } from '../testUtils/';
 
 afterEach(cleanup);
-
-function renderWithRedux(
-  component,
-  { initialState, store = createStore(reducers, initialState) } = {}
-) {
-  return {
-    ...render(<Provider store={store}>{component}</Provider>),
-  };
-}
 
 describe('StudentView Component', () => {
   it('can render with redux with defaults', () => {

@@ -12,6 +12,7 @@ import Congrats from '../components/Congrats';
 import Radio from '../components/Radio';
 import Button from '../components/Button';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Form = styled.form`
   margin: 2em 0;
@@ -36,6 +37,7 @@ function CohortForm({
   selectedCohort,
   successfulSubmission,
   sendStudentSubmission,
+  auth,
 }) {
   // state for valid form ID
   const [formIdFound, setFormIdFound] = useState(false);
@@ -115,6 +117,17 @@ function CohortForm({
         <PageTitle title="Apply for Bridge" />
         <CohortName>{selectedCohort.cohortDisplayName}</CohortName>
 
+        {auth.uid && (
+          <Link
+            to={{
+              pathname: `/admin/${selectedCohort.id}`,
+              state: { formData: selectedCohort },
+            }}
+          >
+            Edit this form
+          </Link>
+        )}
+
         {displayForm()}
 
         <Button text="apply for bridge" />
@@ -128,6 +141,7 @@ const mapStateToProps = state => ({
   error: state.app.error,
   selectedCohort: state.app.selectedCohort,
   successfulSubmission: state.app.successfulSubmission,
+  auth: state.firebase.auth,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -144,6 +158,7 @@ export default connect(
 )(CohortForm);
 
 CohortForm.propTypes = {
+  auth: PropTypes.object,
   getSelectedCohort: PropTypes.func,
   error: PropTypes.object,
   loading: PropTypes.bool,

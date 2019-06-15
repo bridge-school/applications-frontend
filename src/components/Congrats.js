@@ -18,6 +18,7 @@ const Page = styled.div`
   }
   a {
     margin-top: 4em;
+    font-size: 130%;
   }
   .emoji {
     font-size: 400%;
@@ -26,8 +27,7 @@ const Page = styled.div`
   }
 `;
 
-export default function Congrats({ cohortInfo }) {
-  const { cohortDisplayName } = cohortInfo;
+export default function Congrats(props) {
   return (
     <Page>
       <PageTitle title="Congratulations!" />
@@ -35,20 +35,28 @@ export default function Congrats({ cohortInfo }) {
       <span className="emoji" role="img" aria-label="Party popper emoji">
         🎉
       </span>
-      <p>
-        You have successfully submitted your application to{' '}
-        <strong>{cohortDisplayName}</strong>.
-      </p>
-      <p>Applications will be open until `Close Date`.</p>
-      <p>
-        All applicants will hear back from the Bridge team by `Date of
-        Response`.
-      </p>
+      {props.cohortInfo ? (
+        <>
+          <p>
+            You have successfully submitted your application to{' '}
+            <strong>{props.cohortInfo.cohortDisplayName}</strong>.
+          </p>
+          <p>Applications will be open until `Close Date`.</p>
+          <p>
+            All applicants will hear back from the Bridge team by `Date of
+            Response`.
+          </p>
+        </>
+      ) : (
+        <p>{props.message}</p>
+      )}
+
       <BackToHomeLink />
     </Page>
   );
 }
 
 Congrats.propTypes = {
-  cohortInfo: PropTypes.object.isRequired,
+  cohortInfo: PropTypes.object,
+  message: PropTypes.object,
 };

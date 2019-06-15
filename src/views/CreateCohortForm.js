@@ -11,7 +11,7 @@ import { createCohort, updateCohort } from '../store/actions/appActions';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import uuid from 'uuid/v4';
-import { Link } from 'react-router-dom';
+import Congrats from '../components/Congrats';
 
 const Form = styled.form`
   button {
@@ -120,7 +120,6 @@ function CreateCohortForm({
 
     if (editMode) {
       form.formQuestions = [...questionList];
-      console.log(form, 'UPDATE');
       dispatchUpdate(form.id, form);
     } else {
       const defaultQuestions = [
@@ -184,7 +183,7 @@ function CreateCohortForm({
         },
       ];
       form.formQuestions = [...defaultQuestions, ...questionList];
-      console.log('CREATING', form);
+
       submitCohort(form);
     }
   };
@@ -243,16 +242,7 @@ function CreateCohortForm({
   if (!auth.uid) return <Redirect to="/login" />;
 
   if (newCohort) {
-    return (
-      <div>
-        <p>
-          <strong>{newCohort}</strong>
-        </p>
-        <p>
-          <Link to="/">Go back to homepage</Link>
-        </p>
-      </div>
-    );
+    return <Congrats message={newCohort} />;
   }
   return (
     <>

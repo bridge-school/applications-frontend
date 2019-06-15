@@ -6,6 +6,7 @@ const initialState = {
   loading: false,
   newCohort: null,
   selectedCohort: null,
+  successfulSubmission: false,
 };
 
 const reducers = (state = initialState, action) => {
@@ -33,6 +34,7 @@ const reducers = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        newCohort: null,
         error: null,
       };
     case actionType.FETCH_ALL_COHORTS_SUCCESS:
@@ -59,6 +61,7 @@ const reducers = (state = initialState, action) => {
         loading: true,
         error: null,
         selectedCohort: null,
+        successfulSubmission: false,
       };
     case actionType.FETCH_SELECTED_COHORT_SUCCESS:
       return {
@@ -66,11 +69,17 @@ const reducers = (state = initialState, action) => {
         loading: false,
         selectedCohort: action.payload,
       };
-
-    // case actionType.STUDENT_SUBMISSION:
-    //   return {
-    //     ...state,
-    //   };
+    case actionType.STUDENT_SUBMISSION_REQUEST:
+      return {
+        ...state,
+        error: null,
+        successfulSubmission: false,
+      };
+    case actionType.STUDENT_SUBMISSION_SUCCESS:
+      return {
+        ...state,
+        successfulSubmission: true,
+      };
     default:
       return state;
   }

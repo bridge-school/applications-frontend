@@ -29,6 +29,16 @@ const CohortName = styled.p`
   margin: 0.5em 0;
 `;
 
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const EditLink = styled(Link)`
+  text-align: right;
+`;
+
 function CohortForm({
   error,
   loading,
@@ -114,19 +124,23 @@ function CohortForm({
   return (
     selectedCohort && (
       <Form onSubmit={handleSubmit}>
-        <PageTitle title="Apply for Bridge" />
-        <CohortName>{selectedCohort.cohortDisplayName}</CohortName>
-
-        {auth.uid && (
-          <Link
-            to={{
-              pathname: `/admin/${selectedCohort.id}`,
-              state: { formData: selectedCohort },
-            }}
-          >
-            Edit this form
-          </Link>
-        )}
+        <Header>
+          <div>
+            <PageTitle title="Apply for Bridge" />
+            <CohortName>{selectedCohort.cohortDisplayName}</CohortName>
+          </div>
+          {auth.uid && (
+            <EditLink
+              className="button-style"
+              to={{
+                pathname: `/admin/${selectedCohort.id}`,
+                state: { formData: selectedCohort },
+              }}
+            >
+              Edit this form
+            </EditLink>
+          )}
+        </Header>
 
         {displayForm()}
 

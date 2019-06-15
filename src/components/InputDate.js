@@ -4,10 +4,7 @@ import PropTypes from 'prop-types';
 
 const InputDateElement = styled.input`
   padding: ${props => props.theme.padding};
-  margin: ${props => props.theme.margin} 0;
-  color: ${props => props.theme.black};
-  border: ${props => props.theme.border}
-  border-radius: ${props => props.theme.borderRadius};
+  margin-top: 0.25em;
   display: block;
 `;
 

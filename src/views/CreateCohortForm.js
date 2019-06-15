@@ -332,13 +332,15 @@ function CreateCohortForm({
         <section>
           <PageTitle title="Application Questions" />
 
-          <Note>
-            Note: <strong>Full Name</strong>, <strong>Email</strong>,{' '}
-            <strong>How do you identify?</strong>, and{' '}
-            <strong>What pronouns should we use?</strong> will be required
-            questions added to the beginning of the student&rsquo;s application
-            form.
-          </Note>
+          {!editMode && (
+            <Note>
+              Note: <strong>Full Name</strong>, <strong>Email</strong>,{' '}
+              <strong>How do you identify?</strong>, and{' '}
+              <strong>What pronouns should we use?</strong> will be required
+              questions added to the beginning of the student&rsquo;s
+              application form.
+            </Note>
+          )}
 
           {questionList.map((question, index) => (
             <AddQuestion
@@ -354,7 +356,11 @@ function CreateCohortForm({
           <Button text="Add new Question" handleClick={handleAddNewQuestion} />
         </section>
 
-        <Button text="create application group" />
+        <Button
+          text={
+            editMode ? 'update application group' : 'create application group'
+          }
+        />
       </Form>
     </>
   );

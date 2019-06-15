@@ -7,7 +7,7 @@ import Dropdown from '../components/Dropdown';
 import AddQuestion from '../components/AddQuestion';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { createCohort, fetchCohortSlug } from '../store/actions/appActions';
+import { createCohort } from '../store/actions/appActions';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import uuid from 'uuid/v4';
@@ -53,15 +53,7 @@ const Note = styled.p`
   color: #666;
 `;
 
-function CreateCohortForm({
-  submitCohort,
-  fetchSlug,
-  error,
-  newCohort,
-  loading,
-  auth,
-  slugExists,
-}) {
+function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
   /**
    * form are the static form fields.
    * setValues is the method to set the state for those
@@ -91,50 +83,45 @@ function CreateCohortForm({
       cohortTypeSplitAtDash[0];
     form.cohortSlug = cohortSlug;
 
-    fetchSlug(cohortSlug); // if DB has result, slugExists = true
+    const titleCaseCohortType = cohortTypeSplitAtDash.map(
+      word => word.charAt(0).toUpperCase() + word.slice(1)
+    );
 
-    if (slugExists !== null && !slugExists) {
-      
-      const titleCaseCohortType = cohortTypeSplitAtDash.map(
-        word => word.charAt(0).toUpperCase() + word.slice(1)
-      );
+    const cohortDisplayName = `${form.cohortName} - ${titleCaseCohortType.join(
+      ' '
+    )}`;
+    form.cohortDisplayName = cohortDisplayName;
 
-      const cohortDisplayName = `${form.cohortName} - ${titleCaseCohortType.join(
-        ' '
-      )}`;
-      form.cohortDisplayName = cohortDisplayName;
-      
-      const defaultQuestions = [
-        {
-          description: 'Full Name',
-          type: 'input',
-          isRequired: true,
-          id: 'fullName',
-        },
-        {
-          description: 'Email',
-          type: 'email',
-          isRequired: true,
-          id: 'email',
-        },
-        {
-          description: 'How do you identify?',
-          type: 'checkbox',
-          isRequired: true,
-          id: 'identify',
-        },
-        {
-          description: 'What pronouns should we use?',
-          type: 'checkbox',
-          isRequired: true,
-          id: 'pronouns',
-        },
-      ];
+    const defaultQuestions = [
+      {
+        description: 'Full Name',
+        type: 'input',
+        isRequired: true,
+        id: 'fullName',
+      },
+      {
+        description: 'Email',
+        type: 'email',
+        isRequired: true,
+        id: 'email',
+      },
+      {
+        description: 'How do you identify?',
+        type: 'checkbox',
+        isRequired: true,
+        id: 'identify',
+      },
+      {
+        description: 'What pronouns should we use?',
+        type: 'checkbox',
+        isRequired: true,
+        id: 'pronouns',
+      },
+    ];
 
-      form.formQuestions = [...defaultQuestions, ...questionList];
-      console.log('CREATING', form);
-      submitCohort(form);
-    }
+    form.formQuestions = [...defaultQuestions, ...questionList];
+    console.log('CREATING', form);
+    submitCohort(form);
   };
 
   // Generic handler for input fields to save the value as you type
@@ -223,12 +210,6 @@ function CreateCohortForm({
   }
   return (
     <>
-      {slugExists && (
-        <div className="slug-msg">
-          The cohort name and type combination already exists. Please try
-          another combination.
-        </div>
-      )}
       {loading && (
         <div className="loading-msg">
           Submitting your form to the database...
@@ -279,50 +260,50 @@ function CreateCohortForm({
               label="Date Open"
               handleChange={updateField}
             />
-          <InputDate
-            name="dateClosed"
-            value={form.dateClosed}
-            required
-            label="Date Closed"
-            handleChange={updateField}
-          />
-          <InputDate
-            name="dateResponse"
-            value={form.dateResponse}
-            required
-            label="Date of Response"
-            handleChange={updateField}
-          />
-        </Dates>
-      </section>
-      <section>
-        <PageTitle title="Application Questions" />
+            <InputDate
+              name="dateClosed"
+              value={form.dateClosed}
+              required
+              label="Date Closed"
+              handleChange={updateField}
+            />
+            <InputDate
+              name="dateResponse"
+              value={form.dateResponse}
+              required
+              label="Date of Response"
+              handleChange={updateField}
+            />
+          </Dates>
+        </section>
+        <section>
+          <PageTitle title="Application Questions" />
 
-        <Note>
-          Note: <strong>Full Name</strong>, <strong>Email</strong>,{' '}
-          <strong>How do you identify?</strong>, and{' '}
-          <strong>What pronouns should we use?</strong> will be required
-          questions added to the beginning of the student&rsquo;s application
-          form.
-        </Note>
+          <Note>
+            Note: <strong>Full Name</strong>, <strong>Email</strong>,{' '}
+            <strong>How do you identify?</strong>, and{' '}
+            <strong>What pronouns should we use?</strong> will be required
+            questions added to the beginning of the student&rsquo;s application
+            form.
+          </Note>
 
-        {questionList.map((question, index) => (
-          <AddQuestion
-            data={question}
-            handleInputChange={updateQuestionInputField}
-            handleAddNewQuestion={handleAddNewQuestion}
-            handleRemoveQuestion={handleRemoveQuestion}
-            key={question.id}
-            index={index}
-          />
-        ))}
+          {questionList.map((question, index) => (
+            <AddQuestion
+              data={question}
+              handleInputChange={updateQuestionInputField}
+              handleAddNewQuestion={handleAddNewQuestion}
+              handleRemoveQuestion={handleRemoveQuestion}
+              key={question.id}
+              index={index}
+            />
+          ))}
 
-        <Button text="Add new Question" handleClick={handleAddNewQuestion} />
-      </section>
+          <Button text="Add new Question" handleClick={handleAddNewQuestion} />
+        </section>
 
-      <Button text="create application group" />
-    </Form>
-  </>
+        <Button text="create application group" />
+      </Form>
+    </>
   );
 }
 
@@ -332,13 +313,11 @@ const mapStateToProps = state => ({
   error: state.app.error,
   auth: state.firebase.auth,
   cohortSlug: state.app.cohortSlug,
-  slugExists: state.app.slugExists,
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     submitCohort: formData => dispatch(createCohort(formData)),
-    fetchSlug: slug => dispatch(fetchCohortSlug(slug)),
   };
 };
 
@@ -349,10 +328,8 @@ export default connect(
 
 CreateCohortForm.propTypes = {
   submitCohort: PropTypes.func.isRequired,
-  fetchSlug: PropTypes.func.isRequired,
   error: PropTypes.object,
   loading: PropTypes.bool,
   newCohort: PropTypes.string,
   auth: PropTypes.object.isRequired,
-  slugExists: PropTypes.bool,
 };

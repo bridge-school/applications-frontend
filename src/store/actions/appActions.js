@@ -129,37 +129,6 @@ export const fetchSelectedCohort = applicationId => dispatch => {
     .catch(err => dispatch(error(err)));
 };
 
-// ---------- query the DB for an existing Cohort
-export const fetchCohortSlugRequest = () => ({
-  type: actionType.FETCH_COHORT_SLUG_REQUEST,
-});
-
-export const fetchCohortSlug = slug => dispatch => {
-  // Sets the state to Loading in the app
-  dispatch(fetchCohortSlugRequest());
-
-  fetch(`${BASE_URL}/applications/slug/${slug}`)
-    .then(res => {
-      if (!res.ok) throw new Error(res.statusText);
-      return res.json();
-    })
-    .then(res => {
-      //console.log('what is res now: ', res);
-      if (res.slugExists) {
-        dispatch(setCohortAlreadyExists());
-      } else {
-        dispatch(setCohortDoesNotExist());
-      }
-    })
-    .catch(err => dispatch(error(err)));
-};
-export const setCohortDoesNotExist = () => ({
-  type: actionType.COHORT_SLUG_NOT_EXIST,
-});
-export const setCohortAlreadyExists = () => ({
-  type: actionType.COHORT_SLUG_EXISTS,
-});
-
 // ---------- student SUBMISSION to a cohort
 export const studentSubmissionRequest = () => ({
   type: actionType.STUDENT_SUBMISSION_REQUEST,
@@ -189,4 +158,3 @@ export const studentSubmission = formData => dispatch => {
     .then(res => dispatch(studentSubmissionSuccess(res.message)))
     .catch(err => dispatch(error(err)));
 };
-

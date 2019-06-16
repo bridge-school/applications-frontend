@@ -12,6 +12,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import uuid from 'uuid/v4';
 import { Link } from 'react-router-dom';
+import arrayMove from 'array-move';
+import SortableQuestionsList from '../components/SortableQuestionsList';
 
 const Form = styled.form`
   button {
@@ -51,6 +53,19 @@ const Note = styled.p`
   max-width: 41em;
   margin-bottom: 2em;
   color: #666;
+`;
+
+const OrderingInstructions = styled.p`
+  margin: -0.5em 0 1.65em;
+  text-align: center;
+  color: #666;
+`;
+
+const QuestionsContainer = styled.div`
+  border: 6px solid ${p => p.theme.grey};
+  border-right: 0;
+  border-left: 0;
+  padding: 1.5em 0;
 `;
 
 function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
@@ -219,6 +234,15 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
     setQuestionList(newList);
   };
 
+  const [reorderQuestions, setReorderQuestions] = useState(false);
+  const handleReorderQuestions = () => {
+    setReorderQuestions(!reorderQuestions);
+  };
+  // reorder the questions list after dragging and dropping
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    setQuestionList(arrayMove(questionList, oldIndex, newIndex));
+  };
+
   // If not loggedin redirect
   if (!auth.uid) return <Redirect to="/login" />;
 
@@ -240,6 +264,7 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
       </div>
     );
   }
+
   return (
     <>
       {loading && (
@@ -319,18 +344,43 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
             form.
           </Note>
 
-          {questionList.map((question, index) => (
-            <AddQuestion
-              data={question}
-              handleInputChange={updateQuestionInputField}
-              handleAddNewQuestion={handleAddNewQuestion}
-              handleRemoveQuestion={handleRemoveQuestion}
-              key={question.id}
-              index={index}
-            />
-          ))}
-
-          <Button text="Add new Question" handleClick={handleAddNewQuestion} />
+          {reorderQuestions ? (
+            <QuestionsContainer>
+              <Button
+                text="Edit questions list"
+                handleClick={handleReorderQuestions}
+              />
+              <OrderingInstructions>
+                Drag and drop questions to reorder. Form will not submit if
+                there are missing required fields.
+              </OrderingInstructions>
+              <SortableQuestionsList
+                items={questionList}
+                onSortEnd={onSortEnd}
+              />
+            </QuestionsContainer>
+          ) : (
+            <QuestionsContainer>
+              <Button
+                text="reorder questions"
+                handleClick={handleReorderQuestions}
+              />
+              {questionList.map((question, index) => (
+                <AddQuestion
+                  data={question}
+                  handleInputChange={updateQuestionInputField}
+                  handleAddNewQuestion={handleAddNewQuestion}
+                  handleRemoveQuestion={handleRemoveQuestion}
+                  key={question.id}
+                  index={index}
+                />
+              ))}
+              <Button
+                text="Add new Question"
+                handleClick={handleAddNewQuestion}
+              />
+            </QuestionsContainer>
+          )}
         </section>
 
         <Button text="create application group" type="submit" />

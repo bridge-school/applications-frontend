@@ -10,7 +10,7 @@ const DraggableListItem = styled.li`
   background: ${p => p.theme.grey};
   border-radius: ${p => p.theme.borderRadius};
   span {
-    margin: 0 0.5em;
+    margin: 0 1em;
     &:first-of-type {
       font-weight: bold;
     }
@@ -20,14 +20,13 @@ const DraggableListItem = styled.li`
   }
 `;
 
-const ListContainer = styled.ul`
-  padding: 0em 2em 0.75em;
-  list-style: inside;
+const ListContainer = styled.ol`
+  padding: 0em 2em 1em;
+  list-style: decimal inside;
 `;
 
-const SortableItem = SortableElement(({ question, index }) => (
+const SortableItem = SortableElement(({ question }) => (
   <DraggableListItem>
-    Question #{index + 1}:{' '}
     <span>{question.description.trim() || '[missing description]'}</span> —
     <span> {question.type || '[missing type]'}</span>
   </DraggableListItem>

@@ -56,7 +56,7 @@ const Note = styled.p`
 `;
 
 const OrderingInstructions = styled.p`
-  margin: -0.5em 0 1.65em;
+  margin: -0.5em 0 1.75em;
   text-align: center;
   color: #666;
 `;
@@ -297,6 +297,7 @@ function CreateCohortForm({
           <Input
             name="cohortName"
             type="text"
+            autofocus="autofocus"
             value={form.cohortName}
             required
             label="Cohort Name"

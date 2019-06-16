@@ -97,8 +97,14 @@ class App extends Component {
                     exact
                     component={CreateCohortForm}
                   />
+                  <Route
+                    path="/admin/:coID"
+                    exact
+                    component={CreateCohortForm}
+                  />
                   <Route path="/apply" exact component={StudentView} />
                   <Route path="/apply/:coID" component={CohortForm} />
+
                   <Route component={NotFound} />
                 </Switch>
               </Wrapper>

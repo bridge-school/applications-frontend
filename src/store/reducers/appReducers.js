@@ -30,6 +30,19 @@ const reducers = (state = initialState, action) => {
         loading: false,
         newCohort: action.payload,
       };
+    case actionType.UPDATE_COHORT_REQUEST:
+      return {
+        ...state,
+        newCohort: null,
+        loading: true,
+        error: null,
+      };
+    case actionType.UPDATE_COHORT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        newCohort: action.payload,
+      };
     case actionType.FETCH_ALL_COHORTS_REQUEST:
       return {
         ...state,
@@ -47,6 +60,7 @@ const reducers = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        newCohort: null,
         error: null,
       };
     case actionType.FETCH_CURRENT_COHORTS_SUCCESS:

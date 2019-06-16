@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PageTitle from '../components/PageTitle';
 import InputDate from '../components/InputDate';
 import Button from '../components/Button';
@@ -234,10 +234,18 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
     setQuestionList(newList);
   };
 
+  const [disableSubmit, setDisableSubmit] = useState(false);
+
   const [reorderQuestions, setReorderQuestions] = useState(false);
   const handleReorderQuestions = () => {
     setReorderQuestions(!reorderQuestions);
   };
+
+  // Form will submit even if there are missing required fields, if those fields are not visible on the page. So the inputs need to be displayed for HTML5's 'required' checks to work.
+  useEffect(() => {
+    reorderQuestions ? setDisableSubmit(true) : setDisableSubmit(false);
+  }, [reorderQuestions]);
+
   // reorder the questions list after dragging and dropping
   const onSortEnd = ({ oldIndex, newIndex }) => {
     setQuestionList(arrayMove(questionList, oldIndex, newIndex));
@@ -351,8 +359,9 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
                 handleClick={handleReorderQuestions}
               />
               <OrderingInstructions>
-                Drag and drop questions to reorder. Form will not submit if
-                there are missing required fields.
+                Drag and drop questions to reorder. Go back to{' '}
+                <strong>Edit Questions List</strong> to submit application
+                group.
               </OrderingInstructions>
               <SortableQuestionsList
                 items={questionList}
@@ -383,7 +392,11 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
           )}
         </section>
 
-        <Button text="create application group" type="submit" />
+        <Button
+          text="create application group"
+          disabled={disableSubmit}
+          type="submit"
+        />
       </Form>
     </>
   );

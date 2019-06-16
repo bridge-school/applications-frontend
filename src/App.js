@@ -58,7 +58,17 @@ const GlobalStyle = createGlobalStyle`
     &:hover {
       color: ${bridgeTheme.green};
       background: white;
-    }
+    }  
+  }
+  button:disabled,
+  button[disabled] {
+    background: #bbb;
+    border-color: #bbb     
+    &:hover {
+      color: white;
+      background: #bbb;
+      border-color: #bbb  
+    } 
   }
 `;
 

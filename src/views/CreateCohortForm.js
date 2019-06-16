@@ -333,7 +333,7 @@ function CreateCohortForm({ submitCohort, error, newCohort, loading, auth }) {
           <Button text="Add new Question" handleClick={handleAddNewQuestion} />
         </section>
 
-        <Button text="create application group" />
+        <Button text="create application group" type="submit" />
       </Form>
     </>
   );

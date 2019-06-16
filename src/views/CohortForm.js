@@ -117,7 +117,7 @@ function CohortForm({
 
         {displayForm()}
 
-        <Button text="apply for bridge" />
+        <Button text="apply for bridge" type="submit" />
       </Form>
     )
   );

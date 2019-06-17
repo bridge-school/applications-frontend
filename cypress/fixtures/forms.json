@@ -1,0 +1,37 @@
+[
+  {
+    "id": "bUoJTmQxw34B97bso1NY",
+    "cohortName": "Cohort 7",
+    "cohortType": "frontend-development",
+    "cohortSlug": "cohort-7-frontend",
+    "dateClosed": { "_seconds": 1561867200, "_nanoseconds": 0 }
+  },
+  {
+    "id": "qnlHJbtDIFeCE3nyQzCz",
+    "cohortName": "Cohort 8",
+    "cohortType": "frontend-development",
+    "cohortSlug": "cohort-8-frontend",
+    "dateClosed": { "_seconds": 1561262400, "_nanoseconds": 0 }
+  },
+  {
+    "id": "s1iVWsTmG1lWBvnxUmwU",
+    "cohortName": "Cohort 9",
+    "cohortType": "backend-development",
+    "cohortSlug": "cohort-9-backend",
+    "dateClosed": { "_seconds": 1561262400, "_nanoseconds": 0 }
+  },
+  {
+    "id": "wcd0zVe3bSkvRa0xNaAs",
+    "cohortName": "Cohort 10",
+    "cohortType": "design",
+    "cohortSlug": "cohort-10-design",
+    "dateClosed": { "_seconds": 1561176000, "_nanoseconds": 0 }
+  },
+  {
+    "id": "xSHoXKFRbfwqYWwApgzM",
+    "cohortName": "Cohort 11",
+    "cohortType": "frontend-development",
+    "cohortSlug": "cohort-11-frontend",
+    "dateClosed": { "_seconds": 1561867200, "_nanoseconds": 0 }
+  }
+]

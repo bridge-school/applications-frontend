@@ -38,5 +38,5 @@ function createReduxStore(mode = 'development') {
   );
 }
 
-const store = createReduxStore();
+const store = createReduxStore(process.env.NODE_ENV);
 export default store;

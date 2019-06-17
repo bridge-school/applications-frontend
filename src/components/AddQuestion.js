@@ -34,7 +34,7 @@ const CheckboxWrapper = styled.div`
   margin-top: -2.2rem;
 `;
 
-const ButtonElem = styled.button`
+const DeleteButton = styled.button`
   && {
     padding: 0.25em 0.5em 0.35em;
     margin: 1.75rem 0 0 1em;
@@ -56,7 +56,6 @@ export default function AddQuestion({
   data,
   index,
 }) {
-  //const handleChangeAtIndex = handleChange(index);
   return (
     <QuestionOuterWrapper>
       <QuestionInnerWrapper>
@@ -79,20 +78,24 @@ export default function AddQuestion({
               description: `Question #${index + 1} Type`,
               items: [
                 {
-                  label: 'short answer',
+                  label: 'Short Answer',
                   value: 'input',
                 },
                 {
-                  label: 'paragraph',
+                  label: 'Paragraph',
                   value: 'textarea',
                 },
                 {
-                  label: 'checkboxes',
+                  label: 'Checkboxes',
                   value: 'checkbox',
                 },
                 {
-                  label: 'drop down',
+                  label: 'Dropdown',
                   value: 'select',
+                },
+                {
+                  label: 'Email',
+                  value: 'email',
                 },
               ],
             }}
@@ -113,12 +116,12 @@ export default function AddQuestion({
             type="checkbox"
           />
         </CheckboxWrapper>
-        <ButtonElem
+        <DeleteButton
           title="Delete Question"
           onClick={e => handleRemoveQuestion(data.id, e)}
         >
           x
-        </ButtonElem>
+        </DeleteButton>
       </QuestionInnerWrapper>
       {(data.type === 'checkbox' || data.type === 'select') && (
         <QuestionInnerWrapper>
@@ -143,6 +146,5 @@ AddQuestion.propTypes = {
   data: PropTypes.object,
   index: PropTypes.number,
   handleInputChange: PropTypes.func,
-  handleAddNewQuestion: PropTypes.func,
   handleRemoveQuestion: PropTypes.func,
 };

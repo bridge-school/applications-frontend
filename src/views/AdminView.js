@@ -31,7 +31,7 @@ function AdminView({ error, allCohorts, loading, getAllCohorts, auth }) {
   return (
     <div>
       <Header>
-        <PageTitle title="Cohort Application Forms" />
+        <PageTitle title="All Cohort Application Forms" />
         <Link to="/admin/create" className="button-style">
           Create application group
         </Link>

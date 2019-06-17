@@ -9,7 +9,7 @@ const QuestionOuterWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  padding-bottom: ${props => props.theme.padding};
+  margin-bottom: 1.5em;
   width: 100%;
 `;
 
@@ -22,6 +22,9 @@ const QuestionInnerWrapper = styled.div`
 const InputWrapper = styled.div`
   width: 66%;
   margin: -1.5em 2rem 0 0;
+  &.multi-values {
+    margin-top: -2em;
+  }
 `;
 
 const DropdownWrapper = styled.div`
@@ -31,7 +34,7 @@ const DropdownWrapper = styled.div`
 
 const CheckboxWrapper = styled.div`
   width: 5em;
-  margin-top: -2.2rem;
+  margin: -1.15rem 0 0 1em;
 `;
 
 const DeleteButton = styled.button`
@@ -128,19 +131,17 @@ export default function AddQuestion({
         </DeleteButton>
       </QuestionInnerWrapper>
       {(data.type === 'checkbox' || data.type === 'select') && (
-        <QuestionInnerWrapper>
-          <InputWrapper>
-            <Input
-              name={`multiValues${index}`}
-              type="text"
-              required
-              value={data.multiValues}
-              handleChange={handleInputChange(index)('multiValues')}
-              label={`Answer Values for Question #${index +
-                1} (as comma-separated values)`}
-            />
-          </InputWrapper>
-        </QuestionInnerWrapper>
+        <InputWrapper className="multi-values">
+          <Input
+            name={`multiValues${index}`}
+            type="text"
+            required
+            value={data.multiValues}
+            handleChange={handleInputChange(index)('multiValues')}
+            label={`Answer Values for Question #${index +
+              1} (as comma-separated values)`}
+          />
+        </InputWrapper>
       )}
     </QuestionOuterWrapper>
   );

@@ -22,9 +22,11 @@ const QuestionInnerWrapper = styled.div`
 const InputWrapper = styled.div`
   width: 66%;
   margin: -1.5em 2rem 0 0;
-  &.multi-values {
-    margin-top: -2em;
-  }
+`;
+
+const MultiValues = styled.div`
+  margin-top: -2em;
+  width: 91.25%;
 `;
 
 const DropdownWrapper = styled.div`
@@ -131,7 +133,7 @@ export default function AddQuestion({
         </DeleteButton>
       </QuestionInnerWrapper>
       {(data.type === 'checkbox' || data.type === 'select') && (
-        <InputWrapper className="multi-values">
+        <MultiValues>
           <Input
             name={`multiValues${index}`}
             type="text"
@@ -141,7 +143,7 @@ export default function AddQuestion({
             label={`Answer Values for Question #${index +
               1} (as comma-separated values)`}
           />
-        </InputWrapper>
+        </MultiValues>
       )}
     </QuestionOuterWrapper>
   );

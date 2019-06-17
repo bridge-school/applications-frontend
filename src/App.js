@@ -25,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Open Sans', sans-serif;
     line-height: 1.15;
   }
-  label {
+  label, legend {
     font-size: 0.95em;
     font-weight: bold;
   }  

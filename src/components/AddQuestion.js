@@ -105,17 +105,15 @@ export default function AddQuestion({
         <CheckboxWrapper>
           <Checkbox
             name={`isRequired${index}`}
-            data={{
-              description: 'Is required?',
-              type: 'checkbox',
-              items: [
-                {
-                  label: 'Is Required',
-                  value: data.isRequired,
-                  handleChange: handleInputChange(index)('isRequired'),
-                },
-              ],
-            }}
+            description="Is required?"
+            items={[
+              {
+                label: 'Is Required',
+                value: data.isRequired,
+              },
+            ]}
+            handleChange={handleInputChange(index)('isRequired')}
+            type="checkbox"
           />
         </CheckboxWrapper>
         <DeleteButton

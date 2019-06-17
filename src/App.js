@@ -25,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Open Sans', sans-serif;
     line-height: 1.15;
   }
-  label {
+  label, legend {
     font-size: 0.95em;
     font-weight: bold;
   }  
@@ -58,7 +58,17 @@ const GlobalStyle = createGlobalStyle`
     &:hover {
       color: ${bridgeTheme.green};
       background: white;
-    }
+    }  
+  }
+  button:disabled,
+  button[disabled] {
+    background: #bbb;
+    border-color: #bbb     
+    &:hover {
+      color: white;
+      background: #bbb;
+      border-color: #bbb  
+    } 
   }
 `;
 

@@ -6,7 +6,9 @@ export default function Button(props) {
     <button
       data-testid="btn"
       className="button-style"
+      type={props.type || 'button'}
       onClick={props.handleClick}
+      disabled={props.disabled}
     >
       {props.text}
     </button>
@@ -16,4 +18,6 @@ export default function Button(props) {
 Button.propTypes = {
   text: PropTypes.string.isRequired,
   handleClick: PropTypes.func,
+  type: PropTypes.string,
+  disabled: PropTypes.bool,
 };

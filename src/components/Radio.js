@@ -25,8 +25,8 @@ const RadioLabel = styled.label`
   cursor: pointer;
   &:hover {
     color: white;
-    background: ${props => props.theme.indigo};
-    border-color: ${props => props.theme.indigo};
+    background: ${props => props.theme.green};
+    border-color: ${props => props.theme.green};
   }
 `;
 
@@ -36,8 +36,8 @@ const RadioButton = styled.input`
   display: none;
   &:checked + label {
     color: white;
-    background: ${props => props.theme.indigo};
-    border-color: ${props => props.theme.indigo};
+    background: ${props => props.theme.green};
+    border-color: ${props => props.theme.green};
   }
 `;
 
@@ -52,9 +52,7 @@ const Container = styled.div`
   }
 `;
 
-const Legend = styled.legend`
-  ${'' /* padding: ${props => props.theme.padding}; */}
-`;
+const Legend = styled.legend``;
 
 export default function Radio({
   name,

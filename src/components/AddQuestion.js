@@ -90,6 +90,10 @@ export default function AddQuestion({
                   value: 'checkbox',
                 },
                 {
+                  label: 'Single Choice',
+                  value: 'radio',
+                },
+                {
                   label: 'Dropdown',
                   value: 'select',
                 },

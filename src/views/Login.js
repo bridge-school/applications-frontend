@@ -60,6 +60,7 @@ function Login({ loading, logIn, auth, authError }) {
         <Input
           name="username"
           type="email"
+          autofocus="autofocus"
           value={form.username}
           label="Email"
           handleChange={updateField}

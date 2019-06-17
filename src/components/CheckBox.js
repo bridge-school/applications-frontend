@@ -5,19 +5,14 @@ import PropTypes from 'prop-types';
 const checkBoxSize =
   'content: "\\2714"; display: inline-block;width: 2em; height: 2em; padding-top: 0.25rem; margin-top: 0.25rem;';
 
-const Container = styled.div`
-  padding: ${props => props.theme.padding};
-`;
-
 const GroupContainer = styled.div`
-  padding: ${props => props.theme.padding};
   display: flex;
   flex-direction: row;
   flex: 1 1 0;
 `;
 
 const CheckboxLabel = styled.label`
-  padding: ${props => props.theme.padding};
+  padding-right: ${props => props.theme.padding};
   display: flex;
   flex-direction: column-reverse;
   white-space: nowrap;
@@ -57,6 +52,7 @@ const CheckboxInput = styled.input`
 
 const Fieldset = styled.fieldset`
   border: none;
+  margin: 1.5em 0;
   label {
     display: inline-block;
   }
@@ -74,10 +70,10 @@ export default function Checkbox({
   required,
 }) {
   const checkboxes = items.map(item => (
-    <Container key={item.value}>
+    <div key={item.value}>
       <CheckboxInput type="checkbox" onChange={handleChange} name={name} />
       <CheckboxLabel>{item.label}</CheckboxLabel>
-    </Container>
+    </div>
   ));
 
   if (items.length > 1) {

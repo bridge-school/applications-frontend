@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 const Fieldset = styled.fieldset`
   border: none;
   padding: 0;
+  margin: 1.5em 0;
 `;
 
 const RadioLabel = styled.label`

@@ -132,7 +132,9 @@ export default function AddQuestion({
           x
         </DeleteButton>
       </QuestionInnerWrapper>
-      {(data.type === 'checkbox' || data.type === 'select') && (
+      {(data.type === 'checkbox' ||
+        data.type === 'select' ||
+        data.type === 'radio') && (
         <MultiValues>
           <Input
             name={`multiValues${index}`}

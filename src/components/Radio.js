@@ -11,6 +11,7 @@ const Fieldset = styled.fieldset`
 const RadioLabel = styled.label`
   border: 2px solid ${props => props.theme.darkGrey};
   border-radius: 5px;
+  background: ${props => props.theme.grey};
   padding: ${props => props.theme.padding};
   margin: ${props => props.theme.padding};
   &:first-of-type {

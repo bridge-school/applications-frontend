@@ -9,6 +9,7 @@ const GroupContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1 1 0;
+  margin-left: -0.8rem;
 `;
 
 const CheckboxLabel = styled.label`
@@ -50,7 +51,7 @@ const CheckboxInput = styled.input`
   }
 `;
 
-const Fieldset = styled.fieldset`
+const Container = styled.div`
   border: none;
   margin: 1.5em 0;
   label {
@@ -70,21 +71,21 @@ export default function Checkbox({
   required,
 }) {
   const checkboxes = items.map(item => (
-    <div key={item.value}>
+    <React.Fragment key={item.value}>
       <CheckboxInput type="checkbox" onChange={handleChange} name={name} />
       <CheckboxLabel>{item.label}</CheckboxLabel>
-    </div>
+    </React.Fragment>
   ));
 
   if (items.length > 1) {
     return (
-      <Fieldset>
+      <Container>
         <legend>
           {description}
           {required && '*'}
         </legend>
         <GroupContainer> {checkboxes} </GroupContainer>
-      </Fieldset>
+      </Container>
     );
   } else {
     return checkboxes;

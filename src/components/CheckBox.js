@@ -5,11 +5,6 @@ import PropTypes from 'prop-types';
 const checkBoxSize =
   'content: "\\2714"; display: inline-block;width: 2em; height: 2em; padding-top: 0.25rem; margin-top: 0.25rem;';
 
-const Legend = styled.legend`
-  font-size: 0.8em;
-  font-weight: bold;
-`;
-
 const Container = styled.div`
   padding: ${props => props.theme.padding};
 `;
@@ -71,23 +66,27 @@ const Fieldset = styled.fieldset`
   }
 `;
 
-export default function Checkbox({ name, data }) {
-  const checkboxes = data.items.map(item => (
+export default function Checkbox({
+  name,
+  description,
+  items,
+  handleChange,
+  required,
+}) {
+  const checkboxes = items.map(item => (
     <Container key={item.value}>
-      <CheckboxInput
-        type="checkbox"
-        onChange={item.handleChange}
-        checked={item.value}
-        name={name}
-      />
-      <CheckboxLabel key={item.value}>{item.label}</CheckboxLabel>
+      <CheckboxInput type="checkbox" onChange={handleChange} name={name} />
+      <CheckboxLabel>{item.label}</CheckboxLabel>
     </Container>
   ));
 
-  if (data.items.length > 1) {
+  if (items.length > 1) {
     return (
       <Fieldset>
-        <Legend>{data.description}</Legend>
+        <legend>
+          {description}
+          {required && '*'}
+        </legend>
         <GroupContainer> {checkboxes} </GroupContainer>
       </Fieldset>
     );
@@ -98,5 +97,8 @@ export default function Checkbox({ name, data }) {
 
 Checkbox.propTypes = {
   name: PropTypes.string.isRequired,
-  data: PropTypes.object.isRequired,
+  items: PropTypes.array.isRequired,
+  description: PropTypes.string.isRequired,
+  required: PropTypes.bool,
+  handleChange: PropTypes.func.isRequired,
 };

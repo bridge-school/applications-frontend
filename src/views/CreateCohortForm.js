@@ -298,7 +298,7 @@ function CreateCohortForm({
           <Input
             name="cohortName"
             type="text"
-            autofocus="autofocus"
+            autofocus
             value={form.cohortName}
             required
             label="Cohort Name"

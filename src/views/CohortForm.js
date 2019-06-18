@@ -82,47 +82,6 @@ function CohortForm({
     sendStudentSubmission(formData);
   };
 
-  const displayForm = () => {
-    return selectedCohort.formQuestions.map(question => {
-      const inputProps = {
-        type: question.type,
-        label: question.description,
-        name: question.id,
-        required: question.isRequired,
-        handleChange: updateInput,
-        value: formData[question.id],
-        key: question.id,
-      };
-
-      switch (question.type) {
-        case 'input':
-        case 'email':
-          return <Input {...inputProps} />;
-        case 'checkbox':
-          return (
-            <CheckBox
-              {...inputProps}
-              description={question.description}
-              items={question.options}
-            />
-          );
-        case 'textarea':
-          return <Input {...inputProps} rows={question.rows} />;
-        case 'radio':
-        case 'select':
-          return (
-            <Radio
-              {...inputProps}
-              description={question.description}
-              items={question.options}
-            />
-          );
-        default:
-          return null;
-      }
-    });
-  };
-
   if (error) {
     return <div>{error.message} Please try again!</div>;
   }
@@ -154,7 +113,43 @@ function CohortForm({
           )}
         </Header>
 
-        {displayForm()}
+        {selectedCohort.formQuestions.map(question => {
+          const inputProps = {
+            type: question.type,
+            label: question.description,
+            name: question.id,
+            required: question.isRequired,
+            handleChange: updateInput,
+            value: formData[question.id],
+            key: question.id,
+          };
+
+          switch (question.type) {
+            case 'input':
+            case 'email':
+              return <Input {...inputProps} />;
+            case 'checkbox':
+              return (
+                <CheckBox
+                  {...inputProps}
+                  description={question.description}
+                  items={question.options}
+                />
+              );
+            case 'textarea':
+              return <Input {...inputProps} rows={question.rows} />;
+            case 'radio':
+              return (
+                <Radio
+                  {...inputProps}
+                  description={question.description}
+                  items={question.options}
+                />
+              );
+            default:
+              return null;
+          }
+        })}
 
         <Button text="apply for bridge" type="submit" />
       </Form>

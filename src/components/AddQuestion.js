@@ -9,7 +9,7 @@ const QuestionOuterWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  padding-bottom: ${props => props.theme.padding};
+  margin-bottom: 1.5em;
   width: 100%;
 `;
 
@@ -24,6 +24,11 @@ const InputWrapper = styled.div`
   margin: -1.5em 2rem 0 0;
 `;
 
+const MultiValues = styled.div`
+  margin-top: -2em;
+  width: 91.25%;
+`;
+
 const DropdownWrapper = styled.div`
   width: 10em;
   margin-right: 0.9rem;
@@ -31,7 +36,7 @@ const DropdownWrapper = styled.div`
 
 const CheckboxWrapper = styled.div`
   width: 5em;
-  margin-top: -2.2rem;
+  margin: -1.15rem 0 0 1em;
 `;
 
 const DeleteButton = styled.button`
@@ -90,6 +95,10 @@ export default function AddQuestion({
                   value: 'checkbox',
                 },
                 {
+                  label: 'Single Choice',
+                  value: 'radio',
+                },
+                {
                   label: 'Dropdown',
                   value: 'select',
                 },
@@ -123,20 +132,20 @@ export default function AddQuestion({
           x
         </DeleteButton>
       </QuestionInnerWrapper>
-      {(data.type === 'checkbox' || data.type === 'select') && (
-        <QuestionInnerWrapper>
-          <InputWrapper>
-            <Input
-              name={`multiValues${index}`}
-              type="text"
-              required
-              value={data.multiValues}
-              handleChange={handleInputChange(index)('multiValues')}
-              label={`Answer Values for Question #${index +
-                1} (as comma-separated values)`}
-            />
-          </InputWrapper>
-        </QuestionInnerWrapper>
+      {(data.type === 'checkbox' ||
+        data.type === 'select' ||
+        data.type === 'radio') && (
+        <MultiValues>
+          <Input
+            name={`multiValues${index}`}
+            type="text"
+            required
+            value={data.multiValues}
+            handleChange={handleInputChange(index)('multiValues')}
+            label={`Answer Values for Question #${index +
+              1} (as comma-separated values)`}
+          />
+        </MultiValues>
       )}
     </QuestionOuterWrapper>
   );

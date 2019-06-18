@@ -1,4 +1,5 @@
 export const actionType = {
+  LOGIN_LOADING: 'LOGIN_LOADING',
   LOGIN_SUCCESS: 'LOGIN_SUCCESS',
   LOGIN_ERROR: 'LOGIN_ERROR',
   LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
@@ -6,6 +7,7 @@ export const actionType = {
 
 export const logIn = credentials => {
   return (dispatch, getState, { getFirebase }) => {
+    dispatch({ type: actionType.LOGIN_LOADING });
     if (!credentials.username || !credentials.password) {
       let errorMessage = 'please enter the password';
       errorMessage = !credentials.username
@@ -39,6 +41,7 @@ export const logIn = credentials => {
 
 export const logOut = () => {
   return (dispatch, getState, { getFirebase }) => {
+    dispatch({ type: actionType.LOGIN_LOADING });
     const firebase = getFirebase();
     firebase
       .auth()

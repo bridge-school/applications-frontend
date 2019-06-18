@@ -25,6 +25,7 @@ export default function Input({
   value,
   handleChange,
   required,
+  autofocus,
 }) {
   return (
     <Container>
@@ -38,12 +39,14 @@ export default function Input({
             value={value || ''}
             required={required}
             rows="3"
+            autofocus={autofocus}
             onChange={handleChange}
           />
         ) : (
           <InputElement
             id={name}
             name={name}
+            autofocus={autofocus}
             type={type}
             required={required}
             value={value || ''}
@@ -62,5 +65,6 @@ Input.propTypes = {
   type: PropTypes.string.isRequired,
   value: PropTypes.string,
   required: PropTypes.bool,
+  autofocus: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
 };

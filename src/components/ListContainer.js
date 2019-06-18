@@ -10,7 +10,7 @@ const List = styled.ul`
 
 export default function ListContainer({ cohortData }) {
   return (
-    <List>
+    <List data-cy="cohort-forms">
       {cohortData.map(li => (
         <ListItem
           key={li.id}

@@ -13,6 +13,9 @@ export const actionType = {
   CREATE_COHORT_REQUEST: 'CREATE_COHORT_REQUEST',
   CREATE_COHORT_SUCCESS: 'CREATE_COHORT_SUCCESS',
 
+  UPDATE_COHORT_REQUEST: 'UPDATE_COHORT_REQUEST',
+  UPDATE_COHORT_SUCCESS: 'UPDATE_COHORT_SUCCESS',
+
   STUDENT_SUBMISSION_REQUEST: 'STUDENT_SUBMISSION_REQUEST',
   STUDENT_SUBMISSION_SUCCESS: 'STUDENT_SUBMISSION_SUCCESS',
 };
@@ -153,5 +156,35 @@ export const studentSubmission = formData => dispatch => {
       return res.json();
     })
     .then(res => dispatch(studentSubmissionSuccess(res.message)))
+    .catch(err => dispatch(error(err)));
+};
+
+// ---------- UPDATE a cohort form
+export const updateCohortRequest = () => ({
+  type: actionType.UPDATE_COHORT_REQUEST,
+});
+
+export const updateCohortSuccess = data => ({
+  type: actionType.UPDATE_COHORT_SUCCESS,
+  payload: data,
+});
+
+export const updateCohort = (applicationId, formData) => dispatch => {
+  dispatch(updateCohortRequest());
+
+  fetch(`${BASE_URL}/applications/${applicationId}`, {
+    method: 'PUT',
+    body: JSON.stringify(formData),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(res.statusText);
+      }
+      return res.json();
+    })
+    .then(res => dispatch(updateCohortSuccess(res.message)))
     .catch(err => dispatch(error(err)));
 };

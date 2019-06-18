@@ -11,7 +11,9 @@ import Input from '../components/Input';
 import Congrats from '../components/Congrats';
 import Radio from '../components/Radio';
 import Button from '../components/Button';
+import CheckBox from '../components/CheckBox';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Form = styled.form`
   margin: 2em 0;
@@ -28,6 +30,22 @@ const CohortName = styled.p`
   margin: 0.5em 0;
 `;
 
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const EditLink = styled(Link)`
+  && {
+    border-color: ${p => p.theme.indigo};
+    background: ${p => p.theme.indigo};
+    &:hover {
+      color: ${p => p.theme.indigo};
+    }
+  }
+`;
+
 function CohortForm({
   error,
   loading,
@@ -36,6 +54,7 @@ function CohortForm({
   selectedCohort,
   successfulSubmission,
   sendStudentSubmission,
+  auth,
 }) {
   // state for valid form ID
   const [formIdFound, setFormIdFound] = useState(false);
@@ -78,19 +97,24 @@ function CohortForm({
       switch (question.type) {
         case 'input':
         case 'email':
-        case 'checkbox':
           return <Input {...inputProps} />;
+        case 'checkbox':
+          return (
+            <CheckBox
+              {...inputProps}
+              description={question.description}
+              items={question.options}
+            />
+          );
         case 'textarea':
           return <Input {...inputProps} rows={question.rows} />;
         case 'radio':
         case 'select':
           return (
             <Radio
+              {...inputProps}
               description={question.description}
-              name={question.id}
-              key={question.id}
-              // TO DO
-              items={['one', 'two', 'three']}
+              items={question.options}
             />
           );
         default:
@@ -112,12 +136,27 @@ function CohortForm({
   return (
     selectedCohort && (
       <Form onSubmit={handleSubmit}>
-        <PageTitle title="Apply for Bridge" />
-        <CohortName>{selectedCohort.cohortDisplayName}</CohortName>
+        <Header>
+          <div>
+            <PageTitle title="Apply for Bridge" />
+            <CohortName>{selectedCohort.cohortDisplayName}</CohortName>
+          </div>
+          {auth.uid && (
+            <EditLink
+              className="button-style"
+              to={{
+                pathname: `/admin/${selectedCohort.id}`,
+                state: { formData: selectedCohort },
+              }}
+            >
+              Edit this form
+            </EditLink>
+          )}
+        </Header>
 
         {displayForm()}
 
-        <Button text="apply for bridge" />
+        <Button text="apply for bridge" type="submit" />
       </Form>
     )
   );
@@ -128,6 +167,7 @@ const mapStateToProps = state => ({
   error: state.app.error,
   selectedCohort: state.app.selectedCohort,
   successfulSubmission: state.app.successfulSubmission,
+  auth: state.firebase.auth,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -144,6 +184,7 @@ export default connect(
 )(CohortForm);
 
 CohortForm.propTypes = {
+  auth: PropTypes.object,
   getSelectedCohort: PropTypes.func,
   error: PropTypes.object,
   loading: PropTypes.bool,

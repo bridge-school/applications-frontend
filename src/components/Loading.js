@@ -26,12 +26,21 @@ const LoadingIcon = styled.span`
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
+  p {
+    ${'' /* for accessibility */}
+    position: absolute;
+    left: -1000px;
+  }
 `;
 
 export default function Loading() {
   return (
     <Container>
-      <LoadingIcon />
+      <LoadingIcon>
+        <p role="alert" aria-live="polite">
+          Loading...
+        </p>
+      </LoadingIcon>
     </Container>
   );
 }

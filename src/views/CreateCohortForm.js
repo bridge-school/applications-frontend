@@ -152,7 +152,7 @@ function CreateCohortForm({
         },
         {
           description: 'How do you identify?',
-          type: 'checkbox',
+          type: 'radio',
           isRequired: true,
           id: 'identify',
           multiValues: 'Man, Woman, Agender, Non-Binary',
@@ -177,7 +177,7 @@ function CreateCohortForm({
         },
         {
           description: 'What pronouns should we use?',
-          type: 'checkbox',
+          type: 'radio',
           isRequired: true,
           id: 'pronouns',
           multiValues: 'He/Him, She/Her, They/Them',
@@ -260,7 +260,8 @@ function CreateCohortForm({
     setReorderQuestions(!reorderQuestions);
   };
 
-  // Form will submit even if there are missing required fields, if those fields are not visible on the page. So the inputs need to be displayed for HTML5's 'required' checks to work.
+  // Form will submit even if there are missing required fields, if those fields are not visible on the page.
+  // So the inputs need to be displayed for HTML5's 'required' checks to work.
   useEffect(() => {
     reorderQuestions ? setDisableSubmit(true) : setDisableSubmit(false);
   }, [reorderQuestions]);
@@ -297,7 +298,7 @@ function CreateCohortForm({
           <Input
             name="cohortName"
             type="text"
-            autofocus="autofocus"
+            autofocus
             value={form.cohortName}
             required
             label="Cohort Name"

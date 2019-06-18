@@ -5,11 +5,13 @@ import PropTypes from 'prop-types';
 const Fieldset = styled.fieldset`
   border: none;
   padding: 0;
+  margin: 1.5em 0;
 `;
 
 const RadioLabel = styled.label`
   border: 2px solid ${props => props.theme.darkGrey};
   border-radius: 5px;
+  background: ${props => props.theme.grey};
   padding: ${props => props.theme.padding};
   margin: ${props => props.theme.padding};
   &:first-of-type {
@@ -25,8 +27,8 @@ const RadioLabel = styled.label`
   cursor: pointer;
   &:hover {
     color: white;
-    background: ${props => props.theme.indigo};
-    border-color: ${props => props.theme.indigo};
+    background: ${props => props.theme.green};
+    border-color: ${props => props.theme.green};
   }
 `;
 
@@ -36,8 +38,8 @@ const RadioButton = styled.input`
   display: none;
   &:checked + label {
     color: white;
-    background: ${props => props.theme.indigo};
-    border-color: ${props => props.theme.indigo};
+    background: ${props => props.theme.green};
+    border-color: ${props => props.theme.green};
   }
 `;
 
@@ -52,9 +54,7 @@ const Container = styled.div`
   }
 `;
 
-const Legend = styled.legend`
-  ${'' /* padding: ${props => props.theme.padding}; */}
-`;
+const Legend = styled.legend``;
 
 export default function Radio({
   name,

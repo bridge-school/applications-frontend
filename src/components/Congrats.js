@@ -27,6 +27,13 @@ const Page = styled.div`
   }
 `;
 
+const dateOptions = {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+};
+
 export default function Congrats(props) {
   return (
     <Page>
@@ -41,10 +48,21 @@ export default function Congrats(props) {
             You have successfully submitted your application to{' '}
             <strong>{props.cohortInfo.cohortDisplayName}</strong>.
           </p>
-          <p>Applications will be open until `Close Date`.</p>
           <p>
-            All applicants will hear back from the Bridge team by `Date of
-            Response`.
+            Applications will be open until{' '}
+            {new Date(props.cohortInfo.dateClosed).toLocaleDateString(
+              'en-CA',
+              dateOptions
+            )}
+            .
+          </p>
+          <p>
+            All applicants will hear back from the Bridge team by{' '}
+            {new Date(props.cohortInfo.dateResponse).toLocaleDateString(
+              'en-CA',
+              dateOptions
+            )}
+            .
           </p>
         </>
       ) : (

@@ -76,5 +76,5 @@ export default function Congrats(props) {
 
 Congrats.propTypes = {
   cohortInfo: PropTypes.object,
-  message: PropTypes.object,
+  message: PropTypes.string,
 };

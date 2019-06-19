@@ -7,6 +7,7 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import { connect } from 'react-redux';
 import { logIn } from '../store/actions/authActions';
+import Loading from '../components/Loading';
 
 const LoginWrapper = styled.div`
   width: 24em;
@@ -50,17 +51,16 @@ function Login({ loading, logIn, auth, authError }) {
   // if already logged in go to admin view page
   if (auth.uid) return <Redirect to="/admin" />;
 
-  if (loading) {
-    return <div>Logging In...</div>;
-  }
+  if (loading) return <Loading />;
+
   return (
     <LoginWrapper>
       <PageTitle title="Admin Login" />
-      <Form onSubmit={handleFormSubmit}>
+      <Form method="post" onSubmit={handleFormSubmit}>
         <Input
           name="username"
           type="email"
-          autofocus="autofocus"
+          autofocus
           value={form.username}
           label="Email"
           handleChange={updateField}
@@ -75,14 +75,14 @@ function Login({ loading, logIn, auth, authError }) {
           required
         />
         {authError ? <Error>{authError}</Error> : null}
-        <Button text="Login" handleClick={handleFormSubmit} />
+        <Button type="submit" text="Login" />
       </Form>
     </LoginWrapper>
   );
 }
 
 const mapStateToProps = state => ({
-  loading: state.app.loading,
+  loading: state.auth.loading,
   authError: state.auth.authError,
   auth: state.firebase.auth,
 });

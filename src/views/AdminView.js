@@ -16,6 +16,8 @@ const Header = styled.header`
   margin: 1.5rem 0 3.5rem;
 `;
 
+const isAdmin = true;
+
 function AdminView({ error, allCohorts, loading, getAllCohorts, auth }) {
   useEffect(() => {
     getAllCohorts();
@@ -36,7 +38,7 @@ function AdminView({ error, allCohorts, loading, getAllCohorts, auth }) {
           Create application group
         </Link>
       </Header>
-      <ListContainer cohortData={allCohorts} />
+      <ListContainer isAdmin={isAdmin} cohortData={allCohorts} />
     </div>
   );
 }
@@ -65,4 +67,5 @@ AdminView.propTypes = {
   loading: PropTypes.bool,
   getAllCohorts: PropTypes.func,
   auth: PropTypes.object.isRequired,
+  isAdmin: PropTypes.bool,
 };

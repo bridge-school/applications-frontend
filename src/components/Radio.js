@@ -78,7 +78,7 @@ export default function Radio({
                 type="radio"
                 id={item.value}
                 name={name}
-                value={item}
+                value={item.value}
                 required={required}
                 onChange={handleChange}
               />

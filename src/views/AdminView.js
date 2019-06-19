@@ -12,7 +12,7 @@ import { fetchAllCohorts } from '../store/actions/appActions';
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
-  align-content: center;
+  align-items: center;
   margin: 1.5rem 0 3.5rem;
 `;
 

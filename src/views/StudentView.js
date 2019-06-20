@@ -11,6 +11,8 @@ const Header = styled.header`
   margin: 0 0 3rem 0;
 `;
 
+const isAdmin = false;
+
 export function StudentView({
   error,
   loading,
@@ -36,7 +38,7 @@ export function StudentView({
       <Header data-testid="header">
         <PageTitle title="Cohort Application Forms" />
       </Header>
-      <ListContainer cohortData={currentCohorts} />
+      <ListContainer isAdmin={isAdmin} cohortData={currentCohorts} />
     </div>
   );
 }
@@ -61,6 +63,7 @@ export default connect(
 StudentView.propTypes = {
   error: PropTypes.object,
   currentCohorts: PropTypes.array,
+  isAdmin: PropTypes.bool,
   loading: PropTypes.bool,
   getCurrentCohorts: PropTypes.func,
 };

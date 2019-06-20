@@ -31,11 +31,38 @@ const CohortLink = styled(Link)`
   text-decoration: none;
 `;
 
-export default function ListItem({ name, type, url, id }) {
+const DateWrapper = styled.div`
+  font-size: 14px;
+
+  @media (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+
+    span:nth-child(2) {
+      margin: 3px 0;
+    }
+  }
+`;
+
+export default function ListItem({
+  name,
+  type,
+  url,
+  id,
+  dateOpen,
+  dateClosed,
+  dateResponse,
+}) {
   return (
     <LI>
       <CohortLink to={{ pathname: `apply/${url}`, state: { id } }}>
-        {name}
+        <span className="cohort-name">{name}</span>
+        {dateOpen && dateClosed && dateResponse && (
+          <DateWrapper className="admin-dates-wrapper">
+            <span>Open: {dateOpen}</span> <span>Close: {dateClosed}</span>{' '}
+            <span>Response: {dateResponse}</span>
+          </DateWrapper>
+        )}
         <CohortLabel text={type} />
       </CohortLink>
     </LI>
@@ -47,4 +74,7 @@ ListItem.propTypes = {
   type: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  dateOpen: PropTypes.string,
+  dateClosed: PropTypes.string,
+  dateResponse: PropTypes.string,
 };

@@ -14,6 +14,7 @@ import Button from '../components/Button';
 import CheckBox from '../components/CheckBox';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Dropdown from '../components/Dropdown';
 
 const Form = styled.form`
   margin: 2em 0;
@@ -138,6 +139,14 @@ function CohortForm({
               );
             case 'textarea':
               return <Input {...inputProps} rows={question.rows} />;
+            case 'select':
+              return (
+                <Dropdown
+                  {...inputProps}
+                  description={question.description}
+                  items={question.options}
+                />
+              );
             case 'radio':
               return (
                 <Radio

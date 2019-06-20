@@ -17,21 +17,31 @@ const QuestionInnerWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   width: 100%;
+  @media (max-width: 850px) {
+    flex-wrap: wrap;
+  }
 `;
 
 const InputWrapper = styled.div`
   width: 66%;
   margin: -1.5em 2rem 0 0;
+  @media (max-width: 850px) {
+    width: 100%;
+    margin-right: 0;
+  }
 `;
 
 const MultiValues = styled.div`
   margin-top: -2em;
   width: 91.25%;
+  @media (max-width: 850px) {
+    width: 100%;
+  }
 `;
 
 const DropdownWrapper = styled.div`
   width: 10em;
-  margin-right: 0.9rem;
+  margin: -1.5em 0.9rem 0 0;
 `;
 
 const CheckboxWrapper = styled.div`

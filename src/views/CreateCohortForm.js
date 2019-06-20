@@ -46,6 +46,13 @@ const Dates = styled.div`
       width: 100%;
     }
   }
+  @media (max-width: 850px) {
+    flex-wrap: wrap;
+    & > div {
+      width: 100%;
+      margin: 0 2em 1.5em 0 !important;
+    }
+  }
 `;
 
 const Note = styled.p`

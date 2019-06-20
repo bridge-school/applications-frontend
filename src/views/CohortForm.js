@@ -10,11 +10,11 @@ import Loading from '../components/Loading';
 import Input from '../components/Input';
 import Congrats from '../components/Congrats';
 import Radio from '../components/Radio';
+import Dropdown from '../components/Dropdown';
 import Button from '../components/Button';
 import CheckBox from '../components/CheckBox';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Dropdown from '../components/Dropdown';
 
 const Form = styled.form`
   margin: 2em 0;
@@ -143,8 +143,10 @@ function CohortForm({
               return (
                 <Dropdown
                   {...inputProps}
-                  description={question.description}
-                  items={question.options}
+                  data={{
+                    description: question.description,
+                    items: question.options,
+                  }}
                 />
               );
             case 'radio':

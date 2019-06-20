@@ -30,9 +30,7 @@ export default function ListContainer({ isAdmin, cohortData }) {
               name={li.cohortName}
               type={li.cohortType}
               url={li.cohortSlug}
-              dateOpen={li.dateOpen}
               dateClosed={li.dateClosed}
-              dateResponse={li.dateResponse}
             />
           );
         }

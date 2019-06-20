@@ -41,6 +41,7 @@ const DateWrapper = styled.div`
   }
 `;
 
+
 export default function ListItem({ name, type, url, id, dateClosed }) {
   return (
     <LI>

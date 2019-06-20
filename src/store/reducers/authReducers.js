@@ -25,7 +25,11 @@ const authReducers = (state = initialState, action) => {
         loading: false,
       };
     case actionType.LOGOUT_SUCCESS:
-      return state;
+      return {
+        ...state,
+        authError: null,
+        loading: false,
+      };
     default:
       return state;
   }

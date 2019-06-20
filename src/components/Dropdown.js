@@ -12,6 +12,11 @@ const SelectBox = styled.select`
   background-size: 1rem auto, 100%;
   width: 100%;
 `;
+
+const Container = styled.div`
+  margin: 1.5em 0;
+`;
+
 export default function Dropdown({
   required,
   data,
@@ -20,7 +25,7 @@ export default function Dropdown({
   value,
 }) {
   return (
-    <div>
+    <Container>
       <label>
         {required ? `${data.description}*` : data.description}
         <br />
@@ -38,7 +43,7 @@ export default function Dropdown({
           ))}
         </SelectBox>
       </label>
-    </div>
+    </Container>
   );
 }
 

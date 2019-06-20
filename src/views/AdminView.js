@@ -14,6 +14,7 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   margin: 1.5rem 0 3.5rem;
+  flex-wrap: wrap;
 `;
 
 const isAdmin = true;

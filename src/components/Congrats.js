@@ -7,11 +7,15 @@ import styled from 'styled-components';
 
 const Page = styled.div`
   text-align: center;
-  margin-top: 30%;
+  margin-top: 22%;
   h2 {
     color: ${p => p.theme.indigo};
     font-size: 2.25rem;
     font-weight: bold;
+  }
+  span {
+    color: ${p => p.theme.indigo};
+    margin-left: 0.1em;
   }
   p {
     font-size: 140%;
@@ -45,23 +49,30 @@ export default function Congrats(props) {
       {props.cohortInfo ? (
         <>
           <p>
-            You have successfully submitted your application to{' '}
-            <strong>{props.cohortInfo.cohortDisplayName}</strong>.
-          </p>
-          <p>
-            Applications will be open until{' '}
-            {new Date(props.cohortInfo.dateClosed).toLocaleDateString(
-              'en-CA',
-              dateOptions
-            )}
+            You have successfully submitted your application to:{' '}
+            <span>
+              <strong>{props.cohortInfo.cohortDisplayName}</strong>
+            </span>
             .
           </p>
           <p>
-            All applicants will hear back from the Bridge team by{' '}
-            {new Date(props.cohortInfo.dateResponse).toLocaleDateString(
-              'en-CA',
-              dateOptions
-            )}
+            Applications will be open until:{' '}
+            <span>
+              {new Date(props.cohortInfo.dateClosed).toLocaleDateString(
+                'en-CA',
+                dateOptions
+              )}
+            </span>
+            .
+          </p>
+          <p>
+            All applicants will hear back from the Bridge team by:{' '}
+            <span>
+              {new Date(props.cohortInfo.dateResponse).toLocaleDateString(
+                'en-CA',
+                dateOptions
+              )}
+            </span>
             .
           </p>
         </>

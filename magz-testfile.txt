@@ -1,3 +1,0 @@
-Testing my staging and pushing to the master branch.
-
-I made another change to my testfile, as per Corina's feedback!

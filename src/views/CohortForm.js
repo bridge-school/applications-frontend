@@ -10,6 +10,7 @@ import Loading from '../components/Loading';
 import Input from '../components/Input';
 import Congrats from '../components/Congrats';
 import Radio from '../components/Radio';
+import Dropdown from '../components/Dropdown';
 import Button from '../components/Button';
 import CheckBox from '../components/CheckBox';
 import { connect } from 'react-redux';
@@ -138,6 +139,16 @@ function CohortForm({
               );
             case 'textarea':
               return <Input {...inputProps} rows={question.rows} />;
+            case 'select':
+              return (
+                <Dropdown
+                  {...inputProps}
+                  data={{
+                    description: question.description,
+                    items: question.options,
+                  }}
+                />
+              );
             case 'radio':
               return (
                 <Radio

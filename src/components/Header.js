@@ -20,6 +20,20 @@ const Wrapper = styled.div`
   max-width: 64rem;
   margin: 0 auto;
   padding: 0.5rem 1rem;
+  @media (max-width: 500px) {
+    flex-wrap: wrap;
+    text-align: center;
+    img,
+    h1 {
+      width: 100%;
+    }
+    div {
+      margin: 0.5em auto 0;
+      a {
+        margin: 0.5em;
+      }
+    }
+  }
 `;
 
 const Logo = styled.img`

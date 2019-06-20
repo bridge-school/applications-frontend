@@ -59,6 +59,10 @@ const GlobalStyle = createGlobalStyle`
       color: ${bridgeTheme.green};
       background: white;
     }  
+    @media (max-width: 25em) {
+    width: auto;
+    margin-right: 0;
+  }
   }
   button:disabled,
   button[disabled] {
